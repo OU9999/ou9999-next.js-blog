@@ -1,7 +1,14 @@
 import { NextSeo } from "next-seo";
 import MainScroll from "@/components/Home/MainScroll";
+import { useMediaQuery } from "@chakra-ui/react";
+import MainPageMobile from "@/components/Mobile/Home/MainPageMobile";
 
 export default function Home() {
+  const [mobileView] = useMediaQuery("(max-width: 768px)", {
+    ssr: true,
+    fallback: false, // return false on the server, and re-evaluate on the client side
+  });
+
   return (
     <>
       <NextSeo
@@ -22,8 +29,7 @@ export default function Home() {
           ],
         }}
       />
-
-      <MainScroll />
+      {mobileView ? <MainPageMobile /> : <MainScroll />}
     </>
   );
 }

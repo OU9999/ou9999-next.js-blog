@@ -63,6 +63,7 @@ export default function MainScroll() {
         justifyContent={"flex-start"}
         alignItems={"flex-start"}
         position={"relative"}
+        w="100vw"
       >
         <MainPage />
         <VStack w={"100%"} justifyContent={"center"}>

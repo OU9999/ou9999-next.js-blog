@@ -5,6 +5,7 @@ import {
   HStack,
   Text,
   useColorModeValue,
+  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { motion, useScroll, Variants } from "framer-motion";
@@ -26,6 +27,10 @@ const hugmeVariants: Variants = {
 };
 
 export default function Footer() {
+  const [mobileView] = useMediaQuery("(max-width: 768px)", {
+    ssr: true,
+    fallback: false, // return false on the server, and re-evaluate on the client side
+  });
   const { scrollY } = useScroll();
   const isWrite = useRecoilValue(writeAtom);
   const [invisible, setInvisible] = useState(false);
@@ -102,7 +107,7 @@ export default function Footer() {
           "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fhug_me.png?alt=media&token=c44657ff-630e-4edb-a382-b78495387339"
         }
         display={invisible ? "none" : "block"}
-        size={"xl"}
+        size={mobileView ? "md" : "xl"}
         position={"fixed"}
         zIndex={99}
         bottom={3}

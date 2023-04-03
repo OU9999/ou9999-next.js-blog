@@ -1,0 +1,224 @@
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerOverlay,
+  Flex,
+  HStack,
+  Heading,
+  IconButton,
+  Text,
+  VStack,
+  useColorMode,
+  useColorModeValue,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { RxSlash } from "react-icons/rx";
+import { GoThreeBars } from "react-icons/go";
+import {
+  FaGithub,
+  FaInstagram,
+  FaMoon,
+  FaSun,
+  FaTwitter,
+} from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { returnColors } from "@/utils/utilFn";
+import { useRecoilState } from "recoil";
+import { colorThemeAtom } from "@/utils/atoms";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { SiFirebase, SiNextdotjs, SiReact, SiTypescript } from "react-icons/si";
+import { MdEmail } from "react-icons/md";
+
+export default function HeaderMobile() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [colorTheme, setColorTheme] = useRecoilState(colorThemeAtom);
+  const [lightColor, setLightColor] = useState("");
+  const [bgColor, setBgColor] = useState("");
+  const Icon = useColorModeValue(FaMoon, FaSun);
+  const ColorText = useColorModeValue("Dark", "Light");
+  const { toggleColorMode } = useColorMode();
+
+  useEffect(() => {
+    const [lc, dc, hbc] = returnColors(colorTheme);
+    setLightColor(lc);
+    setBgColor(hbc);
+  }, [colorTheme]);
+
+  return (
+    <>
+      <Button
+        colorScheme={colorTheme}
+        onClick={onOpen}
+        position={"fixed"}
+        zIndex={99}
+        top={2}
+        left={2}
+      >
+        <GoThreeBars />
+      </Button>
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerBody>
+            <HStack w="full" justifyContent={"center"}>
+              <Box fontSize={"3xl"} color={lightColor}>
+                <AiOutlineLeft />
+              </Box>
+              <Text
+                fontSize={"2xl"}
+                fontWeight={"bold"}
+                textShadow={`${lightColor} 1px 0 30px`}
+              >
+                OU9999
+              </Text>
+              <HStack fontSize={"3xl"} spacing={-3} color={lightColor}>
+                <RxSlash />
+                <AiOutlineRight />
+              </HStack>
+            </HStack>
+            <VStack h={"full"}>
+              <HStack w="full" justifyContent={"center"}>
+                <Flex gap={1}>
+                  <Button
+                    fontSize={"xl"}
+                    variant="ghost"
+                    px={"3"}
+                    py={"8"}
+                    colorScheme={"gray"}
+                  >
+                    <Link href="https://github.com/OU9999" target="_blank">
+                      <FaGithub />
+                    </Link>
+                  </Button>
+                  <Button
+                    fontSize={"xl"}
+                    variant="ghost"
+                    px={"3"}
+                    py={"8"}
+                    colorScheme={"twitter"}
+                  >
+                    <FaTwitter />
+                  </Button>
+                  <Button
+                    fontSize={"xl"}
+                    variant="ghost"
+                    px={"3"}
+                    py={"8"}
+                    colorScheme={"pink"}
+                  >
+                    <FaInstagram />
+                  </Button>
+                  <Button
+                    fontSize={"xl"}
+                    variant="ghost"
+                    px={"3"}
+                    py={"8"}
+                    colorScheme={"green"}
+                    // onClick={onEmailButtonClicked}
+                  >
+                    <MdEmail />
+                  </Button>
+                  <Button
+                    fontSize={"xl"}
+                    variant="ghost"
+                    px={"3"}
+                    py={"8"}
+                    colorScheme={colorTheme}
+                    onClick={toggleColorMode}
+                  >
+                    <Icon />
+                  </Button>
+                </Flex>
+              </HStack>
+
+              <Divider />
+
+              <VStack py={3} justifyContent={"center"} alignItems={"center"}>
+                <Text
+                  colorScheme={colorTheme}
+                  fontSize={"xl"}
+                  mb={2}
+                  fontWeight={"bold"}
+                >
+                  Color Theme
+                </Text>
+                <HStack>
+                  <Button
+                    colorScheme="purple"
+                    onClick={() => setColorTheme("purple")}
+                  >
+                    Purple
+                  </Button>
+                  <Button
+                    colorScheme="teal"
+                    onClick={() => setColorTheme("teal")}
+                  >
+                    Teal
+                  </Button>
+                  <Button
+                    colorScheme="cyan"
+                    onClick={() => setColorTheme("cyan")}
+                  >
+                    Cyan
+                  </Button>
+                </HStack>
+              </VStack>
+              <Divider />
+
+              <VStack
+                py={3}
+                justifyContent={"center"}
+                alignItems={"center"}
+                gap={2}
+              >
+                <Link href={"/"}>
+                  <Button>Home</Button>
+                </Link>
+                <Link href={"/"}>
+                  <Button>Notes</Button>
+                </Link>
+                <Link href={"/"}>
+                  <Button>Guest Book</Button>
+                </Link>
+              </VStack>
+            </VStack>
+          </DrawerBody>
+          <DrawerFooter>
+            <HStack fontSize={"md"} fontWeight={"semibold"}>
+              <Box
+                as={motion.div}
+                initial={{
+                  rotateZ: 360,
+                }}
+                animate={{
+                  rotateZ: 0,
+                  transition: {
+                    duration: 9,
+                    repeat: Infinity,
+                    type: "linear",
+                  },
+                }}
+              >
+                <SiReact color="#61DAFB" />
+              </Box>
+
+              <SiTypescript color="#3178C6" />
+              <SiFirebase color=" #FFCA28" />
+              <SiNextdotjs />
+              <FaGithub />
+            </HStack>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
+}

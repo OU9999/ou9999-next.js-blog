@@ -29,3 +29,8 @@ export const colorThemeAtom = atom<string>({
   key: "colorTheme",
   default: "purple",
 });
+
+export const isMobileAtom = atom<boolean>({
+  key: "isMobile",
+  default: false,
+});

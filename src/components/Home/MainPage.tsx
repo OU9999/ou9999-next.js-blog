@@ -8,6 +8,7 @@ import {
   Flex,
   HStack,
   Text,
+  useMediaQuery,
   useToast,
 } from "@chakra-ui/react";
 import { motion, useAnimation, Variants } from "framer-motion";
@@ -127,7 +128,7 @@ export default function MainPage() {
     <>
       <Box
         w="100vw"
-        h="100vh"
+        h={"100vh"}
         position={"absolute"}
         zIndex={-1}
         backgroundRepeat="no-repeat"
@@ -142,7 +143,7 @@ export default function MainPage() {
       />
       <Box
         w="100vw"
-        h="100vh"
+        h={"100vh"}
         position={"absolute"}
         zIndex={1}
         top={-2}
