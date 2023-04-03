@@ -18,40 +18,15 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
+  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { doc, getDoc } from "firebase/firestore";
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import { BiTimeFive } from "react-icons/bi";
-import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
-import styled from "styled-components";
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
 import { useEffect, useState } from "react";
-import Toc from "@/components/Entry/TOC";
 import { NextSeo } from "next-seo";
-
-//custom style for md view
-const CustomStyle = styled.div`
-  blockquote {
-    background-color: gray;
-    border: none;
-    padding: 10px;
-    color: white;
-    border-radius: 10px;
-  }
-  img {
-    margin: 10px;
-    width: 100%;
-    border-radius: 15px;
-  }
-`;
-
-const MarkdownPreview = dynamic(() => import("@uiw/react-markdown-preview"), {
-  ssr: false,
-});
+import EntryMainPage from "@/components/Entry/EntryMainPage";
+import EntryMainPageMobile from "@/components/Mobile/Entry/EntryMainPageMobile";
 
 export const getServerSideProps = async ({ params }: any) => {
   const docId = params.slug[1];
@@ -78,21 +53,11 @@ interface IEntryProps {
 }
 
 export default function Entry({ detail, docId }: IEntryProps) {
-  const colorMode = useColorModeValue("light", "dark");
-  const isLogin = useRecoilValue(isLoginAtom);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const date = dateFormatter(detail.createdAt);
-  const urlTitle = returnUrlTitle(detail.title);
+  const [mobileView] = useMediaQuery("(max-width: 768px)", {
+    ssr: true,
+    fallback: false, // return false on the server, and re-evaluate on the client side
+  });
   const desc = returnDescription(detail.md);
-  const [re, setRe] = useState(false);
-
-  useEffect(() => {
-    setInterval(() => {
-      setRe(true);
-    }, 500);
-  }, []);
-
-  console.log(desc + "...");
 
   return (
     <>
@@ -122,163 +87,11 @@ export default function Entry({ detail, docId }: IEntryProps) {
           cardType: "summary_large_image",
         }}
       />
-      <VStack height={"auto"} width="100vw">
-        <Box
-          w="100vw"
-          h="50vh"
-          position={"absolute"}
-          zIndex={30}
-          backgroundRepeat="no-repeat"
-          backgroundAttachment={"fixed"}
-          backgroundSize="cover"
-          backgroundPosition={"center center"}
-          backgroundImage="https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2Fmiles.jpeg?alt=media&token=57761a5b-3caa-437a-a1d5-9cb79a4a9fc1"
-        />
-        <Box
-          w="100vw"
-          h="50vh"
-          position={"absolute"}
-          zIndex={32}
-          top={-2}
-          background={
-            "repeating-linear-gradient(0deg,#0e0d0e 25%,#0e0d0e 50%, #171819 50%,  #171819 75%)"
-          }
-          backgroundSize="10px 10px"
-          opacity={0.3}
-        />
-        <Center
-          minH={"50vh"}
-          width="full"
-          color="white"
-          zIndex={33}
-          position={"relative"}
-        >
-          <VStack gap={5}>
-            <Heading textShadow={"#000 1px 0 10px"} fontSize={"5xl"} px={20}>
-              {detail?.title}
-            </Heading>
-            <HStack gap={10}>
-              <HStack
-                justifyContent={"center"}
-                alignItems={"center"}
-                spacing={1}
-              >
-                <Box fontSize={"2xl"}>
-                  <GoThreeBars />
-                </Box>
-                <Text
-                  textShadow={"#000 1px 0 10px"}
-                  fontSize={"2xl"}
-                  fontWeight={"bold"}
-                >
-                  {detail?.category}
-                </Text>
-              </HStack>
-              <HStack
-                justifyContent={"center"}
-                alignItems={"center"}
-                spacing={1}
-              >
-                <Box fontSize={"2xl"}>
-                  <BiTimeFive />
-                </Box>
-                <Text
-                  textShadow={"#000 1px 0 10px"}
-                  fontSize={"2xl"}
-                  fontWeight={"bold"}
-                >
-                  {date}
-                </Text>
-              </HStack>
-            </HStack>
-
-            {isLogin ? (
-              <HStack
-                position={"absolute"}
-                bottom={10}
-                right={10}
-                gap={3}
-                color="white"
-                fontWeight={"bold"}
-              >
-                <Link
-                  href={{
-                    pathname: `/write/${urlTitle}/${docId}`,
-                  }}
-                >
-                  <Box
-                    cursor={"pointer"}
-                    _hover={{
-                      borderBottom: "1px solid",
-                    }}
-                  >
-                    <Text>수정</Text>
-                  </Box>
-                </Link>
-                <Box
-                  onClick={onOpen}
-                  cursor={"pointer"}
-                  _hover={{
-                    borderBottom: "1px solid",
-                  }}
-                >
-                  <Text>삭제</Text>
-                </Box>
-              </HStack>
-            ) : null}
-          </VStack>
-        </Center>
-
-        <Box py={32}>
-          <Image
-            alt="thumbnail"
-            src={
-              detail.thumbnailUrl === ""
-                ? selectBasicThumbnail(detail.category)
-                : detail.thumbnailUrl
-            }
-            rounded="3xl"
-            h="auto"
-            w={"auto"}
-            transform={"auto"}
-            boxShadow={"dark-lg"}
-            border={"0px solid"}
-          />
-        </Box>
-        <Flex
-          w="full"
-          position={"relative"}
-          overflow={"hidden"}
-          justifyContent={"center"}
-        >
-          <Box width={"55vw"} height="auto" data-color-mode={colorMode}>
-            <CustomStyle>
-              <MarkdownPreview
-                source={detail.md}
-                style={{
-                  backgroundColor: colorMode === "dark" ? "#1A202C" : undefined,
-                }}
-              />
-            </CustomStyle>
-          </Box>
-          {re && (
-            <Box position={"fixed"} right={10} top={150} zIndex={1}>
-              <Toc md={detail.md} />
-            </Box>
-          )}
-        </Flex>
-
-        <Box position={"relative"} w="full" h="auto" zIndex={32}>
-          <EntryFooter category={detail.category} docId={docId} />
-        </Box>
-
-        <DeleteModal
-          isOpen={isOpen}
-          onClose={onClose}
-          id={docId}
-          thumbnailUrl={detail?.thumbnailUrl!}
-        />
-      </VStack>
+      {mobileView ? (
+        <EntryMainPageMobile detail={detail} docId={docId} />
+      ) : (
+        <EntryMainPage detail={detail} docId={docId} />
+      )}
     </>
   );
 }

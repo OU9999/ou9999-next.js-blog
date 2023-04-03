@@ -109,9 +109,7 @@ export default function NoteCard({
                     noOfLines={2}
                     transition={"0.3s"}
                     cursor="pointer"
-                    _hover={{
-                      color: relativeColor,
-                    }}
+                    color={hover ? relativeColor : undefined}
                   >
                     {title}
                   </Heading>

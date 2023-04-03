@@ -1,6 +1,5 @@
 import { Box, Grid } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import LoadingCard from "./LoadingCard";
 import { INotes } from "@/pages/notes/[category]";
 import NoteCard from "./NoteCard";
 

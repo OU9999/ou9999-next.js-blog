@@ -183,10 +183,10 @@ export default function HeaderMobile() {
                 <Link href={"/"}>
                   <Button>Home</Button>
                 </Link>
-                <Link href={"/"}>
+                <Link href={"/notes/ALL"}>
                   <Button>Notes</Button>
                 </Link>
-                <Link href={"/"}>
+                <Link href={"/guestbook"}>
                   <Button>Guest Book</Button>
                 </Link>
               </VStack>

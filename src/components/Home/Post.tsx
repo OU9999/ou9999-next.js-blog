@@ -100,9 +100,7 @@ export default function Post({
                 noOfLines={2}
                 cursor="pointer"
                 fontSize={"2xl"}
-                _hover={{
-                  color: relativeColor,
-                }}
+                color={hover ? relativeColor : undefined}
                 transition={"0.3s"}
               >
                 {title}
