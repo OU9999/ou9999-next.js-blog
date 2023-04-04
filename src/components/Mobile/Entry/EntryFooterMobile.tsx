@@ -75,14 +75,14 @@ export default function EntryFooterMobile({
           <Image
             alt="footerImg"
             w="100vw"
-            h="30vh"
+            h="40vh"
             position={"absolute"}
             zIndex={-1}
             src={backgroundImage}
           />
           <Box
             w="100vw"
-            h="30vh"
+            h="40vh"
             position={"absolute"}
             zIndex={1}
             background={
@@ -91,45 +91,47 @@ export default function EntryFooterMobile({
             backgroundSize="10px 10px"
             opacity={0.3}
           />
-        </Box>
-        <Box width={"full"} height={"auto"} position="relative" zIndex={4}>
-          <Flex
-            w="full"
-            justifyContent={"space-between"}
-            alignItems={"center"}
-            px="5"
-            pt="5"
+          <Center
+            w="100vw"
+            h="40vh"
+            position="relative"
+            zIndex={4}
+            flexDir={"column"}
+            justifyContent={"space-around"}
           >
-            <Heading
-              fontSize="md"
-              fontWeight="extrabold"
-              textShadow={"black 1px 0 10px"}
-              color={"white"}
+            <Flex
+              w="full"
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              px="5"
             >
-              카테고리의 다른글
-            </Heading>
-            <Link href={`/notes/${category}`}>
-              <Button size={"sm"} colorScheme={colorTheme}>
-                다른글 더 보기
-              </Button>
-            </Link>
-          </Flex>
+              <Heading
+                fontSize="md"
+                fontWeight="extrabold"
+                textShadow={"black 1px 0 10px"}
+                color={"white"}
+              >
+                카테고리의 다른글
+              </Heading>
+              <Link href={`/notes/${category}`}>
+                <Button size={"sm"} colorScheme={colorTheme}>
+                  다른글 더 보기
+                </Button>
+              </Link>
+            </Flex>
+            <VStack w="full">
+              {notes?.map((note) => (
+                <OtherCardMobile
+                  key={note.id}
+                  title={note.title}
+                  thumbnailUrl={note.thumbnailUrl}
+                  category={note.category}
+                  docId={note.id}
+                />
+              ))}
+            </VStack>
+          </Center>
         </Box>
-
-        {/* NoteCards */}
-        <Center w="full" pt={4} gap={20} position="relative" zIndex={4}>
-          <VStack w="full" px="5">
-            {notes?.map((note) => (
-              <OtherCardMobile
-                key={note.id}
-                title={note.title}
-                thumbnailUrl={note.thumbnailUrl}
-                category={note.category}
-                docId={note.id}
-              />
-            ))}
-          </VStack>
-        </Center>
 
         {/* comments */}
         <Box

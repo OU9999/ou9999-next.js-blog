@@ -76,7 +76,7 @@ export default function CommentMobile({
   const date = dateFormatter(createdAt);
 
   const onDeleteClick = async () => {
-    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
     if (newPassword === password) {
       const commentsRef = doc(dbService, "comments", commentId);
       await deleteDoc(commentsRef);
@@ -85,6 +85,7 @@ export default function CommentMobile({
         position: "top",
         isClosable: true,
       });
+    } else if (newPassword === "") {
     } else {
       toast({
         title: "비밀번호가 틀립니다",
@@ -96,9 +97,10 @@ export default function CommentMobile({
   };
 
   const onEditClick = async () => {
-    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
     if (newPassword === password) {
       setIsEdit(true);
+    } else if (newPassword === "") {
     } else {
       toast({
         title: "비밀번호가 틀립니다",
@@ -171,12 +173,13 @@ export default function CommentMobile({
         w={"full"}
         h={"auto"}
         rounded={"2xl"}
-        boxShadow={"dark-lg"}
+        boxShadow={"2xl"}
         alignItems={"flex-start"}
         px={4}
         pt={4}
         pb={5}
         gap={3}
+        zIndex={10}
         bgColor={bgColor}
       >
         <HStack

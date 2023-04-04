@@ -66,7 +66,7 @@ export default function CommentReplyMobile({
   };
 
   const onDeleteClick = async () => {
-    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
     if (newPassword === password) {
       const commentsRef = doc(dbService, "replyComments", id);
       await deleteDoc(commentsRef);
@@ -75,6 +75,7 @@ export default function CommentReplyMobile({
         position: "top",
         isClosable: true,
       });
+    } else if (newPassword === "") {
     } else {
       toast({
         title: "비밀번호가 틀립니다",
@@ -86,9 +87,10 @@ export default function CommentReplyMobile({
   };
 
   const onEditClick = async () => {
-    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
     if (newPassword === password) {
       setIsEdit(true);
+    } else if (newPassword === "") {
     } else {
       toast({
         title: "비밀번호가 틀립니다",
@@ -119,16 +121,18 @@ export default function CommentReplyMobile({
         <VStack
           w="2xl"
           rounded={"2xl"}
-          boxShadow={"dark-lg"}
+          boxShadow={"2xl"}
           p={5}
           alignItems={"flex-start"}
           gap={3}
+          zIndex={11}
           bgColor={bgColor}
         >
           <HStack
             w={"full"}
             justifyContent={"space-between"}
             alignItems={"center"}
+            pos="relative"
           >
             <HStack justifyContent={"center"} alignItems={"center"} gap={2}>
               <Avatar icon={<FaUser fontSize={"1.2rem"} />} size={"sm"} />
@@ -142,7 +146,7 @@ export default function CommentReplyMobile({
                 </HStack>
               </VStack>
             </HStack>
-            <HStack spacing={0} gap={2}>
+            <HStack spacing={0} gap={2} pos={"absolute"} right={0} top={0}>
               <Text fontSize={"sm"} color={"gray"} onClick={onEditClick}>
                 수정
               </Text>

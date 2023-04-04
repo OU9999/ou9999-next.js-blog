@@ -109,7 +109,7 @@ export default function GBCommentMobile({
   };
 
   const onDeleteClick = async () => {
-    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
     if (newPassword === password) {
       const commentsRef = doc(dbService, "guestBooks", commentId);
       await deleteDoc(commentsRef);
@@ -118,6 +118,7 @@ export default function GBCommentMobile({
         position: "top",
         isClosable: true,
       });
+    } else if (newPassword === "") {
     } else {
       toast({
         title: "비밀번호가 틀립니다",
@@ -129,9 +130,10 @@ export default function GBCommentMobile({
   };
 
   const onEditClick = async () => {
-    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
     if (newPassword === password) {
       setIsEdit(true);
+    } else if (newPassword === "") {
     } else {
       toast({
         title: "비밀번호가 틀립니다",
