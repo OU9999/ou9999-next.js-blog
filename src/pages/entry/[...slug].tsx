@@ -1,29 +1,8 @@
-import DeleteModal from "@/components/Entry/DeleteModal";
-import EntryFooter from "@/components/Entry/EntryFooter";
-import { isLoginAtom } from "@/utils/atoms";
 import { dbService } from "@/utils/firebase";
-import {
-  dateFormatter,
-  returnDescription,
-  returnUrlTitle,
-  selectBasicThumbnail,
-} from "@/utils/utilFn";
-import {
-  Box,
-  Center,
-  Flex,
-  Heading,
-  HStack,
-  Image,
-  Text,
-  useColorModeValue,
-  useDisclosure,
-  useMediaQuery,
-  VStack,
-} from "@chakra-ui/react";
+import { returnDescription, selectBasicThumbnail } from "@/utils/utilFn";
+import { useMediaQuery } from "@chakra-ui/react";
 import { doc, getDoc } from "firebase/firestore";
-import { useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
+
 import { NextSeo } from "next-seo";
 import EntryMainPage from "@/components/Entry/EntryMainPage";
 import EntryMainPageMobile from "@/components/Mobile/Entry/EntryMainPageMobile";
@@ -63,12 +42,12 @@ export default function Entry({ detail, docId }: IEntryProps) {
     <>
       <NextSeo
         title={`${detail.title} | OU9999's First Blog`}
-        description={desc}
+        description={`${desc} | OU9999's First Blog`}
         openGraph={{
           type: "website",
           url: "no",
-          title: detail.title,
-          description: desc,
+          title: `${detail.title} | OU9999's First Blog`,
+          description: `${desc} | OU9999's First Blog`,
           images: [
             {
               url:

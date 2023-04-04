@@ -1,13 +1,6 @@
 import DeleteModal from "@/components/Entry/DeleteModal";
-import EntryFooter from "@/components/Entry/EntryFooter";
 import { isLoginAtom } from "@/utils/atoms";
-import { dbService } from "@/utils/firebase";
-import {
-  dateFormatter,
-  returnDescription,
-  returnUrlTitle,
-  selectBasicThumbnail,
-} from "@/utils/utilFn";
+import { dateFormatter, selectBasicThumbnail } from "@/utils/utilFn";
 import {
   Box,
   Center,
@@ -20,18 +13,13 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { doc, getDoc } from "firebase/firestore";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { BiTimeFive } from "react-icons/bi";
 import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
-import { useEffect, useState } from "react";
-import Toc from "@/components/Entry/TOC";
-import { NextSeo } from "next-seo";
 import EntryFooterMobile from "./EntryFooterMobile";
 
 //custom style for md view
@@ -108,7 +96,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
           zIndex={33}
           position={"relative"}
         >
-          <VStack gap={5} bgColor={"rgba(0,0,0,0.3)"} py={5}>
+          <VStack gap={5} w="full" bgColor={"rgba(0,0,0,0.3)"} py={5}>
             <Heading textShadow={"#000 1px 0 10px"} fontSize={"xl"} px={10}>
               {detail?.title}
             </Heading>

@@ -69,13 +69,13 @@ export default function NotesCategory({
   return (
     <>
       <NextSeo
-        title="Notes | OU9999"
-        description="OU9999 First Blog | Notes!"
+        title="Notes | OU9999's First Blog"
+        description="Notes! | OU9999's First Blog"
         openGraph={{
           type: "website",
           url: "no",
           title: "OU9999",
-          description: "OU9999 First Blog! | Notes!",
+          description: "Notes! | OU9999's First Blog",
           images: [
             {
               url: "/op.png",

@@ -13,13 +13,11 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEye, FaRegCommentDots } from "react-icons/fa";
 import { BiTimeFive } from "react-icons/bi";
 import {
   dateFormatter,
-  returnColors,
   returnDescription,
   returnUrlTitle,
   selectBasicThumbnail,

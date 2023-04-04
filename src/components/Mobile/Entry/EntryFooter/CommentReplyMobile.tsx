@@ -4,27 +4,22 @@ import {
   Center,
   Heading,
   HStack,
-  IconButton,
   Text,
   Textarea,
-  Tooltip,
   useColorModeValue,
   useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { doc, updateDoc } from "firebase/firestore";
-import { motion } from "framer-motion";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { FaCommentSlash } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { FiCornerDownRight } from "react-icons/fi";
-import { dbService } from "../../../utils/firebase";
-import CommentDeleteModal from "./CommentDeleteModal";
-import { userIcons } from "./CommentInput";
-import CommentPopover from "./CommentPopover";
 import { dateFormatter } from "@/utils/utilFn";
-import { useRecoilValue } from "recoil";
+import { userIcons } from "./CommentInputMobile";
+import { dbService } from "@/utils/firebase";
 import { colorThemeAtom } from "@/utils/atoms";
+import { useRecoilValue } from "recoil";
 
 interface ICommentReplyProps {
   nickname: string;
@@ -36,7 +31,7 @@ interface ICommentReplyProps {
   edited: boolean;
 }
 
-export default function CommentReply({
+export default function CommentReplyMobile({
   nickname,
   password,
   avatar,
@@ -57,7 +52,7 @@ export default function CommentReply({
   const toast = useToast();
 
   const onUpdateButtonClick = async () => {
-    const commentsRef = doc(dbService, "replyComments", id!);
+    const commentsRef = doc(dbService, "replyComments", id);
     await updateDoc(commentsRef, {
       comment: newComment,
       edited: true,
@@ -68,6 +63,40 @@ export default function CommentReply({
       isClosable: true,
     });
     setIsEdit(false);
+  };
+
+  const onDeleteClick = async () => {
+    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    if (newPassword === password) {
+      const commentsRef = doc(dbService, "replyComments", id);
+      await deleteDoc(commentsRef);
+      toast({
+        title: "삭제 완료!",
+        position: "top",
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "비밀번호가 틀립니다",
+        position: "top",
+        isClosable: true,
+        status: "error",
+      });
+    }
+  };
+
+  const onEditClick = async () => {
+    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    if (newPassword === password) {
+      setIsEdit(true);
+    } else {
+      toast({
+        title: "비밀번호가 틀립니다",
+        position: "top",
+        isClosable: true,
+        status: "error",
+      });
+    }
   };
 
   const avatarTest = (avatar: string) => {
@@ -91,23 +120,20 @@ export default function CommentReply({
           w="2xl"
           rounded={"2xl"}
           boxShadow={"dark-lg"}
-          p={"10"}
+          p={5}
           alignItems={"flex-start"}
           gap={3}
-          as={motion.div}
-          onHoverStart={() => {
-            setOption(true);
-          }}
-          onHoverEnd={() => {
-            setOption(false);
-          }}
           bgColor={bgColor}
         >
-          <HStack w={"full"} justifyContent={"space-between"}>
-            <HStack alignItems={"center"} gap={4}>
-              <Avatar icon={icon} />
-              <VStack alignItems={"flex-start"}>
-                <Heading fontSize={"2xl"}>{nickname}</Heading>
+          <HStack
+            w={"full"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <HStack justifyContent={"center"} alignItems={"center"} gap={2}>
+              <Avatar icon={<FaUser fontSize={"1.2rem"} />} size={"sm"} />
+              <VStack alignItems={"flex-start"} spacing={0}>
+                <Heading fontSize={"xl"}>{nickname}</Heading>
                 <HStack>
                   <Text fontSize={"xs"}>
                     {date}
@@ -116,18 +142,13 @@ export default function CommentReply({
                 </HStack>
               </VStack>
             </HStack>
-            <HStack gap={2} opacity={option ? 1 : 0} transition={"0.5s"}>
-              <CommentPopover password={password} setIsEdit={setIsEdit} />
-              <Tooltip label="삭제" aria-label="delete" placement="top">
-                <IconButton
-                  fontSize={"xl"}
-                  aria-label="delete"
-                  variant="ghost"
-                  onClick={onOpen}
-                >
-                  <FaCommentSlash />
-                </IconButton>
-              </Tooltip>
+            <HStack spacing={0} gap={2}>
+              <Text fontSize={"sm"} color={"gray"} onClick={onEditClick}>
+                수정
+              </Text>
+              <Text fontSize={"sm"} color={"gray"} onClick={onDeleteClick}>
+                삭제
+              </Text>
             </HStack>
           </HStack>
           {isEdit ? (
@@ -139,17 +160,10 @@ export default function CommentReply({
                 onChange={(e) => setNewComment(e.currentTarget.value)}
               />
               <HStack w={"full"} justifyContent={"flex-end"}>
-                <Button
-                  onClick={() => setIsEdit(false)}
-                  colorScheme={colorTheme}
-                  variant={"ghost"}
-                >
+                <Button colorScheme={colorTheme} variant={"ghost"}>
                   취소
                 </Button>
-                <Button
-                  onClick={() => onUpdateButtonClick()}
-                  colorScheme={colorTheme}
-                >
+                <Button colorScheme={colorTheme} onClick={onUpdateButtonClick}>
                   수정
                 </Button>
               </HStack>
@@ -159,13 +173,6 @@ export default function CommentReply({
           )}
         </VStack>
       </Center>
-      <CommentDeleteModal
-        isOpen={isOpen}
-        onClose={onClose}
-        commentId={id}
-        password={password}
-        isReply={true}
-      />
     </>
   );
 }

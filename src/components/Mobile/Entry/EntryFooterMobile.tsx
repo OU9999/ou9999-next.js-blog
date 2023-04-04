@@ -1,4 +1,3 @@
-import NoteCard from "@/components/Notes/NoteCard";
 import { images } from "@/constants/mainpageArray";
 import { INotes } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
@@ -10,6 +9,7 @@ import {
   Flex,
   Heading,
   Image,
+  VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
 import {
@@ -23,7 +23,9 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import PostMobile from "../Home/PostMobile";
+import OtherCardMobile from "./EntryFooter/OtherCardMobile";
+import CommentInputMobile from "./EntryFooter/CommentInputMobile";
+import CommentsMobile from "./EntryFooter/CommentsMobile";
 
 interface IEntryFooterProps {
   category: string;
@@ -90,17 +92,13 @@ export default function EntryFooterMobile({
             opacity={0.3}
           />
         </Box>
-        <Box
-          width={"full"}
-          height={"auto"}
-          position="relative"
-          zIndex={4}
-          paddingTop={20}
-        >
+        <Box width={"full"} height={"auto"} position="relative" zIndex={4}>
           <Flex
             w="full"
             justifyContent={"space-between"}
-            alignItems={"flex-start"}
+            alignItems={"center"}
+            px="5"
+            pt="5"
           >
             <Heading
               fontSize="md"
@@ -119,25 +117,19 @@ export default function EntryFooterMobile({
         </Box>
 
         {/* NoteCards */}
-        {/* <Center
-          w="full"
-          paddingTop={10}
-          gap={20}
-          position="relative"
-          zIndex={4}
-        >
-          {notes?.map((note) => (
-            <NoteCard
-              key={note.id}
-              title={note.title}
-              thumbnailUrl={note.thumbnailUrl}
-              md={note.md}
-              category={note.category}
-              link={note.id}
-              createdAt={note.createdAt}
-            />
-          ))}
-        </Center> */}
+        <Center w="full" pt={4} gap={20} position="relative" zIndex={4}>
+          <VStack w="full" px="5">
+            {notes?.map((note) => (
+              <OtherCardMobile
+                key={note.id}
+                title={note.title}
+                thumbnailUrl={note.thumbnailUrl}
+                category={note.category}
+                docId={note.id}
+              />
+            ))}
+          </VStack>
+        </Center>
 
         {/* comments */}
         <Box
@@ -147,8 +139,8 @@ export default function EntryFooterMobile({
           zIndex={5}
           bgColor={bgColor}
         >
-          {/* <CommentInput docId={docId} />
-          <Comments docId={docId} /> */}
+          <CommentInputMobile docId={docId} />
+          <CommentsMobile docId={docId} />
         </Box>
       </Box>
     </>

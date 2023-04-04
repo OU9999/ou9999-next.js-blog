@@ -1,13 +1,11 @@
 import { colorThemeAtom } from "@/utils/atoms";
 import { dbService } from "@/utils/firebase";
 import {
-  Avatar,
   Box,
   Button,
   Center,
   Divider,
   Flex,
-  HStack,
   Input,
   InputGroup,
   InputLeftElement,
@@ -71,7 +69,7 @@ export const userIcons = [
   },
 ];
 
-export default function CommentInput({ docId }: ICommentInputProps) {
+export default function CommentInputMobile({ docId }: ICommentInputProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
   const [nickname, setNickname] = useState<string>("");
@@ -80,10 +78,6 @@ export default function CommentInput({ docId }: ICommentInputProps) {
 
   const inputBgColor = useColorModeValue("#fff", "#2D3748");
   const toast = useToast();
-
-  const onAvatarClicked = () => {
-    setUserIcon(userIcons[Math.floor(Math.random() * userIcons.length)]);
-  };
 
   const onAddButtonClicked = async () => {
     if (nickname === "" || password === "" || comment === "") {
@@ -135,15 +129,15 @@ export default function CommentInput({ docId }: ICommentInputProps) {
   return (
     <>
       <Divider mt={"24"} border={"5px solid"} />
-      <Box w={"full"} pb={"24"}>
+      <Box w={"full"} pb={"24"} overflow={"hidden"}>
         <Center w={"full"}>
-          <VStack w={"full"}>
-            <Box fontSize={"9xl"} my={"10"}>
+          <VStack w={"full"} px={2}>
+            <Box fontSize={"7xl"} my={"10"}>
               <FaRegComments />
             </Box>
             <VStack
               alignItems={"flex-start"}
-              w={"3xl"}
+              w={"full"}
               h={"sm"}
               rounded={"2xl"}
               boxShadow={"dark-lg"}
@@ -153,15 +147,7 @@ export default function CommentInput({ docId }: ICommentInputProps) {
               gap={3}
               bgColor={inputBgColor}
             >
-              <HStack width={"80%"} p={5} gap={3}>
-                {userIcon && (
-                  <Avatar
-                    icon={userIcon.icon}
-                    onClick={onAvatarClicked}
-                    cursor={"pointer"}
-                  />
-                )}
-
+              <VStack w="full">
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <FaUser color="gray.300" />
@@ -186,7 +172,8 @@ export default function CommentInput({ docId }: ICommentInputProps) {
                     onChange={(e) => setPassword(e.currentTarget.value)}
                   />
                 </InputGroup>
-              </HStack>
+              </VStack>
+
               <Textarea
                 alignItems={"flex-start"}
                 placeholder="댓글 작성란..."

@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Divider,
@@ -33,11 +34,12 @@ import { returnColors } from "@/utils/utilFn";
 import { useRecoilState } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { SiFirebase, SiNextdotjs, SiReact, SiTypescript } from "react-icons/si";
 import { MdEmail } from "react-icons/md";
 
 export default function HeaderMobile() {
+  const { scrollYProgress } = useScroll();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeAtom);
   const [lightColor, setLightColor] = useState("");
@@ -54,6 +56,19 @@ export default function HeaderMobile() {
 
   return (
     <>
+      <Box
+        bgColor={bgColor}
+        opacity={0.3}
+        zIndex={99}
+        w="105vw"
+        h="2"
+        as={motion.div}
+        style={{ scaleX: scrollYProgress }}
+        transformOrigin="left"
+        position="fixed"
+        left={-3}
+        top={0}
+      ></Box>
       <Button
         colorScheme={colorTheme}
         onClick={onOpen}
@@ -86,6 +101,14 @@ export default function HeaderMobile() {
               </HStack>
             </HStack>
             <VStack h={"full"}>
+              <Avatar
+                mt={10}
+                size={"xl"}
+                name="OU9999"
+                src={
+                  "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fprofile.jpeg?alt=media&token=9f24e1a0-9580-4fbd-b086-344f45116885"
+                }
+              />
               <HStack w="full" justifyContent={"center"}>
                 <Flex gap={1}>
                   <Button

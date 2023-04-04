@@ -1,4 +1,3 @@
-import NoteGrid from "@/components/Notes/NoteGrid";
 import { ICategorys, INotes, allCategory } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
 import { dbService } from "@/utils/firebase";

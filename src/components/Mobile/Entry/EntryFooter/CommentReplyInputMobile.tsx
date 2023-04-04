@@ -12,12 +12,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { addDoc, collection } from "firebase/firestore";
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 import { FiCornerDownRight } from "react-icons/fi";
-import { dbService } from "../../../utils/firebase";
-import { userIcons } from "./CommentInput";
+import { userIcons } from "./CommentInputMobile";
+import { dbService } from "@/utils/firebase";
 import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
 
@@ -26,7 +25,7 @@ interface ICommentReplyInputProps {
   commentId: string;
 }
 
-export default function CommentReplyInput({
+export default function CommentReplyInputMobile({
   setIsReply,
   commentId,
 }: ICommentReplyInputProps) {
@@ -97,20 +96,12 @@ export default function CommentReplyInput({
           w="2xl"
           rounded={"2xl"}
           boxShadow={"dark-lg"}
-          p={"10"}
           alignItems={"flex-start"}
           gap={2}
-          as={motion.div}
           bgColor={bgColor}
+          p={5}
         >
-          <HStack width={"80%"} p={2} gap={3}>
-            {userIcon && (
-              <Avatar
-                icon={userIcon.icon}
-                onClick={onAvatarClicked}
-                cursor={"pointer"}
-              />
-            )}
+          <VStack width={"full"}>
             <InputGroup>
               <InputLeftElement pointerEvents="none">
                 <FaUser color="gray.300" />
@@ -135,7 +126,7 @@ export default function CommentReplyInput({
                 onChange={(e) => setPassword(e.currentTarget.value)}
               />
             </InputGroup>
-          </HStack>
+          </VStack>
           <VStack w={"full"} gap={3}>
             <Textarea
               height={"40"}

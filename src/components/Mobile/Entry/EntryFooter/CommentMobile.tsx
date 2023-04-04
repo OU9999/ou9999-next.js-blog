@@ -4,26 +4,19 @@ import {
   Center,
   Heading,
   HStack,
-  IconButton,
   Text,
   Textarea,
-  Tooltip,
   useColorModeValue,
   useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { FaCommentSlash, FaReply } from "react-icons/fa";
-import CommentReply from "./CommenReply";
-import CommentDeleteModal from "./CommentDeleteModal";
-import { userIcons } from "./CommentInput";
-import CommentPopover from "./CommentPopover";
-import CommentReplyInput from "./CommentReplyInput";
+import { FaUser } from "react-icons/fa";
 import { dateFormatter } from "@/utils/utilFn";
 import {
   collection,
+  deleteDoc,
   doc,
   onSnapshot,
   orderBy,
@@ -32,8 +25,11 @@ import {
   where,
 } from "firebase/firestore";
 import { dbService } from "@/utils/firebase";
-import { useRecoilValue } from "recoil";
+import { userIcons } from "./CommentInputMobile";
+import CommentReplyInputMobile from "./CommentReplyInputMobile";
+import CommentReplyMobile from "./CommentReplyMobile";
 import { colorThemeAtom } from "@/utils/atoms";
+import { useRecoilValue } from "recoil";
 
 interface ICommentProps {
   nickname: string;
@@ -56,7 +52,7 @@ interface ICommentReply {
   id: string;
 }
 
-export default function Comment({
+export default function CommentMobile({
   nickname,
   password,
   comment,
@@ -67,7 +63,6 @@ export default function Comment({
 }: ICommentProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [icon, setIcon] = useState<JSX.Element>();
-  const [option, setOption] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isReply, setIsReply] = useState(false);
   const [newComment, setNewComment] = useState(comment);
@@ -79,6 +74,40 @@ export default function Comment({
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const date = dateFormatter(createdAt);
+
+  const onDeleteClick = async () => {
+    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    if (newPassword === password) {
+      const commentsRef = doc(dbService, "comments", commentId);
+      await deleteDoc(commentsRef);
+      toast({
+        title: "삭제 완료!",
+        position: "top",
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "비밀번호가 틀립니다",
+        position: "top",
+        isClosable: true,
+        status: "error",
+      });
+    }
+  };
+
+  const onEditClick = async () => {
+    let newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
+    if (newPassword === password) {
+      setIsEdit(true);
+    } else {
+      toast({
+        title: "비밀번호가 틀립니다",
+        position: "top",
+        isClosable: true,
+        status: "error",
+      });
+    }
+  };
 
   const onUpdateButtonClick = async () => {
     if (newComment.length > 500) {
@@ -139,27 +168,26 @@ export default function Comment({
     <>
       <VStack
         position={"relative"}
-        w={"3xl"}
+        w={"full"}
         h={"auto"}
         rounded={"2xl"}
         boxShadow={"dark-lg"}
-        p={"10"}
         alignItems={"flex-start"}
+        px={4}
+        pt={4}
+        pb={5}
         gap={3}
-        as={motion.div}
-        onHoverStart={() => {
-          setOption(true);
-        }}
-        onHoverEnd={() => {
-          setOption(false);
-        }}
         bgColor={bgColor}
       >
-        <HStack w={"full"} justifyContent={"space-between"}>
-          <HStack alignItems={"center"} gap={4}>
-            <Avatar icon={icon} />
-            <VStack alignItems={"flex-start"}>
-              <Heading fontSize={"2xl"}>{nickname}</Heading>
+        <HStack
+          w={"full"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <HStack justifyContent={"center"} alignItems={"center"} gap={2}>
+            <Avatar icon={<FaUser fontSize={"1.2rem"} />} size={"sm"} />
+            <VStack alignItems={"flex-start"} spacing={0}>
+              <Heading fontSize={"xl"}>{nickname}</Heading>
               <HStack>
                 <Text fontSize={"xs"}>
                   {date}
@@ -168,30 +196,23 @@ export default function Comment({
               </HStack>
             </VStack>
           </HStack>
-          <HStack gap={2} opacity={option ? 1 : 0} transition={"0.5s"}>
-            <CommentPopover password={password} setIsEdit={setIsEdit} />
-            <Tooltip label="삭제" aria-label="delete" placement="top">
-              <IconButton
-                fontSize={"xl"}
-                aria-label="delete"
-                variant="ghost"
-                onClick={onOpen}
-              >
-                <FaCommentSlash />
-              </IconButton>
-            </Tooltip>
-            <Tooltip label="답글" aria-label="reply" placement="top">
-              <IconButton
-                fontSize={"xl"}
-                aria-label="reply"
-                variant="ghost"
-                onClick={() => setIsReply(true)}
-              >
-                <FaReply />
-              </IconButton>
-            </Tooltip>
+          <HStack spacing={0} gap={2}>
+            <Text fontSize={"sm"} color={"gray"} onClick={onEditClick}>
+              수정
+            </Text>
+            <Text fontSize={"sm"} color={"gray"} onClick={onDeleteClick}>
+              삭제
+            </Text>
+            <Text
+              fontSize={"sm"}
+              color={"gray"}
+              onClick={() => setIsReply(true)}
+            >
+              답글
+            </Text>
           </HStack>
         </HStack>
+
         {isEdit ? (
           <VStack w={"full"} gap={3}>
             <Textarea
@@ -222,11 +243,14 @@ export default function Comment({
       </VStack>
 
       {isReply ? (
-        <CommentReplyInput setIsReply={setIsReply} commentId={commentId} />
+        <CommentReplyInputMobile
+          setIsReply={setIsReply}
+          commentId={commentId}
+        />
       ) : null}
-      <Center w="full" h={"auto"} flexDir={"column"} gap={10}>
+      <Center w="full" h={"auto"} flexDir={"column"} gap={4}>
         {replyComments?.map((reply) => (
-          <CommentReply
+          <CommentReplyMobile
             key={reply.id}
             id={reply.id}
             nickname={reply.nickname}
@@ -238,12 +262,6 @@ export default function Comment({
           />
         ))}
       </Center>
-      <CommentDeleteModal
-        isOpen={isOpen}
-        onClose={onClose}
-        commentId={commentId}
-        password={password}
-      />
     </>
   );
 }

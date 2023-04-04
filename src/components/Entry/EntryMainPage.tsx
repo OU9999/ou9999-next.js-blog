@@ -20,7 +20,6 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { doc, getDoc } from "firebase/firestore";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { BiTimeFive } from "react-icons/bi";
@@ -31,7 +30,6 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import { useEffect, useState } from "react";
 import Toc from "@/components/Entry/TOC";
-import { NextSeo } from "next-seo";
 
 //custom style for md view
 const CustomStyle = styled.div`

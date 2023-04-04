@@ -8,7 +8,6 @@ import {
   Flex,
   HStack,
   Text,
-  useMediaQuery,
   useToast,
 } from "@chakra-ui/react";
 import { motion, useAnimation, Variants } from "framer-motion";

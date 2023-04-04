@@ -8,6 +8,7 @@ import {
   Input,
   useColorModeValue,
   useDisclosure,
+  useMediaQuery,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -20,19 +21,19 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import AddModal from "@/components/Write/AddModal";
-
-export const getServerSideProps = async ({ resolvedUrl }: any) => {
-  return {
-    props: { resolvedUrl },
-  };
-};
+import Mobile404 from "@/components/Mobile/404";
+import { NextSeo } from "next-seo";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
 });
 
-export default function Write({ resolvedUrl }: any) {
-  console.log(resolvedUrl);
+export default function Write() {
+  const [mobileView] = useMediaQuery("(max-width: 768px)", {
+    ssr: true,
+    fallback: false, // return false on the server, and re-evaluate on the client side
+  });
+
   const setIsWrite = useSetRecoilState(writeAtom);
   const isLogin = useRecoilValue(isLoginAtom);
   const [md, setMd] = useState<string | undefined>("# 내용을 입력하세요...");
@@ -82,86 +83,113 @@ export default function Write({ resolvedUrl }: any) {
 
   return (
     <>
-      <HStack
-        minW={"100vw"}
-        minH={"100vh"}
-        boxSizing={"border-box"}
-        as={motion.div}
-        initial={{
-          opacity: 0,
+      <NextSeo
+        title="Write | OU9999's First Blog"
+        description="Write | OU9999's First Blog"
+        openGraph={{
+          type: "website",
+          url: "no",
+          title: "OU9999",
+          description: "Write | OU9999's First Blog",
+          images: [
+            {
+              url: "/op.png",
+              width: 285,
+              height: 167,
+              alt: "image",
+            },
+          ],
         }}
-        animate={{
-          opacity: 1,
-          transition: { duration: 0.3, type: "linear" },
-        }}
-      >
-        <VStack w={"50%"} minH={"100vh"}>
-          <Input
-            width={"48vw"}
-            minH={"10vh"}
-            mt={"3"}
-            padding={"10"}
-            bgColor={bgColor}
-            placeholder="제목을 입력하세요..."
-            size="lg"
-            fontSize={"4xl"}
-            value={title}
-            onChange={onTitleChange}
-            border={"1px solid"}
-            rounded={"1rem"}
-            fontWeight={"bold"}
-          />
-          <Box width={"50vw"} height={"auto"} data-color-mode={colorMode}>
-            <MDEditor value={md} onChange={setMd} height={vh} preview="edit" />
-          </Box>
-          <Flex width={"100%"} height={"8vh"} alignItems={"center"} px={"10"}>
-            <Flex width={"50%"}>
-              <Link href={"/"}>
-                <Button variant={"ghost"} fontSize={"2xl"}>
-                  ← 나가기
-                </Button>
-              </Link>
-            </Flex>
-            <Flex width={"50%"} justifyContent={"flex-end"} gap={4}>
-              <Link href={"/"}>
+      />
+      {mobileView ? (
+        <Mobile404 />
+      ) : (
+        <HStack
+          minW={"100vw"}
+          minH={"100vh"}
+          boxSizing={"border-box"}
+          as={motion.div}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+            transition: { duration: 0.3, type: "linear" },
+          }}
+        >
+          <VStack w={"50%"} minH={"100vh"}>
+            <Input
+              width={"48vw"}
+              minH={"10vh"}
+              mt={"3"}
+              padding={"10"}
+              bgColor={bgColor}
+              placeholder="제목을 입력하세요..."
+              size="lg"
+              fontSize={"4xl"}
+              value={title}
+              onChange={onTitleChange}
+              border={"1px solid"}
+              rounded={"1rem"}
+              fontWeight={"bold"}
+            />
+            <Box width={"50vw"} height={"auto"} data-color-mode={colorMode}>
+              <MDEditor
+                value={md}
+                onChange={setMd}
+                height={vh}
+                preview="edit"
+              />
+            </Box>
+            <Flex width={"100%"} height={"8vh"} alignItems={"center"} px={"10"}>
+              <Flex width={"50%"}>
+                <Link href={"/"}>
+                  <Button variant={"ghost"} fontSize={"2xl"}>
+                    ← 나가기
+                  </Button>
+                </Link>
+              </Flex>
+              <Flex width={"50%"} justifyContent={"flex-end"} gap={4}>
+                <Link href={"/"}>
+                  <Button
+                    variant={"ghost"}
+                    colorScheme={"twitter"}
+                    fontSize={"2xl"}
+                  >
+                    임시저장
+                  </Button>
+                </Link>
+
                 <Button
-                  variant={"ghost"}
+                  onClick={onSaveClicked}
                   colorScheme={"twitter"}
                   fontSize={"2xl"}
                 >
-                  임시저장
+                  노트작성
                 </Button>
-              </Link>
-
-              <Button
-                onClick={onSaveClicked}
-                colorScheme={"twitter"}
-                fontSize={"2xl"}
-              >
-                노트작성
-              </Button>
+              </Flex>
             </Flex>
-          </Flex>
-        </VStack>
-        <VStack w={"50%"} minH={"100vh"} justifyContent={"center"}>
-          <Box width={"50vw"} data-color-mode={colorMode}>
-            <MDEditor
-              style={{ padding: 10, border: "none" }}
-              value={md}
-              height={secondVh}
-              preview="preview"
-              hideToolbar={true}
-            />
-          </Box>
-        </VStack>
-        <AddModal
-          isOpen={isOpen}
-          onClose={onClose}
-          bgColor={bgColor}
-          title={title}
-          md={md!}
-        />
-      </HStack>
+          </VStack>
+          <VStack w={"50%"} minH={"100vh"} justifyContent={"center"}>
+            <Box width={"50vw"} data-color-mode={colorMode}>
+              <MDEditor
+                style={{ padding: 10, border: "none" }}
+                value={md}
+                height={secondVh}
+                preview="preview"
+                hideToolbar={true}
+              />
+            </Box>
+          </VStack>
+          <AddModal
+            isOpen={isOpen}
+            onClose={onClose}
+            bgColor={bgColor}
+            title={title}
+            md={md!}
+          />
+        </HStack>
+      )}
     </>
   );
 }

@@ -18,6 +18,8 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { dbService } from "../../../utils/firebase";
+import { colorThemeAtom } from "@/utils/atoms";
+import { useRecoilValue } from "recoil";
 
 interface ICommentDeleteModalProps {
   isOpen: boolean;
@@ -34,6 +36,7 @@ export default function CommentDeleteModal({
   password,
   isReply,
 }: ICommentDeleteModalProps) {
+  const colorTheme = useRecoilValue(colorThemeAtom);
   const toast = useToast();
   const [checkPassword, setCheckPassword] = useState("");
 
@@ -87,10 +90,10 @@ export default function CommentDeleteModal({
             </VStack>
           </ModalBody>
           <ModalFooter gap={3}>
-            <Button colorScheme="twitter" onClick={onClose} variant="ghost">
+            <Button colorScheme={colorTheme} onClick={onClose} variant="ghost">
               취소
             </Button>
-            <Button colorScheme="twitter" mr={3} onClick={onDeleteClick}>
+            <Button colorScheme={colorTheme} mr={3} onClick={onDeleteClick}>
               삭제
             </Button>
           </ModalFooter>

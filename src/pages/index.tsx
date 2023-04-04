@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <NextSeo
-        title="OU9999"
+        title="OU9999's First Blog"
         description="OU9999 First Blog!"
         openGraph={{
           type: "website",

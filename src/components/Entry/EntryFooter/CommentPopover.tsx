@@ -1,3 +1,4 @@
+import { colorThemeAtom } from "@/utils/atoms";
 import {
   Box,
   Button,
@@ -20,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaEdit, FaLock } from "react-icons/fa";
+import { useRecoilValue } from "recoil";
 
 interface ICommentPopoverProps {
   password: string;
@@ -30,6 +32,7 @@ export default function CommentPopover({
   password,
   setIsEdit,
 }: ICommentPopoverProps) {
+  const colorTheme = useRecoilValue(colorThemeAtom);
   const { onClose, isOpen, onToggle } = useDisclosure();
   const [checkPassword, setCheckPassword] = useState("");
   const toast = useToast();
@@ -91,10 +94,14 @@ export default function CommentPopover({
           </PopoverBody>
           <PopoverFooter display="flex" justifyContent="flex-end">
             <ButtonGroup size="sm">
-              <Button colorScheme="twitter" variant={"ghost"} onClick={onClose}>
+              <Button
+                colorScheme={colorTheme}
+                variant={"ghost"}
+                onClick={onClose}
+              >
                 취소
               </Button>
-              <Button colorScheme="twitter" onClick={onCheckButtonClicked}>
+              <Button colorScheme={colorTheme} onClick={onCheckButtonClicked}>
                 확인
               </Button>
             </ButtonGroup>

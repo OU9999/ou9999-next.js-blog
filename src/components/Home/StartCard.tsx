@@ -1,5 +1,4 @@
 import { Box, Image, Center, Heading, Text } from "@chakra-ui/react";
-
 import { motion } from "framer-motion";
 import { useState } from "react";
 
