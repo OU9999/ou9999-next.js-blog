@@ -1,5 +1,5 @@
 import { images, quotes } from "@/constants/mainpageArray";
-import { startAnimationAtom } from "@/utils/atoms";
+import { isMobileAtom, startAnimationAtom } from "@/utils/atoms";
 import { vhToPixels } from "@/utils/utilFn";
 import {
   Box,
@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { motion, useAnimation, Variants } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaArrowDown,
   FaGithub,
@@ -22,14 +22,14 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { MdEmail, MdReplay } from "react-icons/md";
-import { useRecoilValue } from "recoil";
 import MainPageText from "./MainPageText";
+import { useRecoilValue } from "recoil";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
   clicked: {
-    opacity: [1, 0.5, 0, 1],
-    filter: ["blur(0px)", "blur(30px)", "blur(15px)", "blur(0px)"],
+    opacity: [0, 1],
+    filter: ["blur(30px)", "blur(0px)"],
     transition: {
       duration: 1,
       type: "linear",
@@ -49,8 +49,8 @@ const mainBoxVariants: Variants = {
 const quoteVariants: Variants = {
   normal: { y: 0 },
   clicked: {
-    y: [0, -50, 0],
-    opacity: [1, 0.5, 0, 1],
+    y: [-50, 0],
+    opacity: [0, 1],
     transition: {
       duration: 1,
     },
@@ -82,16 +82,17 @@ export default function MainPage() {
   const resetButtonAni = useAnimation();
   const backgroundAni = useAnimation();
   const toast = useToast();
+  const interval = useRef<NodeJS.Timer>();
 
   const setBgAndQuote = () => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
     setQuote(`${quotes[Math.floor(Math.random() * quotes.length)]}`);
   };
 
-  const onResetButtonClicked = () => {
+  const onResetButtonClicked = async () => {
+    await setBgAndQuote();
     quoteAni.start("clicked");
     backgroundAni.start("clicked");
-    setTimeout(() => setBgAndQuote(), 500);
   };
 
   const onEmailButtonClicked = () => {
@@ -114,6 +115,11 @@ export default function MainPage() {
 
   useEffect(() => {
     setBgAndQuote();
+    interval.current = setInterval(onResetButtonClicked, 15000);
+    return () => {
+      clearInterval(interval.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

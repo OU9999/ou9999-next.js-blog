@@ -2,8 +2,16 @@ import NoteMainPageMobile from "@/components/Mobile/Notes/NoteMainPageMobile";
 import NotesMainPage from "@/components/Notes/NoteMainPage";
 import { dbService } from "@/utils/firebase";
 import { useMediaQuery } from "@chakra-ui/react";
-import { collection, orderBy, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  orderBy,
+  query,
+  where,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
 import { NextSeo } from "next-seo";
+import { useEffect, useState } from "react";
 
 export interface INotes {
   id: string;
@@ -36,35 +44,57 @@ interface INotesCategoryProps {
 
 export const getServerSideProps = async ({ params }: any) => {
   const { category } = params;
-  let q;
-  if (category === "ALL") {
-    q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
-  } else {
-    q = query(
-      collection(dbService, "notes"),
-      where("category", "==", category),
-      orderBy("createdAt", "desc")
-    );
-  }
+  // let q;
+  // if (category === "ALL") {
+  //   q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
+  // } else {
+  //   q = query(
+  //     collection(dbService, "notes"),
+  //     where("category", "==", category),
+  //     orderBy("createdAt", "desc")
+  //   );
+  // }
 
-  const snapshot = await getDocs(q);
-  const notesArr = snapshot.docs.map((note) => ({
-    id: note.id + "",
-    ...note.data(),
-  }));
+  // const snapshot = await getDocs(q);
+  // const notesArr = snapshot.docs.map((note) => ({
+  //   id: note.id + "",
+  //   ...note.data(),
+  // }));
   return {
-    props: { category, notes: notesArr },
+    props: { category },
   };
 };
 
-export default function NotesCategory({
-  category,
-  notes,
-}: INotesCategoryProps) {
+export default function NotesCategory({ category }: INotesCategoryProps) {
   const [mobileView] = useMediaQuery("(max-width: 768px)", {
     ssr: true,
     fallback: false, // return false on the server, and re-evaluate on the client side
   });
+  const [notes, setNotes] = useState<INotes[]>();
+
+  const getNotes = async (category: string) => {
+    let q;
+    if (category === "ALL") {
+      q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
+    } else {
+      q = query(
+        collection(dbService, "notes"),
+        where("category", "==", category),
+        orderBy("createdAt", "desc")
+      );
+    }
+    onSnapshot(q, (snapshot) => {
+      const notesArr: any = snapshot.docs.map((note) => ({
+        id: note.id + "",
+        ...note.data(),
+      }));
+      setNotes(notesArr);
+    });
+  };
+
+  useEffect(() => {
+    getNotes(category);
+  }, [category]);
 
   return (
     <>
@@ -87,9 +117,9 @@ export default function NotesCategory({
         }}
       />
       {mobileView ? (
-        <NoteMainPageMobile category={category} notes={notes} />
+        <NoteMainPageMobile category={category} notes={notes!} />
       ) : (
-        <NotesMainPage category={category} notes={notes} />
+        <NotesMainPage category={category} notes={notes!} />
       )}
     </>
   );

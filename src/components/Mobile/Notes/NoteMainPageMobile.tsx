@@ -22,6 +22,8 @@ import { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import PostMobile from "../Home/PostMobile";
+import LoadingCard from "@/components/Notes/LoadingCard";
+import LoadingCardMobile from "./LoadingCardMobile";
 
 interface INotesMainPageProps {
   category: string;
@@ -129,17 +131,23 @@ export default function NoteMainPageMobile({
             </Box>
           </HStack>
           <VStack gap={10}>
-            {notes?.map((note) => (
-              <PostMobile
-                key={note.id}
-                link={note.id}
-                title={note.title}
-                md={note.md}
-                thumbnailUrl={note.thumbnailUrl}
-                category={note.category}
-                createdAt={note.createdAt}
-              />
-            ))}
+            {!notes && (
+              <>
+                <LoadingCardMobile />
+              </>
+            )}
+            {notes &&
+              notes?.map((note) => (
+                <PostMobile
+                  key={note.id}
+                  link={note.id}
+                  title={note.title}
+                  md={note.md}
+                  thumbnailUrl={note.thumbnailUrl}
+                  category={note.category}
+                  createdAt={note.createdAt}
+                />
+              ))}
           </VStack>
           <Divider py={3} />
         </VStack>

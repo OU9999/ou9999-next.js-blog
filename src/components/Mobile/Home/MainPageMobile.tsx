@@ -10,12 +10,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { images, quotes } from "@/constants/mainpageArray";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
 import { MdExpandMore } from "react-icons/md";
 import { useRecoilValue } from "recoil";
-import { colorThemeAtom } from "@/utils/atoms";
+import { colorThemeAtom, isMobileAtom } from "@/utils/atoms";
 import { INotes } from "@/pages/notes/[category]";
 import {
   collection,
@@ -28,6 +28,19 @@ import { dbService } from "@/utils/firebase";
 import PostMobile from "./PostMobile";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { returnColors } from "@/utils/utilFn";
+import { Variants, motion, useAnimation } from "framer-motion";
+
+const backgroundVariants: Variants = {
+  normal: { opacity: 1 },
+  clicked: {
+    opacity: [1, 0.5, 0, 1],
+    filter: ["blur(0px)", "blur(30px)", "blur(15px)", "blur(0px)"],
+    transition: {
+      duration: 1,
+      type: "linear",
+    },
+  },
+};
 
 export default function MainPageMobile() {
   const [backgroundImage, setBackgroundImage] = useState<string>("");
@@ -37,22 +50,21 @@ export default function MainPageMobile() {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [lightColor, setLightColor] = useState("");
   const [bgColor, setBgColor] = useState("");
+  const backgroundAni = useAnimation();
+  const interval = useRef<NodeJS.Timer>();
 
   const onMoreClicked = () => {
     setLimitCount((prev) => prev + 4);
   };
 
-  const setBg = () => {
+  const setBgAndQt = () => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   };
 
-  const setQt = () => {
-    setQuote(`${quotes[Math.floor(Math.random() * quotes.length)]}`);
-  };
-
-  const onChangeButtonClicked = () => {
-    setBg();
-    setQt();
+  const onChangeButtonClicked = async () => {
+    await setBgAndQt();
+    backgroundAni.start("clicked");
   };
 
   const getNotes = async (limitCount: number) => {
@@ -81,17 +93,13 @@ export default function MainPageMobile() {
   }, [colorTheme]);
 
   useEffect(() => {
-    onChangeButtonClicked();
+    setBgAndQt();
+    interval.current = setInterval(onChangeButtonClicked, 15000);
+    return () => {
+      clearInterval(interval.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (
-      backgroundImage ===
-      "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2Feye.jpg?alt=media&token=ce326f62-40a5-45d0-a4da-b31697174803"
-    ) {
-      setBg();
-    }
-  }, [backgroundImage]);
 
   return (
     <>
@@ -103,6 +111,10 @@ export default function MainPageMobile() {
           position={"absolute"}
           zIndex={-1}
           src={backgroundImage}
+          as={motion.img}
+          variants={backgroundVariants}
+          animate={backgroundAni}
+          initial={"normal"}
         />
         <Box
           w="100vw"
@@ -144,7 +156,14 @@ export default function MainPageMobile() {
         </Center>
         <Divider pt={3} />
 
-        <HStack px={5} gap={1}>
+        <HStack
+          px={5}
+          gap={1}
+          as={motion.div}
+          variants={backgroundVariants}
+          animate={backgroundAni}
+          initial={"normal"}
+        >
           <FaQuoteLeft />
           <Text fontWeight={"bold"}>{quote}</Text>
           <FaQuoteRight />

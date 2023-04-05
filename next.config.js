@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const nextConfig = {
-  reactStrictMode: true,
-};
+const nextConfig = {};
 
 const removeImports = require("next-remove-imports")();
 

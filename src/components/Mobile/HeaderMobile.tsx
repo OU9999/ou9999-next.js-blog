@@ -203,13 +203,13 @@ export default function HeaderMobile() {
                 alignItems={"center"}
                 gap={2}
               >
-                <Link href={"/"}>
+                <Link href={"/"} onClick={onClose}>
                   <Button>Home</Button>
                 </Link>
-                <Link href={"/notes/ALL"}>
+                <Link href={"/notes/ALL"} onClick={onClose}>
                   <Button>Notes</Button>
                 </Link>
-                <Link href={"/guestbook"}>
+                <Link href={"/guestbook"} onClick={onClose}>
                   <Button>Guest Book</Button>
                 </Link>
               </VStack>
