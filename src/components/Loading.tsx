@@ -1,4 +1,4 @@
-import { Center, Spinner, useMediaQuery } from "@chakra-ui/react";
+import { Box, Center, Spinner, useMediaQuery } from "@chakra-ui/react";
 
 export default function Loading() {
   const [mobileView] = useMediaQuery("(max-width: 768px)", {
@@ -10,19 +10,21 @@ export default function Loading() {
       <Center w="100vw" h="100vh" zIndex={"popover"} position={"fixed"}>
         {mobileView ? (
           <Spinner
-            size={"xl"}
-            color="white"
+            bgColor={"black"}
             pos={"absolute"}
             top={10}
             right={10}
+            size={"xl"}
+            color="white"
           />
         ) : (
           <Spinner
-            size={"xl"}
-            color="white"
+            bgColor={"black"}
             pos={"absolute"}
             bottom={10}
             right={10}
+            size={"xl"}
+            color="white"
           />
         )}
       </Center>

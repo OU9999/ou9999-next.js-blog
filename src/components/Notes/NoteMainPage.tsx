@@ -15,25 +15,31 @@ import {
   HStack,
   Box,
   Divider,
+  Grid,
 } from "@chakra-ui/react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
+import LoadingCard from "./LoadingCard";
+import Loading from "../Loading";
 
 interface INotesMainPageProps {
   category: string;
-  notes: INotes[];
 }
 
-export default function NotesMainPage({
-  category,
-  notes,
-}: INotesMainPageProps) {
+export default function NotesMainPage({ category }: INotesMainPageProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [categorys, setCategorys] = useState<ICategorys[]>([]);
   const [lightColor, setLightColor] = useState("");
+  const [notes, setNotes] = useState<INotes[]>();
 
   const getCategorys = async () => {
     const q = query(
@@ -49,8 +55,29 @@ export default function NotesMainPage({
     });
   };
 
+  const getNotes = async (category: string) => {
+    let q;
+    if (category === "ALL") {
+      q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
+    } else {
+      q = query(
+        collection(dbService, "notes"),
+        where("category", "==", category),
+        orderBy("createdAt", "desc")
+      );
+    }
+    onSnapshot(q, (snapshot) => {
+      const notesArr: any = snapshot.docs.map((note) => ({
+        id: note.id + "",
+        ...note.data(),
+      }));
+      setNotes(notesArr);
+    });
+  };
+
   useEffect(() => {
     getCategorys();
+    getNotes(category);
   }, [category]);
 
   useEffect(() => {
@@ -124,7 +151,24 @@ export default function NotesMainPage({
               </Menu>
             </Box>
           </HStack>
-          <NoteGrid notes={notes} />
+          {!notes && (
+            <Grid
+              templateColumns={"repeat(3, 1fr)"}
+              px={10}
+              columnGap={8}
+              rowGap={16}
+              pb={20}
+            >
+              {!notes && (
+                <>
+                  <LoadingCard />
+                  <LoadingCard />
+                  <LoadingCard />
+                </>
+              )}
+            </Grid>
+          )}
+          <NoteGrid notes={notes!} />
           <Divider py={3} />
         </VStack>
       </VStack>

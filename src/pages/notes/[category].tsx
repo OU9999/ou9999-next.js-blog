@@ -70,31 +70,6 @@ export default function NotesCategory({ category }: INotesCategoryProps) {
     ssr: true,
     fallback: false, // return false on the server, and re-evaluate on the client side
   });
-  const [notes, setNotes] = useState<INotes[]>();
-
-  const getNotes = async (category: string) => {
-    let q;
-    if (category === "ALL") {
-      q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
-    } else {
-      q = query(
-        collection(dbService, "notes"),
-        where("category", "==", category),
-        orderBy("createdAt", "desc")
-      );
-    }
-    onSnapshot(q, (snapshot) => {
-      const notesArr: any = snapshot.docs.map((note) => ({
-        id: note.id + "",
-        ...note.data(),
-      }));
-      setNotes(notesArr);
-    });
-  };
-
-  useEffect(() => {
-    getNotes(category);
-  }, [category]);
 
   return (
     <>
@@ -117,9 +92,9 @@ export default function NotesCategory({ category }: INotesCategoryProps) {
         }}
       />
       {mobileView ? (
-        <NoteMainPageMobile category={category} notes={notes!} />
+        <NoteMainPageMobile category={category} />
       ) : (
-        <NotesMainPage category={category} notes={notes!} />
+        <NotesMainPage category={category} />
       )}
     </>
   );

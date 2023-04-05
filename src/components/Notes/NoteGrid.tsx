@@ -2,7 +2,6 @@ import { Box, Grid } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { INotes } from "@/pages/notes/[category]";
 import NoteCard from "./NoteCard";
-import LoadingCard from "./LoadingCard";
 
 const container = {
   hidden: { opacity: 0 },
@@ -45,13 +44,6 @@ export default function NoteGrid({ notes }: INoteGridProps) {
         initial="hidden"
         animate="show"
       >
-        {!notes && (
-          <>
-            <LoadingCard />
-            <LoadingCard />
-            <LoadingCard />
-          </>
-        )}
         {notes &&
           notes.map((note) => (
             <Box

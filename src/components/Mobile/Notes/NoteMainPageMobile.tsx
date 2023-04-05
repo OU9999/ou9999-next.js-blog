@@ -16,7 +16,13 @@ import {
   MenuList,
   VStack,
 } from "@chakra-ui/react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
@@ -27,16 +33,13 @@ import LoadingCardMobile from "./LoadingCardMobile";
 
 interface INotesMainPageProps {
   category: string;
-  notes: INotes[];
 }
 
-export default function NoteMainPageMobile({
-  category,
-  notes,
-}: INotesMainPageProps) {
+export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [categorys, setCategorys] = useState<ICategorys[]>([]);
   const [lightColor, setLightColor] = useState("");
+  const [notes, setNotes] = useState<INotes[]>();
 
   const getCategorys = async () => {
     const q = query(
@@ -52,8 +55,29 @@ export default function NoteMainPageMobile({
     });
   };
 
+  const getNotes = async (category: string) => {
+    let q;
+    if (category === "ALL") {
+      q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
+    } else {
+      q = query(
+        collection(dbService, "notes"),
+        where("category", "==", category),
+        orderBy("createdAt", "desc")
+      );
+    }
+    onSnapshot(q, (snapshot) => {
+      const notesArr: any = snapshot.docs.map((note) => ({
+        id: note.id + "",
+        ...note.data(),
+      }));
+      setNotes(notesArr);
+    });
+  };
+
   useEffect(() => {
     getCategorys();
+    getNotes(category);
   }, [category]);
 
   useEffect(() => {
