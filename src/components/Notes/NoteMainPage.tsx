@@ -16,6 +16,7 @@ import {
   Box,
   Divider,
   Grid,
+  useToast,
 } from "@chakra-ui/react";
 import {
   collection,
@@ -29,7 +30,7 @@ import { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import LoadingCard from "./LoadingCard";
-import Loading from "../Loading";
+import { MdExpandMore } from "react-icons/md";
 
 interface INotesMainPageProps {
   category: string;
@@ -40,6 +41,15 @@ export default function NotesMainPage({ category }: INotesMainPageProps) {
   const [categorys, setCategorys] = useState<ICategorys[]>([]);
   const [lightColor, setLightColor] = useState("");
   const [notes, setNotes] = useState<INotes[]>();
+  const [limitCount, setLimitCount] = useState(9);
+  const [size, setSize] = useState(0);
+  const [isDisable, setIsDisable] = useState(false);
+
+  const onMoreClicked = () => {
+    if (size >= limitCount) {
+      setLimitCount((prev) => prev + 9);
+    }
+  };
 
   const getCategorys = async () => {
     const q = query(
@@ -67,6 +77,7 @@ export default function NotesMainPage({ category }: INotesMainPageProps) {
       );
     }
     onSnapshot(q, (snapshot) => {
+      setSize(snapshot.size);
       const notesArr: any = snapshot.docs.map((note) => ({
         id: note.id + "",
         ...note.data(),
@@ -74,6 +85,14 @@ export default function NotesMainPage({ category }: INotesMainPageProps) {
       setNotes(notesArr);
     });
   };
+
+  useEffect(() => {
+    if (size <= limitCount) {
+      setIsDisable(true);
+    } else {
+      setIsDisable(false);
+    }
+  }, [isDisable, limitCount, size]);
 
   useEffect(() => {
     getCategorys();
@@ -168,7 +187,20 @@ export default function NotesMainPage({ category }: INotesMainPageProps) {
               )}
             </Grid>
           )}
-          <NoteGrid notes={notes!} />
+          <NoteGrid notes={notes!} limitCount={limitCount} />
+          {isDisable ? null : (
+            <IconButton
+              aria-label="expand"
+              fontSize={"5xl"}
+              padding={"5"}
+              variant={"ghost"}
+              colorScheme={colorTheme}
+              onClick={onMoreClicked}
+            >
+              <MdExpandMore />
+            </IconButton>
+          )}
+
           <Divider py={3} />
         </VStack>
       </VStack>

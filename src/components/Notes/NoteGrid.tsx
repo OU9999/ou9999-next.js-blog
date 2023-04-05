@@ -7,30 +7,31 @@ const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.3,
-    },
   },
 };
 
 const item = {
   hidden: { opacity: 0 },
-  show: {
-    opacity: [0, 1],
-    y: [-100, 0],
-    transition: {
-      duration: 0.8,
-      type: "spring",
-      stiffness: 200,
-    },
+  show: (idx: number) => {
+    return {
+      opacity: [0, 1],
+      y: [-100, 0],
+      transition: {
+        duration: 0.8,
+        type: "spring",
+        stiffness: 200,
+        delay: 0.05 * idx,
+      },
+    };
   },
 };
 
 interface INoteGridProps {
   notes: INotes[];
+  limitCount: number;
 }
 
-export default function NoteGrid({ notes }: INoteGridProps) {
+export default function NoteGrid({ notes, limitCount }: INoteGridProps) {
   return (
     <>
       <Grid
@@ -45,6 +46,29 @@ export default function NoteGrid({ notes }: INoteGridProps) {
         animate="show"
       >
         {notes &&
+          notes.slice(0, limitCount).map((note, idx: number) => (
+            <>
+              <Box
+                key={note.id}
+                as={motion.div}
+                variants={item}
+                whileInView={"show"}
+                custom={idx}
+                viewport={{ once: true }}
+              >
+                <NoteCard
+                  key={note.id}
+                  link={note.id}
+                  title={note.title}
+                  md={note.md}
+                  category={note.category}
+                  createdAt={note.createdAt}
+                  thumbnailUrl={note.thumbnailUrl}
+                />
+              </Box>
+            </>
+          ))}
+        {/* {notes &&
           notes.map((note) => (
             <Box
               key={note.id}
@@ -62,9 +86,8 @@ export default function NoteGrid({ notes }: INoteGridProps) {
                 createdAt={note.createdAt}
                 thumbnailUrl={note.thumbnailUrl}
               />
-              {/* <LoadingCard /> */}
             </Box>
-          ))}
+          ))} */}
       </Grid>
     </>
   );
