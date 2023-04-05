@@ -1,10 +1,8 @@
 import DeleteModal from "@/components/Entry/DeleteModal";
 import EntryFooter from "@/components/Entry/EntryFooter";
 import { isLoginAtom } from "@/utils/atoms";
-import { dbService } from "@/utils/firebase";
 import {
   dateFormatter,
-  returnDescription,
   returnUrlTitle,
   selectBasicThumbnail,
 } from "@/utils/utilFn";
@@ -30,6 +28,7 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import { useEffect, useState } from "react";
 import Toc from "@/components/Entry/TOC";
+import "@fontsource/noto-sans-kr";
 
 //custom style for md view
 const CustomStyle = styled.div`
@@ -215,6 +214,7 @@ export default function EntryMainPage({ detail, docId }: IEntryProps) {
                 source={detail.md}
                 style={{
                   backgroundColor: colorMode === "dark" ? "#1A202C" : undefined,
+                  fontFamily: "Noto Sans KR, sans-serif",
                 }}
               />
             </CustomStyle>

@@ -43,6 +43,7 @@ export default function GBCommentMobile({
   avatar,
   commentId,
   edited,
+  userIconPic,
   guestBookImg,
 }: ICommentProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
@@ -197,7 +198,12 @@ export default function GBCommentMobile({
           alignItems={"center"}
         >
           <HStack justifyContent={"center"} alignItems={"center"} gap={2}>
-            <Avatar icon={<FaUser fontSize={"1.2rem"} />} size={"sm"} />
+            {userIconPic === "" ? (
+              <Avatar icon={<FaUser fontSize={"1.2rem"} />} size={"sm"} />
+            ) : (
+              <Avatar src={userIconPic} size={"sm"} />
+            )}
+
             <VStack alignItems={"flex-start"} spacing={0}>
               <Heading fontSize={"xl"}>{nickname}</Heading>
               <HStack>

@@ -21,6 +21,7 @@ import styled from "styled-components";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import EntryFooterMobile from "./EntryFooterMobile";
+import "@fontsource/noto-sans-kr";
 
 //custom style for md view
 const CustomStyle = styled.div`
@@ -186,6 +187,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
                 source={detail.md}
                 style={{
                   backgroundColor: colorMode === "dark" ? "#1A202C" : undefined,
+                  fontFamily: "Noto Sans KR, sans-serif",
                 }}
               />
             </CustomStyle>

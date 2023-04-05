@@ -245,7 +245,7 @@ export default function GBInputMobile() {
                   style={{ display: "none" }}
                 />
 
-                <HStack>
+                <VStack>
                   <InputGroup>
                     <InputLeftElement pointerEvents="none">
                       <FaUser color="gray.300" />
@@ -270,7 +270,7 @@ export default function GBInputMobile() {
                       onChange={(e) => setPassword(e.currentTarget.value)}
                     />
                   </InputGroup>
-                </HStack>
+                </VStack>
               </HStack>
               <Textarea
                 alignItems={"flex-start"}

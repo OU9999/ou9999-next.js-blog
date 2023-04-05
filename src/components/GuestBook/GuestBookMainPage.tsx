@@ -1,14 +1,26 @@
 import GBComments from "@/components/GuestBook/GBComments";
 import GBInput from "@/components/GuestBook/GBInput";
+import { colorThemeAtom } from "@/utils/atoms";
+import { returnColors } from "@/utils/utilFn";
 import { Box, Center, Heading, Text, VStack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 export default function GuestBookMainPage() {
+  const colorTheme = useRecoilValue(colorThemeAtom);
+  const [lightColor, setLightColor] = useState("");
+
+  useEffect(() => {
+    const [lc, dc, hbc] = returnColors(colorTheme);
+    setLightColor(lc);
+  }, [colorTheme]);
+
   return (
     <>
       <VStack h="auto" justifyContent={"flex-start"} position={"relative"}>
         <Box
           w="100vw"
-          h="60vh"
+          h="40vh"
           position={"absolute"}
           zIndex={-1}
           backgroundRepeat="no-repeat"
@@ -19,7 +31,7 @@ export default function GuestBookMainPage() {
         />
         <Box
           w="100vw"
-          h="60vh"
+          h="40vh"
           position={"absolute"}
           zIndex={1}
           top={-2}
@@ -30,9 +42,9 @@ export default function GuestBookMainPage() {
           opacity={0.3}
         />
 
-        <Center minH={"60vh"} color="white" zIndex={2}>
+        <Center minH={"40vh"} color="white" zIndex={2}>
           <VStack gap={4}>
-            <Heading textShadow={"#000 1px 0 10px"} fontSize={"7xl"}>
+            <Heading textShadow={`3px 3px ${lightColor}`} fontSize={"7xl"}>
               Guest Book
             </Heading>
             <Text

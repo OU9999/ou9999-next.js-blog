@@ -63,7 +63,7 @@ export default function MainPageText({
     <>
       <Text
         fontSize={"9xl"}
-        fontWeight={"bold"}
+        fontWeight={"extrabold"}
         textShadow={`${Click === 0 ? lightColor : randomColor} 1px 0 30px`}
         onClick={onClicked}
         as={motion.p}

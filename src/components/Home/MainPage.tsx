@@ -74,7 +74,8 @@ const resetButtonVariants: Variants = {
 export default function MainPage() {
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [quote, setQuote] = useState<string>("");
-  const startAnimation = useRecoilValue(startAnimationAtom);
+  // const startAnimation = useRecoilValue(startAnimationAtom);
+  const [startAnimation, setStartAnimation] = useState(true);
   const mainTextAni = useAnimation();
   const mainBoxAni = useAnimation();
   const quoteAni = useAnimation();
@@ -119,6 +120,7 @@ export default function MainPage() {
     if (startAnimation === true) {
       mainTextAni.start("start");
       mainBoxAni.start("start");
+      setStartAnimation(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startAnimation]);

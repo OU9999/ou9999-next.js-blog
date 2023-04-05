@@ -22,6 +22,10 @@ const theme = extendTheme({
       dark: "#9DECF9",
     },
   },
+  fonts: {
+    heading: "Noto Sans KR, sans-serif",
+    body: "Noto Sans KR, sans-serif",
+  },
   styles: {
     global: {
       body: {
