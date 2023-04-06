@@ -196,7 +196,7 @@ export default function EntryMainPage({ detail, docId }: IEntryProps) {
             }
             rounded="3xl"
             h="auto"
-            w={"auto"}
+            maxW={"50vw"}
             transform={"auto"}
             boxShadow={"dark-lg"}
             border={"0px solid"}
