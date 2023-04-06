@@ -127,7 +127,7 @@ export default function MainPage() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (time >= 15) {
+      if (time >= 30) {
         onResetButtonClicked();
       } else {
         setTime((prev) => prev + 1);
@@ -184,9 +184,9 @@ export default function MainPage() {
         opacity={0.3}
       />
       <Center w={"100vw"} h={"100vh"} position={"relative"}>
-        <Box pos={"absolute"} bottom={10} right={10} w="16" zIndex={99}>
+        <Box pos={"absolute"} bottom={10} right={10} w="16" zIndex={10}>
           <CircularProgressbar
-            value={(time / 15) * 100}
+            value={(time / 30) * 100}
             strokeWidth={50}
             styles={buildStyles({
               pathTransitionDuration: 1,
