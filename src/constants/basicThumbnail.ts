@@ -10,3 +10,5 @@ export const tsThumbnail =
   "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/notes%2FTS.png?alt=media&token=618604a2-ac30-4453-b286-6988aba913bf";
 export const nextThumbnail =
   "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/notes%2Fnext.png?alt=media&token=e2192c79-d4e2-4a3e-8ef2-7097f6b96338";
+export const blogThumbnail =
+  "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/notes%2Freact%2Bts%2Bchakra.png?alt=media&token=d3c61b66-2d98-4664-9fb8-48bad73f8ffc";

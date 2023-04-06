@@ -1,5 +1,6 @@
 import {
   algoThumbnail,
+  blogThumbnail,
   cssThumbnail,
   jsThumbnail,
   nextThumbnail,
@@ -42,9 +43,10 @@ export const selectBasicThumbnail = (category: string) => {
       return cssThumbnail;
     case "Next.js":
       return nextThumbnail;
-
+    case "My First Blog":
+      return blogThumbnail;
     default:
-      return;
+      return reactThumbnail;
   }
 };
 
