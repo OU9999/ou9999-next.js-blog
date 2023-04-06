@@ -47,13 +47,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={theme}>
+      {loading && <Loading />}
       <RecoilRoot>
         <AnimatePresence
           initial={true}
           onExitComplete={() => window.scrollTo(0, 0)}
         >
           {mobileView ? <HeaderMobile /> : <Header />}
-          {loading && <Loading />}
           <Component {...pageProps} />
           <Footer />
           {/* {mobileView ? null : <StartModal />} */}
