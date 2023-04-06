@@ -25,6 +25,8 @@ import { MdEmail, MdReplay } from "react-icons/md";
 import MainPageText from "./MainPageText";
 import { useRecoilValue } from "recoil";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { RxSlash } from "react-icons/rx";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -203,12 +205,25 @@ export default function MainPage() {
           zIndex={2}
         >
           <HStack userSelect={"none"} color={"white"}>
+            <Box fontSize={"9xl"} color={lightColor} pos={"relative"} top={2}>
+              <AiOutlineLeft />
+            </Box>
             <MainPageText text="O" mainTextAni={mainTextAni} />
             <MainPageText text="U" mainTextAni={mainTextAni} />
             <MainPageText text="9" mainTextAni={mainTextAni} />
             <MainPageText text="9" mainTextAni={mainTextAni} />
             <MainPageText text="9" mainTextAni={mainTextAni} />
             <MainPageText text="9" mainTextAni={mainTextAni} />
+            <HStack
+              fontSize={"9xl"}
+              spacing={-10}
+              color={lightColor}
+              pos={"relative"}
+              top={2}
+            >
+              <RxSlash />
+              <AiOutlineRight />
+            </HStack>
           </HStack>
 
           <Flex

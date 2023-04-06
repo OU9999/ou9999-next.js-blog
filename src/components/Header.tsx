@@ -146,7 +146,7 @@ export default function Header() {
             onHoverStart={() => setUnderBar(true)}
             onHoverEnd={() => setUnderBar(false)}
           >
-            <Box fontSize={"4xl"} color={lightColor}>
+            <Box fontSize={"4xl"} color={lightColor} pos={"relative"} top={1}>
               <AiOutlineLeft />
             </Box>
             <Link href={"/"}>
@@ -161,7 +161,13 @@ export default function Header() {
                 OU9999
               </Heading>
             </Link>
-            <HStack fontSize={"4xl"} spacing={-3} color={lightColor}>
+            <HStack
+              fontSize={"4xl"}
+              spacing={-3}
+              color={lightColor}
+              pos={"relative"}
+              top={1}
+            >
               <RxSlash />
               <AiOutlineRight />
             </HStack>

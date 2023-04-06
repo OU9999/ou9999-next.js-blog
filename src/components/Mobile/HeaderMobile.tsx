@@ -84,8 +84,13 @@ export default function HeaderMobile() {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerBody>
-            <HStack w="full" justifyContent={"center"}>
-              <Box fontSize={"3xl"} color={lightColor}>
+            <HStack w="full" justifyContent={"center"} spacing={0}>
+              <Box
+                fontSize={"3xl"}
+                color={lightColor}
+                pos={"relative"}
+                top={0.5}
+              >
                 <AiOutlineLeft />
               </Box>
               <Text
@@ -95,7 +100,13 @@ export default function HeaderMobile() {
               >
                 OU9999
               </Text>
-              <HStack fontSize={"3xl"} spacing={-3} color={lightColor}>
+              <HStack
+                fontSize={"3xl"}
+                spacing={-3}
+                color={lightColor}
+                pos={"relative"}
+                top={0.5}
+              >
                 <RxSlash />
                 <AiOutlineRight />
               </HStack>

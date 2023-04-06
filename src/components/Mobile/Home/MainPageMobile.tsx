@@ -58,9 +58,7 @@ export default function MainPageMobile() {
   const [limitCount, setLimitCount] = useState(4);
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [lightColor, setLightColor] = useState("");
-  const [bgColor, setBgColor] = useState("");
   const backgroundAni = useAnimation();
-  const interval = useRef<NodeJS.Timer>();
 
   const onMoreClicked = () => {
     setLimitCount((prev) => prev + 4);
@@ -104,7 +102,6 @@ export default function MainPageMobile() {
   useEffect(() => {
     const [lc, dc, hbc] = returnColors(colorTheme);
     setLightColor(lc);
-    setBgColor(hbc);
   }, [colorTheme]);
 
   const [time, setTime] = useState(0);
@@ -159,11 +156,7 @@ export default function MainPageMobile() {
               })}
             />
           </Box>
-          <Box
-            fontSize={"5xl"}
-            color={lightColor}
-            onClick={onResetButtonClicked}
-          >
+          <Box fontSize={"5xl"} color={lightColor} pos={"relative"} top={1}>
             <AiOutlineLeft />
           </Box>
           <Text
@@ -178,7 +171,8 @@ export default function MainPageMobile() {
             fontSize={"5xl"}
             spacing={-3}
             color={lightColor}
-            onClick={onResetButtonClicked}
+            pos={"relative"}
+            top={1}
           >
             <RxSlash />
             <AiOutlineRight />
