@@ -27,6 +27,10 @@ export const images = [
   "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2Fwall-e.gif?alt=media&token=5ae1dec8-82a4-4392-a487-6bccb6d08aa8",
   "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2Fweather.jpeg?alt=media&token=cf40644e-7738-4407-88ad-5bef84f10c5a",
   "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2Fzootopia.jpeg?alt=media&token=3b8b3ff5-f374-4df5-b6ef-7f1b8e0c71e3",
+  "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2F4910984.gif?alt=media&token=a1bbf134-04a1-434a-bbac-e8450cd3a1a0",
+  "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2F8881446.jpg?alt=media&token=384c5556-0b0b-48f7-ad65-04bd64f2d383",
+  "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2Fedgerunner.gif?alt=media&token=16fc89e3-a415-485a-ab63-8004c85464cc",
+  "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2Fwallpaperflare.com_wallpaper.jpg?alt=media&token=466bc1e9-8afa-47a6-bd68-37e385a6c316",
 ];
 
 export const quotes = [

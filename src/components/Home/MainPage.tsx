@@ -1,6 +1,6 @@
 import { images, quotes } from "@/constants/mainpageArray";
-import { isMobileAtom, startAnimationAtom } from "@/utils/atoms";
-import { vhToPixels } from "@/utils/utilFn";
+import { colorThemeAtom } from "@/utils/atoms";
+import { returnColors, vhToPixels } from "@/utils/utilFn";
 import {
   Box,
   Button,
@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { motion, useAnimation, Variants } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaArrowDown,
   FaGithub,
@@ -24,12 +24,21 @@ import {
 import { MdEmail, MdReplay } from "react-icons/md";
 import MainPageText from "./MainPageText";
 import { useRecoilValue } from "recoil";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
   clicked: {
-    opacity: [0, 1],
-    filter: ["blur(30px)", "blur(0px)"],
+    opacity: [1, 0],
+    filter: ["blur(0px)", "blur(90px)"],
+    transition: {
+      duration: 1,
+      type: "linear",
+    },
+  },
+  done: {
+    opacity: [0, 0, 0, 1],
+    filter: ["blur(90px)", "blur(60px)", "blur(30px)", "blur(0px)"],
     transition: {
       duration: 1,
       type: "linear",
@@ -74,7 +83,8 @@ const resetButtonVariants: Variants = {
 export default function MainPage() {
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [quote, setQuote] = useState<string>("");
-  // const startAnimation = useRecoilValue(startAnimationAtom);
+  const colorTheme = useRecoilValue(colorThemeAtom);
+  const [lightColor, setLightColor] = useState("");
   const [startAnimation, setStartAnimation] = useState(true);
   const mainTextAni = useAnimation();
   const mainBoxAni = useAnimation();
@@ -82,7 +92,7 @@ export default function MainPage() {
   const resetButtonAni = useAnimation();
   const backgroundAni = useAnimation();
   const toast = useToast();
-  const interval = useRef<NodeJS.Timer>();
+  const [time, setTime] = useState(0);
 
   const setBgAndQuote = () => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
@@ -90,9 +100,11 @@ export default function MainPage() {
   };
 
   const onResetButtonClicked = async () => {
-    await setBgAndQuote();
+    setTime(0);
     quoteAni.start("clicked");
     backgroundAni.start("clicked");
+    await setBgAndQuote();
+    await backgroundAni.start("done");
   };
 
   const onEmailButtonClicked = () => {
@@ -114,13 +126,24 @@ export default function MainPage() {
   };
 
   useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (time >= 15) {
+        onResetButtonClicked();
+      } else {
+        setTime((prev) => prev + 1);
+      }
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [time]);
+
+  useEffect(() => {
     setBgAndQuote();
-    interval.current = setInterval(onResetButtonClicked, 15000);
-    return () => {
-      clearInterval(interval.current);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const [lc, dc, hbc] = returnColors(colorTheme);
+    setLightColor(lc);
+  }, [colorTheme]);
 
   useEffect(() => {
     if (startAnimation === true) {
@@ -161,6 +184,17 @@ export default function MainPage() {
         opacity={0.3}
       />
       <Center w={"100vw"} h={"100vh"} position={"relative"}>
+        <Box pos={"absolute"} bottom={10} right={10} w="16" zIndex={99}>
+          <CircularProgressbar
+            value={(time / 15) * 100}
+            strokeWidth={50}
+            styles={buildStyles({
+              pathTransitionDuration: 1,
+              strokeLinecap: "butt",
+              pathColor: lightColor,
+            })}
+          />
+        </Box>
         <Flex
           justify={"center"}
           align={"center"}

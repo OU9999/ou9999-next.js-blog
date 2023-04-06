@@ -29,12 +29,21 @@ import PostMobile from "./PostMobile";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
   clicked: {
-    opacity: [1, 0.5, 0, 1],
-    filter: ["blur(0px)", "blur(30px)", "blur(15px)", "blur(0px)"],
+    opacity: [1, 0],
+    filter: ["blur(0px)", "blur(90px)"],
+    transition: {
+      duration: 1,
+      type: "linear",
+    },
+  },
+  done: {
+    opacity: [0, 0, 0, 1],
+    filter: ["blur(90px)", "blur(60px)", "blur(30px)", "blur(0px)"],
     transition: {
       duration: 1,
       type: "linear",
@@ -57,14 +66,16 @@ export default function MainPageMobile() {
     setLimitCount((prev) => prev + 4);
   };
 
-  const setBgAndQt = () => {
+  const setBgAndQuote = () => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   };
 
-  const onChangeButtonClicked = async () => {
-    await setBgAndQt();
+  const onResetButtonClicked = async () => {
+    setTime(0);
     backgroundAni.start("clicked");
+    await setBgAndQuote();
+    await backgroundAni.start("done");
   };
 
   const getNotes = async (limitCount: number) => {
@@ -83,6 +94,10 @@ export default function MainPageMobile() {
   };
 
   useEffect(() => {
+    setBgAndQuote();
+  }, []);
+
+  useEffect(() => {
     getNotes(limitCount);
   }, [limitCount]);
 
@@ -92,14 +107,18 @@ export default function MainPageMobile() {
     setBgColor(hbc);
   }, [colorTheme]);
 
+  const [time, setTime] = useState(0);
+
   useEffect(() => {
-    setBgAndQt();
-    interval.current = setInterval(onChangeButtonClicked, 15000);
-    return () => {
-      clearInterval(interval.current);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const intervalId = setInterval(() => {
+      if (time >= 15) {
+        onResetButtonClicked();
+      } else {
+        setTime((prev) => prev + 1);
+      }
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [time]);
 
   return (
     <>
@@ -128,11 +147,22 @@ export default function MainPageMobile() {
           backgroundSize="10px 10px"
           opacity={0.3}
         />
-        <Center w="full" h={"30vh"} zIndex={2}>
+        <Center w="full" h={"30vh"} zIndex={2} pos={"relative"}>
+          <Box pos={"absolute"} w="9" bottom={5} right={5} zIndex={99}>
+            <CircularProgressbar
+              value={(time / 15) * 100}
+              strokeWidth={50}
+              styles={buildStyles({
+                pathTransitionDuration: 1,
+                strokeLinecap: "butt",
+                pathColor: lightColor,
+              })}
+            />
+          </Box>
           <Box
             fontSize={"5xl"}
             color={lightColor}
-            onClick={onChangeButtonClicked}
+            onClick={onResetButtonClicked}
           >
             <AiOutlineLeft />
           </Box>
@@ -148,7 +178,7 @@ export default function MainPageMobile() {
             fontSize={"5xl"}
             spacing={-3}
             color={lightColor}
-            onClick={onChangeButtonClicked}
+            onClick={onResetButtonClicked}
           >
             <RxSlash />
             <AiOutlineRight />
