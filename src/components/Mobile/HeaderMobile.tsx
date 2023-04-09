@@ -11,8 +11,6 @@ import {
   DrawerOverlay,
   Flex,
   HStack,
-  Heading,
-  IconButton,
   Text,
   VStack,
   useColorMode,
@@ -45,7 +43,6 @@ export default function HeaderMobile() {
   const [lightColor, setLightColor] = useState("");
   const [bgColor, setBgColor] = useState("");
   const Icon = useColorModeValue(FaMoon, FaSun);
-  const ColorText = useColorModeValue("Dark", "Light");
   const { toggleColorMode } = useColorMode();
 
   useEffect(() => {

@@ -161,7 +161,7 @@ export default function MainPageMobile() {
           </Box>
           <Text
             fontSize={"5xl"}
-            fontWeight={"bold"}
+            fontWeight={"extrabold"}
             color={"white"}
             textShadow={`${lightColor} 1px 0 30px`}
           >
