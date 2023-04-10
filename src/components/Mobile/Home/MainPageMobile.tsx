@@ -1,22 +1,17 @@
 import {
   Box,
-  Center,
   Divider,
-  Flex,
   HStack,
   Heading,
   IconButton,
-  Image,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { images, quotes } from "@/constants/mainpageArray";
-import { useEffect, useRef, useState } from "react";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { RxSlash } from "react-icons/rx";
+import { quotes } from "@/constants/mainpageArray";
+import { useEffect, useState } from "react";
 import { MdExpandMore } from "react-icons/md";
 import { useRecoilValue } from "recoil";
-import { colorThemeAtom, isMobileAtom } from "@/utils/atoms";
+import { colorThemeAtom } from "@/utils/atoms";
 import { INotes } from "@/pages/notes/[category]";
 import {
   collection,
@@ -27,19 +22,9 @@ import {
 } from "firebase/firestore";
 import { dbService } from "@/utils/firebase";
 import PostMobile from "./PostMobile";
-import {
-  FaEye,
-  FaQuoteLeft,
-  FaQuoteRight,
-  FaRegCommentDots,
-} from "react-icons/fa";
+import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import MainImgMobile from "../MainImgMobile";
-import { reactThumbnail } from "@/constants/basicThumbnail";
-import { GoThreeBars } from "react-icons/go";
-import { BiTimeFive } from "react-icons/bi";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -147,15 +132,15 @@ export default function MainPageMobile() {
         <Heading py={10}>최신 글 🔥</Heading>
         <VStack w="full" px={10} gap={10} spacing={0}>
           {notes?.map((note) => (
-            <PostMobile
-              key={note.id}
-              link={note.id}
-              title={note.title}
-              md={note.md}
-              thumbnailUrl={note.thumbnailUrl}
-              category={note.category}
-              createdAt={note.createdAt}
-            />
+            <Box key={note.id} w="full">
+              <PostMobile
+                link={note.id}
+                title={note.title}
+                thumbnailUrl={note.thumbnailUrl}
+                category={note.category}
+                createdAt={note.createdAt}
+              />
+            </Box>
           ))}
           <IconButton
             aria-label="expand"

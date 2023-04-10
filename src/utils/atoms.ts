@@ -15,11 +15,6 @@ export const isLoginAtom = atom<boolean>({
   default: false,
 });
 
-export const isEntryAtom = atom<boolean>({
-  key: "isEntry",
-  default: false,
-});
-
 export const tocAtom = atom<string>({
   key: "tocMd",
   default: "",
@@ -32,5 +27,10 @@ export const colorThemeAtom = atom<string>({
 
 export const isMobileAtom = atom<boolean>({
   key: "isMobile",
+  default: false,
+});
+
+export const isEntryAtom = atom<boolean>({
+  key: "isEntry",
   default: false,
 });

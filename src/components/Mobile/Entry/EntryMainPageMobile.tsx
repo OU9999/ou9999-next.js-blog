@@ -1,5 +1,5 @@
 import DeleteModal from "@/components/Entry/DeleteModal";
-import { isLoginAtom } from "@/utils/atoms";
+import { isEntryAtom, isLoginAtom } from "@/utils/atoms";
 import { dateFormatter, selectBasicThumbnail } from "@/utils/utilFn";
 import {
   Box,
@@ -16,12 +16,13 @@ import {
 import dynamic from "next/dynamic";
 import { BiTimeFive } from "react-icons/bi";
 import { GoThreeBars } from "react-icons/go";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import EntryFooterMobile from "./EntryFooterMobile";
 import "@fontsource/noto-sans-kr";
+import { useEffect } from "react";
 
 //custom style for md view
 const CustomStyle = styled.div`
@@ -58,10 +59,18 @@ interface IEntryProps {
 }
 
 export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
+  const setIsEntry = useSetRecoilState(isEntryAtom);
   const colorMode = useColorModeValue("light", "dark");
   const isLogin = useRecoilValue(isLoginAtom);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const date = dateFormatter(detail.createdAt);
+
+  useEffect(() => {
+    setIsEntry(true);
+    return () => {
+      setIsEntry(false);
+    };
+  }, []);
 
   return (
     <>

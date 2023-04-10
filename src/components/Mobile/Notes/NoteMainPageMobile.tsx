@@ -158,19 +158,17 @@ export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
               </>
             )}
             {notes &&
-              notes
-                .slice(0, limitCount)
-                .map((note) => (
+              notes.slice(0, limitCount).map((note) => (
+                <Box key={note.id} w="full">
                   <PostMobile
-                    key={note.id}
                     link={note.id}
                     title={note.title}
-                    md={note.md}
                     thumbnailUrl={note.thumbnailUrl}
                     category={note.category}
                     createdAt={note.createdAt}
                   />
-                ))}
+                </Box>
+              ))}
           </VStack>
           {isDisable ? null : (
             <IconButton

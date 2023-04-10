@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
 import { useRecoilValue } from "recoil";
-import { colorThemeAtom, isMobileAtom } from "@/utils/atoms";
+import { colorThemeAtom, isEntryAtom, isMobileAtom } from "@/utils/atoms";
 import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -51,6 +51,7 @@ export default function MainImgMobile() {
   const relativeColor = useColorModeValue(lightColor, darkColor);
   const backgroundAni = useAnimation();
   const router = useRouter();
+  const isEntry = useRecoilValue(isEntryAtom);
 
   const setBg = () => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
@@ -92,7 +93,12 @@ export default function MainImgMobile() {
 
   return (
     <>
-      <VStack w="100vw" h="auto" overflow={"hidden"}>
+      <VStack
+        w="100vw"
+        h="auto"
+        overflow={"hidden"}
+        display={isEntry ? "none" : undefined}
+      >
         <Image
           alt="mainImg"
           w="100vw"
