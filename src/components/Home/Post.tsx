@@ -90,7 +90,7 @@ export default function Post({
           <VStack
             width={"50%"}
             height={"100%"}
-            alignItems={"center"}
+            alignItems={"flex-start"}
             p={10}
             gap={2}
           >
