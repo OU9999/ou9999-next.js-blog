@@ -57,11 +57,7 @@ export default function PostMobile({
             flexDir={"column"}
           >
             <Box pb={3} pl={3} color={"white"}>
-              <Heading
-                textShadow={"#000 1px 0 10px"}
-                fontSize={"xl"}
-                noOfLines={1}
-              >
+              <Heading fontSize={"xl"} noOfLines={1}>
                 {title}
               </Heading>
               <HStack gap={2}>

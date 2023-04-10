@@ -41,13 +41,16 @@ export default function HeaderMobile() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeAtom);
   const [lightColor, setLightColor] = useState("");
+  const [darkColor, setDarkColor] = useState("");
   const [bgColor, setBgColor] = useState("");
+  const relativeColor = useColorModeValue(lightColor, darkColor);
   const Icon = useColorModeValue(FaMoon, FaSun);
   const { toggleColorMode } = useColorMode();
 
   useEffect(() => {
     const [lc, dc, hbc] = returnColors(colorTheme);
     setLightColor(lc);
+    setDarkColor(dc);
     setBgColor(hbc);
   }, [colorTheme]);
 
@@ -91,6 +94,7 @@ export default function HeaderMobile() {
                 <AiOutlineLeft />
               </Box>
               <Text
+                color={relativeColor}
                 fontSize={"2xl"}
                 fontWeight={"bold"}
                 textShadow={`${lightColor} 1px 0 30px`}

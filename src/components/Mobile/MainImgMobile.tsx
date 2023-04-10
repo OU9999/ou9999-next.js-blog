@@ -1,11 +1,8 @@
 import {
   Box,
   Center,
-  Divider,
   Flex,
   HStack,
-  Heading,
-  IconButton,
   Image,
   Text,
   VStack,
@@ -16,12 +13,11 @@ import { useEffect, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
 import { useRecoilValue } from "recoil";
-import { colorThemeAtom, isEntryAtom, isMobileAtom } from "@/utils/atoms";
+import { colorThemeAtom, isEntryAtom } from "@/utils/atoms";
 import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -89,6 +85,7 @@ export default function MainImgMobile() {
       }
     }, 1000);
     return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 
   return (
