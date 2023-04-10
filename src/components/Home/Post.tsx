@@ -68,7 +68,7 @@ export default function Post({
       <Box
         position={"relative"}
         rounded="2xl"
-        w="4xl"
+        w="5xl"
         h="xs"
         overflow={"hidden"}
         boxShadow={hover ? `0 0 10px 5px ${relativeColor}` : "dark-lg"}
@@ -90,10 +90,9 @@ export default function Post({
           <VStack
             width={"50%"}
             height={"100%"}
-            alignItems={"flex-start"}
+            alignItems={"center"}
             p={10}
             gap={2}
-            pl={8}
           >
             <Link href={`/entry/${urlTitle}/${link}`}>
               <Heading
@@ -128,7 +127,7 @@ export default function Post({
             </HStack>
             <Box position={"relative"} overflow="hidden">
               <Box
-                width={"sm"}
+                width={"md"}
                 h={"24"}
                 noOfLines={5}
                 data-color-mode={colorMode}

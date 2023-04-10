@@ -51,7 +51,6 @@ export default function MainPageMobile() {
   const [notes, setNotes] = useState<INotes[] | undefined>();
   const [limitCount, setLimitCount] = useState(4);
   const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
   const backgroundAni = useAnimation();
 
   const onMoreClicked = () => {
@@ -91,11 +90,6 @@ export default function MainPageMobile() {
   useEffect(() => {
     getNotes(limitCount);
   }, [limitCount]);
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-  }, [colorTheme]);
 
   const [time, setTime] = useState(0);
 

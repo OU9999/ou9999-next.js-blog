@@ -56,7 +56,7 @@ export default function PostMobile({
             h="full"
             flexDir={"column"}
           >
-            <Box pb={3} pl={3} color={"white"}>
+            <Box pb={3} px={3} color={"white"}>
               <Heading fontSize={"xl"} noOfLines={1}>
                 {title}
               </Heading>
@@ -64,17 +64,18 @@ export default function PostMobile({
                 <HStack
                   justifyContent={"center"}
                   alignItems={"center"}
-                  spacing={1}
+                  spacing={0}
                 >
-                  <Box fontSize={"sm"}>
+                  <Box fontSize={"xs"} pos={"relative"} top={0.4}>
                     <GoThreeBars />
                   </Box>
                   <Text
                     textShadow={"#000 1px 0 10px"}
-                    fontSize={"sm"}
+                    fontSize={"xs"}
                     fontWeight={"bold"}
+                    noOfLines={1}
                   >
-                    React
+                    {category}
                   </Text>
                 </HStack>
                 <HStack
@@ -82,13 +83,14 @@ export default function PostMobile({
                   alignItems={"center"}
                   spacing={1}
                 >
-                  <Box fontSize={"sm"}>
+                  <Box fontSize={"xs"}>
                     <BiTimeFive />
                   </Box>
                   <Text
                     textShadow={"#000 1px 0 10px"}
-                    fontSize={"sm"}
+                    fontSize={"xs"}
                     fontWeight={"bold"}
+                    noOfLines={1}
                   >
                     {date}
                   </Text>
