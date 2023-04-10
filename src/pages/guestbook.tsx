@@ -1,13 +1,24 @@
 import GuestBookMainPage from "@/components/GuestBook/GuestBookMainPage";
-import GuestBookMainPageMobile from "@/components/Mobile/GuestBook/GuestBookMainPageMobile";
 import { useMediaQuery } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
+import { useEffect, useState } from "react";
 
 export default function GuestBook() {
-  const [mobileView] = useMediaQuery("(max-width: 768px)", {
+  const [desktopView] = useMediaQuery("(min-width: 768px)", {
     ssr: true,
-    fallback: false, // return false on the server, and re-evaluate on the client side
+    fallback: false,
   });
+  const [GuestBookMainPageMobile, setGuestBookMainPageMobile] =
+    useState<React.ComponentType | null>(null);
+
+  useEffect(() => {
+    import("@/components/Mobile/GuestBook/GuestBookMainPageMobile").then(
+      (module) => {
+        setGuestBookMainPageMobile(() => module.default);
+      }
+    );
+  }, []);
+
   return (
     <>
       <NextSeo
@@ -28,7 +39,11 @@ export default function GuestBook() {
           ],
         }}
       />
-      {mobileView ? <GuestBookMainPageMobile /> : <GuestBookMainPage />}
+      {desktopView ? (
+        <GuestBookMainPage />
+      ) : (
+        GuestBookMainPageMobile && <GuestBookMainPageMobile />
+      )}
     </>
   );
 }

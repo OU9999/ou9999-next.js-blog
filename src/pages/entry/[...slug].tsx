@@ -2,10 +2,9 @@ import { dbService } from "@/utils/firebase";
 import { returnDescription, selectBasicThumbnail } from "@/utils/utilFn";
 import { useMediaQuery } from "@chakra-ui/react";
 import { doc, getDoc } from "firebase/firestore";
-
 import { NextSeo } from "next-seo";
 import EntryMainPage from "@/components/Entry/EntryMainPage";
-import EntryMainPageMobile from "@/components/Mobile/Entry/EntryMainPageMobile";
+import { useEffect, useState } from "react";
 
 export const getServerSideProps = async ({ params }: any) => {
   const docId = params.slug[1];
@@ -32,11 +31,18 @@ interface IEntryProps {
 }
 
 export default function Entry({ detail, docId }: IEntryProps) {
-  const [mobileView] = useMediaQuery("(max-width: 768px)", {
+  const [desktopView] = useMediaQuery("(min-width: 768px)", {
     ssr: true,
-    fallback: false, // return false on the server, and re-evaluate on the client side
+    fallback: false,
   });
+  const [EntryMainPageMobile, setEntryMainPageMobile] =
+    useState<React.ComponentType<IEntryProps> | null>(null);
   const desc = returnDescription(detail.md);
+  useEffect(() => {
+    import("@/components/Mobile/Entry/EntryMainPageMobile").then((module) => {
+      setEntryMainPageMobile(() => module.default);
+    });
+  }, []);
 
   return (
     <>
@@ -66,10 +72,13 @@ export default function Entry({ detail, docId }: IEntryProps) {
           cardType: "summary_large_image",
         }}
       />
-      {mobileView ? (
-        <EntryMainPageMobile detail={detail} docId={docId} />
-      ) : (
+
+      {desktopView ? (
         <EntryMainPage detail={detail} docId={docId} />
+      ) : (
+        EntryMainPageMobile && (
+          <EntryMainPageMobile detail={detail} docId={docId} />
+        )
       )}
     </>
   );

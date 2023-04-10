@@ -2,6 +2,7 @@ import NoteMainPageMobile from "@/components/Mobile/Notes/NoteMainPageMobile";
 import NotesMainPage from "@/components/Notes/NoteMainPage";
 import { useMediaQuery } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
+import { useEffect, useState } from "react";
 
 export interface INotes {
   id: string;
@@ -32,6 +33,10 @@ interface INotesCategoryProps {
   notes: INotes[];
 }
 
+interface INoteMainPageMobileProps {
+  category: string;
+}
+
 export const getServerSideProps = async ({ params }: any) => {
   const { category } = params;
 
@@ -41,10 +46,18 @@ export const getServerSideProps = async ({ params }: any) => {
 };
 
 export default function NotesCategory({ category }: INotesCategoryProps) {
-  const [mobileView] = useMediaQuery("(max-width: 768px)", {
+  const [desktopView] = useMediaQuery("(min-width: 768px)", {
     ssr: true,
-    fallback: false, // return false on the server, and re-evaluate on the client side
+    fallback: false,
   });
+  const [NoteMainPageMobile, setNoteMainPageMobile] =
+    useState<React.ComponentType<INoteMainPageMobileProps> | null>(null);
+
+  useEffect(() => {
+    import("@/components/Mobile/Notes/NoteMainPageMobile").then((module) => {
+      setNoteMainPageMobile(() => module.default);
+    });
+  }, []);
 
   return (
     <>
@@ -66,10 +79,10 @@ export default function NotesCategory({ category }: INotesCategoryProps) {
           ],
         }}
       />
-      {mobileView ? (
-        <NoteMainPageMobile category={category} />
-      ) : (
+      {desktopView ? (
         <NotesMainPage category={category} />
+      ) : (
+        NoteMainPageMobile && <NoteMainPageMobile category={category} />
       )}
     </>
   );

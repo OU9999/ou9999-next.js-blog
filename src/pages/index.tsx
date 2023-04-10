@@ -1,13 +1,21 @@
 import { NextSeo } from "next-seo";
-import MainScroll from "@/components/Home/MainScroll";
 import { useMediaQuery } from "@chakra-ui/react";
-import MainPageMobile from "@/components/Mobile/Home/MainPageMobile";
+import { useEffect, useState } from "react";
+import MainScroll from "@/components/Home/MainScroll";
 
 export default function Home() {
-  const [mobileView] = useMediaQuery("(max-width: 768px)", {
+  const [desktopView] = useMediaQuery("(min-width: 768px)", {
     ssr: true,
-    fallback: false, // return false on the server, and re-evaluate on the client side
+    fallback: false,
   });
+  const [MainPageMobile, setMainPageMobile] =
+    useState<React.ComponentType | null>(null);
+
+  useEffect(() => {
+    import("@/components/Mobile/Home/MainPageMobile").then((module) => {
+      setMainPageMobile(() => module.default);
+    });
+  }, []);
 
   return (
     <>
@@ -30,7 +38,7 @@ export default function Home() {
         }}
       />
 
-      {mobileView ? <MainPageMobile /> : <MainScroll />}
+      {desktopView ? <MainScroll /> : MainPageMobile && <MainPageMobile />}
     </>
   );
 }

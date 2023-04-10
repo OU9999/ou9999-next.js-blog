@@ -153,6 +153,8 @@ export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
             {!notes && (
               <>
                 <LoadingCardMobile />
+                <LoadingCardMobile />
+                <LoadingCardMobile />
               </>
             )}
             {notes &&

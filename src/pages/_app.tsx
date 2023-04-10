@@ -47,8 +47,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={theme}>
-      {loading && <Loading />}
       <RecoilRoot>
+        {loading && <Loading />}
         <AnimatePresence
           initial={true}
           onExitComplete={() => window.scrollTo(0, 0)}
@@ -57,7 +57,6 @@ export default function App({ Component, pageProps }: AppProps) {
           {mobileView ? <MainImgMobile /> : null}
           <Component {...pageProps} />
           <Footer />
-          {/* {mobileView ? null : <StartModal />} */}
         </AnimatePresence>
       </RecoilRoot>
     </ChakraProvider>
