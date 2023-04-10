@@ -2,6 +2,7 @@ import {
   Box,
   Center,
   Divider,
+  Flex,
   HStack,
   Heading,
   IconButton,
@@ -26,10 +27,19 @@ import {
 } from "firebase/firestore";
 import { dbService } from "@/utils/firebase";
 import PostMobile from "./PostMobile";
-import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
+import {
+  FaEye,
+  FaQuoteLeft,
+  FaQuoteRight,
+  FaRegCommentDots,
+} from "react-icons/fa";
 import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import MainImgMobile from "../MainImgMobile";
+import { reactThumbnail } from "@/constants/basicThumbnail";
+import { GoThreeBars } from "react-icons/go";
+import { BiTimeFive } from "react-icons/bi";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -52,7 +62,6 @@ const backgroundVariants: Variants = {
 };
 
 export default function MainPageMobile() {
-  const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [quote, setQuote] = useState<string>("");
   const [notes, setNotes] = useState<INotes[] | undefined>();
   const [limitCount, setLimitCount] = useState(4);
@@ -64,15 +73,14 @@ export default function MainPageMobile() {
     setLimitCount((prev) => prev + 4);
   };
 
-  const setBgAndQuote = () => {
-    setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
+  const setQt = () => {
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   };
 
   const onResetButtonClicked = async () => {
     setTime(0);
     backgroundAni.start("clicked");
-    await setBgAndQuote();
+    await setQt();
     await backgroundAni.start("done");
   };
 
@@ -92,7 +100,7 @@ export default function MainPageMobile() {
   };
 
   useEffect(() => {
-    setBgAndQuote();
+    setQt();
   }, []);
 
   useEffect(() => {
@@ -120,64 +128,6 @@ export default function MainPageMobile() {
   return (
     <>
       <VStack w="100vw" h="auto" overflow={"hidden"}>
-        <Image
-          alt="mainImg"
-          w="100vw"
-          h={"30vh"}
-          position={"absolute"}
-          zIndex={-1}
-          src={backgroundImage}
-          as={motion.img}
-          variants={backgroundVariants}
-          animate={backgroundAni}
-          initial={"normal"}
-        />
-        <Box
-          w="100vw"
-          h={"30vh"}
-          position={"absolute"}
-          zIndex={1}
-          top={-2}
-          background={
-            "repeating-linear-gradient(0deg,#0e0d0e 25%,#0e0d0e 50%, #171819 50%,  #171819 75%)"
-          }
-          backgroundSize="10px 10px"
-          opacity={0.3}
-        />
-        <Center w="full" h={"30vh"} zIndex={2} pos={"relative"}>
-          <Box pos={"absolute"} w="9" bottom={5} right={5} zIndex={10}>
-            <CircularProgressbar
-              value={(time / 30) * 100}
-              strokeWidth={50}
-              styles={buildStyles({
-                pathTransitionDuration: 1,
-                strokeLinecap: "butt",
-                pathColor: lightColor,
-              })}
-            />
-          </Box>
-          <Box fontSize={"5xl"} color={lightColor} pos={"relative"} top={1}>
-            <AiOutlineLeft />
-          </Box>
-          <Text
-            fontSize={"5xl"}
-            fontWeight={"extrabold"}
-            color={"white"}
-            textShadow={`${lightColor} 1px 0 30px`}
-          >
-            OU9999
-          </Text>
-          <HStack
-            fontSize={"5xl"}
-            spacing={-3}
-            color={lightColor}
-            pos={"relative"}
-            top={1}
-          >
-            <RxSlash />
-            <AiOutlineRight />
-          </HStack>
-        </Center>
         <Divider pt={3} />
 
         <HStack
@@ -195,7 +145,7 @@ export default function MainPageMobile() {
 
         <Divider />
         <Heading py={10}>최신 글 🔥</Heading>
-        <VStack gap={10}>
+        <VStack w="full" px={10} gap={10} spacing={0}>
           {notes?.map((note) => (
             <PostMobile
               key={note.id}

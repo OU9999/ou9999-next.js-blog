@@ -16,7 +16,6 @@ import {
   Box,
   Divider,
   Grid,
-  useToast,
 } from "@chakra-ui/react";
 import {
   collection,
@@ -170,6 +169,7 @@ export default function NotesMainPage({ category }: INotesMainPageProps) {
               </Menu>
             </Box>
           </HStack>
+
           {!notes && (
             <Grid
               templateColumns={"repeat(3, 1fr)"}
@@ -200,7 +200,6 @@ export default function NotesMainPage({ category }: INotesMainPageProps) {
               <MdExpandMore />
             </IconButton>
           )}
-
           <Divider py={3} />
         </VStack>
       </VStack>

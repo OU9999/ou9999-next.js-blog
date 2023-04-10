@@ -68,26 +68,6 @@ export default function NoteGrid({ notes, limitCount }: INoteGridProps) {
               </Box>
             </>
           ))}
-        {/* {notes &&
-          notes.map((note) => (
-            <Box
-              key={note.id}
-              as={motion.div}
-              variants={item}
-              whileInView={"show"}
-              viewport={{ once: true }}
-            >
-              <NoteCard
-                key={note.id}
-                link={note.id}
-                title={note.title}
-                md={note.md}
-                category={note.category}
-                createdAt={note.createdAt}
-                thumbnailUrl={note.thumbnailUrl}
-              />
-            </Box>
-          ))} */}
       </Grid>
     </>
   );

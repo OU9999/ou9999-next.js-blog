@@ -4,6 +4,7 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Center,
   Divider,
   Flex,
   Heading,
@@ -25,6 +26,7 @@ import {
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
+import { GoThreeBars } from "react-icons/go";
 
 interface INoteCardProps {
   title: string;
@@ -56,79 +58,80 @@ export default function PostMobile({
 
   return (
     <>
-      <Box>
-        <Card maxW="80vw" minH={"sm"} boxShadow={"2xl"}>
-          <CardBody>
-            <Box overflow={"hidden"} borderRadius="lg">
-              <Link href={`/entry/${urlTitle}/${link}`}>
-                <Image
-                  width={"full"}
-                  h={"48"}
-                  src={
-                    thumbnailUrl === ""
-                      ? selectBasicThumbnail(category)
-                      : thumbnailUrl
-                  }
-                  alt="thumbnail"
-                  borderRadius="lg"
-                  transition={"0.5s"}
-                />
-              </Link>
-            </Box>
-            <Stack mt="6" spacing="3">
-              <Link href={`/entry/${urlTitle}/${link}`}>
-                <Flex h={"12"} alignItems={"center"}>
-                  <Heading size="md" noOfLines={2}>
-                    {title}
-                  </Heading>
-                </Flex>
-              </Link>
-              <Box position={"relative"}>
-                <Box
-                  width={"auto"}
-                  minH="24"
-                  maxH="24"
-                  overflow={"hidden"}
-                  data-color-mode={colorMode}
-                >
-                  <Text>{desc}</Text>
-                </Box>
-                <Box
-                  position={"absolute"}
-                  w="full"
-                  h="full"
-                  background={`linear-gradient(to top, ${mdBgColor} 0%,rgba(255,255,255,0) 100%)`}
-                  top={0}
-                ></Box>
-              </Box>
+      <Flex
+        w="full"
+        h="44"
+        pos={"relative"}
+        rounded={"lg"}
+        overflow={"hidden"}
+        boxShadow={"dark-lg"}
+      >
+        <Image
+          alt="thumbNail"
+          src={
+            thumbnailUrl === "" ? selectBasicThumbnail(category) : thumbnailUrl
+          }
+          w="full"
+          h="full"
+          zIndex={-1}
+          pos="absolute"
+        />
 
-              <Button
-                colorScheme={colorTheme}
-                fontSize="lg"
-                width={"50%"}
-                cursor="auto"
-              >
-                {category}
-              </Button>
-            </Stack>
-          </CardBody>
-          <Divider />
-          <CardFooter>
-            <HStack gap={1}>
-              <FaEye />
-              <FaRegCommentDots />
+        <Flex justifyContent={"flex-end"} w="full" h="full" flexDir={"column"}>
+          <Box pb={3} pl={3} color={"white"}>
+            <Heading
+              textShadow={"#000 1px 0 10px"}
+              fontSize={"xl"}
+              noOfLines={1}
+            >
+              {title}
+            </Heading>
+            <HStack gap={2}>
               <HStack
-                spacing={1}
                 justifyContent={"center"}
                 alignItems={"center"}
+                spacing={1}
               >
-                <BiTimeFive />
-                <Text>{date}</Text>
+                <Box fontSize={"sm"}>
+                  <GoThreeBars />
+                </Box>
+                <Text
+                  textShadow={"#000 1px 0 10px"}
+                  fontSize={"sm"}
+                  fontWeight={"bold"}
+                >
+                  React
+                </Text>
+              </HStack>
+              <HStack
+                justifyContent={"center"}
+                alignItems={"center"}
+                spacing={1}
+              >
+                <Box fontSize={"sm"}>
+                  <BiTimeFive />
+                </Box>
+                <Text
+                  textShadow={"#000 1px 0 10px"}
+                  fontSize={"sm"}
+                  fontWeight={"bold"}
+                >
+                  {date}
+                </Text>
               </HStack>
             </HStack>
-          </CardFooter>
-        </Card>
-      </Box>
+          </Box>
+
+          <Box
+            position={"absolute"}
+            w="full"
+            h="full"
+            background={`linear-gradient(to top, rgba(0,0,0,1) 0% ,rgba(255,255,255,0) 50%)`}
+            top={0}
+            zIndex={-1}
+          />
+        </Flex>
+      </Flex>
     </>
   );
 }

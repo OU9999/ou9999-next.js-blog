@@ -65,7 +65,12 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
 
   return (
     <>
-      <VStack height={"auto"} width="100vw" overflow={"hidden"}>
+      <VStack
+        height={"auto"}
+        width="100vw"
+        overflow={"hidden"}
+        pos={"relative"}
+      >
         <Image
           alt="mainImg"
           w="100vw"

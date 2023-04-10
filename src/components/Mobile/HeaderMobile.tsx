@@ -78,7 +78,7 @@ export default function HeaderMobile() {
       </Button>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent overflow={"hidden"}>
           <DrawerCloseButton />
           <DrawerBody>
             <HStack w="full" justifyContent={"center"} spacing={0}>

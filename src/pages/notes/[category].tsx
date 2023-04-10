@@ -1,17 +1,7 @@
 import NoteMainPageMobile from "@/components/Mobile/Notes/NoteMainPageMobile";
 import NotesMainPage from "@/components/Notes/NoteMainPage";
-import { dbService } from "@/utils/firebase";
 import { useMediaQuery } from "@chakra-ui/react";
-import {
-  collection,
-  orderBy,
-  query,
-  where,
-  getDocs,
-  onSnapshot,
-} from "firebase/firestore";
 import { NextSeo } from "next-seo";
-import { useEffect, useState } from "react";
 
 export interface INotes {
   id: string;
@@ -44,22 +34,7 @@ interface INotesCategoryProps {
 
 export const getServerSideProps = async ({ params }: any) => {
   const { category } = params;
-  // let q;
-  // if (category === "ALL") {
-  //   q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
-  // } else {
-  //   q = query(
-  //     collection(dbService, "notes"),
-  //     where("category", "==", category),
-  //     orderBy("createdAt", "desc")
-  //   );
-  // }
 
-  // const snapshot = await getDocs(q);
-  // const notesArr = snapshot.docs.map((note) => ({
-  //   id: note.id + "",
-  //   ...note.data(),
-  // }));
   return {
     props: { category },
   };

@@ -10,6 +10,7 @@ import "@fontsource/noto-sans-kr";
 import { useEffect, useState } from "react";
 import { Router } from "next/router";
 import Loading from "@/components/Loading";
+import MainImgMobile from "@/components/Mobile/MainImgMobile";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [mobileView] = useMediaQuery("(max-width: 768px)", {
@@ -53,6 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
           onExitComplete={() => window.scrollTo(0, 0)}
         >
           {mobileView ? <HeaderMobile /> : <Header />}
+          {mobileView ? <MainImgMobile /> : null}
           <Component {...pageProps} />
           <Footer />
           {/* {mobileView ? null : <StartModal />} */}

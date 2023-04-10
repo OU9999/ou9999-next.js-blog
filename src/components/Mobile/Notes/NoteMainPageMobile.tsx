@@ -114,31 +114,6 @@ export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
         position={"relative"}
         overflow={"hidden"}
       >
-        <Image
-          alt="mainImg"
-          w="100vw"
-          h={"30vh"}
-          position={"absolute"}
-          zIndex={-1}
-          src="https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2Fmiles.jpeg?alt=media&token=57761a5b-3caa-437a-a1d5-9cb79a4a9fc1"
-        />
-        <Box
-          w="100vw"
-          h="30vh"
-          position={"absolute"}
-          zIndex={1}
-          top={-2}
-          background={
-            "repeating-linear-gradient(0deg,#0e0d0e 25%,#0e0d0e 50%, #171819 50%,  #171819 75%)"
-          }
-          backgroundSize="10px 10px"
-          opacity={0.3}
-        />
-        <Center minH={"30vh"} color="white" zIndex={2}>
-          <Heading textShadow={`3px 3px ${lightColor}`} fontSize={"5xl"}>
-            Notes
-          </Heading>
-        </Center>
         <VStack position={"relative"}>
           <HStack
             gap={3}
@@ -174,7 +149,7 @@ export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
               </Menu>
             </Box>
           </HStack>
-          <VStack gap={10}>
+          <VStack px={10} gap={10}>
             {!notes && (
               <>
                 <LoadingCardMobile />
