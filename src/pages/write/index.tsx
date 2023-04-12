@@ -23,6 +23,22 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import AddModal from "@/components/Write/AddModal";
 import Mobile404 from "@/components/Mobile/404";
 import { NextSeo } from "next-seo";
+import styled from "styled-components";
+
+const CustomStyle = styled.div`
+  blockquote {
+    background-color: gray;
+    border: none;
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+  }
+  img {
+    margin: 10px;
+    width: 100%;
+    border-radius: 20px;
+  }
+`;
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
@@ -172,13 +188,15 @@ export default function Write() {
           </VStack>
           <VStack w={"50%"} minH={"100vh"} justifyContent={"center"}>
             <Box width={"50vw"} data-color-mode={colorMode}>
-              <MDEditor
-                style={{ padding: 10, border: "none" }}
-                value={md}
-                height={secondVh}
-                preview="preview"
-                hideToolbar={true}
-              />
+              <CustomStyle>
+                <MDEditor
+                  style={{ padding: 10, border: "none" }}
+                  value={md}
+                  height={secondVh}
+                  preview="preview"
+                  hideToolbar={true}
+                />
+              </CustomStyle>
             </Box>
           </VStack>
           <AddModal

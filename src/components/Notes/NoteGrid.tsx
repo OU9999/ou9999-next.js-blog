@@ -28,10 +28,9 @@ const item = {
 
 interface INoteGridProps {
   notes: INotes[];
-  limitCount: number;
 }
 
-export default function NoteGrid({ notes, limitCount }: INoteGridProps) {
+export default function NoteGrid({ notes }: INoteGridProps) {
   return (
     <>
       <Grid
@@ -46,11 +45,15 @@ export default function NoteGrid({ notes, limitCount }: INoteGridProps) {
         animate="show"
       >
         {notes &&
-          notes.slice(0, limitCount).map((note, idx: number) => (
+          notes.map((note, idx: number) => (
             <>
               <Box
                 key={note.id}
                 as={motion.div}
+                initial={{
+                  opacity: 0,
+                  y: -100,
+                }}
                 variants={item}
                 whileInView={"show"}
                 custom={idx}

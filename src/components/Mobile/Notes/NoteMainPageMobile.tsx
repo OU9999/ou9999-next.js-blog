@@ -1,15 +1,12 @@
 import { ICategorys, INotes, allCategory } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
 import { dbService } from "@/utils/firebase";
-import { returnColors } from "@/utils/utilFn";
 import {
   Box,
-  Center,
   Divider,
   HStack,
   Heading,
   IconButton,
-  Image,
   Menu,
   MenuButton,
   MenuItem,
@@ -18,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import {
   collection,
+  getDocs,
   limit,
   onSnapshot,
   orderBy,
@@ -29,27 +27,26 @@ import { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import PostMobile from "../Home/PostMobile";
-import LoadingCard from "@/components/Notes/LoadingCard";
 import LoadingCardMobile from "./LoadingCardMobile";
 import { MdExpandMore } from "react-icons/md";
 
 interface INotesMainPageProps {
   category: string;
+  size: number;
 }
 
-export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
+export default function NoteMainPageMobile({
+  category,
+  size,
+}: INotesMainPageProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [categorys, setCategorys] = useState<ICategorys[]>([]);
-  const [lightColor, setLightColor] = useState("");
-  const [notes, setNotes] = useState<INotes[]>();
-  const [limitCount, setLimitCount] = useState(9);
-  const [size, setSize] = useState(0);
+  const [notes, setNotes] = useState<INotes[]>([]);
+  const [limitSize, setLimitSize] = useState(9);
   const [isDisable, setIsDisable] = useState(false);
 
-  const onMoreClicked = () => {
-    if (size >= limitCount) {
-      setLimitCount((prev) => prev + 9);
-    }
+  const onMoreButtonClicked = () => {
+    setLimitSize((prev) => prev + 9);
   };
 
   const getCategorys = async () => {
@@ -66,44 +63,42 @@ export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
     });
   };
 
-  const getNotes = async (category: string) => {
+  const getNotes = async (category: string, limitSize: number) => {
     let q;
     if (category === "ALL") {
-      q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
+      q = query(
+        collection(dbService, "notes"),
+        orderBy("createdAt", "desc"),
+        limit(limitSize)
+      );
     } else {
       q = query(
         collection(dbService, "notes"),
         where("category", "==", category),
-        orderBy("createdAt", "desc")
+        orderBy("createdAt", "desc"),
+        limit(limitSize)
       );
     }
-    onSnapshot(q, (snapshot) => {
-      setSize(snapshot.size);
-      const notesArr: any = snapshot.docs.map((note) => ({
-        id: note.id + "",
-        ...note.data(),
-      }));
-      setNotes(notesArr);
-    });
+    const snapshot = await getDocs(q);
+    const notesArr: any = snapshot.docs.map((note) => ({
+      id: note.id + "",
+      ...note.data(),
+    }));
+    setNotes(notesArr);
   };
 
   useEffect(() => {
-    getCategorys();
-    getNotes(category);
-  }, [category]);
-
-  useEffect(() => {
-    if (size <= limitCount) {
-      setIsDisable(true);
-    } else {
+    if (size >= limitSize) {
       setIsDisable(false);
+    } else {
+      setIsDisable(true);
     }
-  }, [isDisable, limitCount, size]);
+  }, [limitSize, size]);
 
   useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-  }, [colorTheme]);
+    getCategorys();
+    getNotes(category, limitSize);
+  }, [category, limitSize]);
 
   return (
     <>
@@ -150,25 +145,21 @@ export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
             </Box>
           </HStack>
           <VStack px={10} gap={10}>
-            {!notes && (
-              <>
-                <LoadingCardMobile />
-                <LoadingCardMobile />
-                <LoadingCardMobile />
-              </>
-            )}
-            {notes &&
-              notes.slice(0, limitCount).map((note) => (
-                <Box key={note.id} w="full">
-                  <PostMobile
-                    link={note.id}
-                    title={note.title}
-                    thumbnailUrl={note.thumbnailUrl}
-                    category={note.category}
-                    createdAt={note.createdAt}
-                  />
-                </Box>
-              ))}
+            {!notes
+              ? Array.from({ length: 3 }).map((_, index) => (
+                  <LoadingCardMobile key={index} />
+                ))
+              : notes.map((note) => (
+                  <Box key={note.id} w="full">
+                    <PostMobile
+                      link={note.id}
+                      title={note.title}
+                      thumbnailUrl={note.thumbnailUrl}
+                      category={note.category}
+                      createdAt={note.createdAt}
+                    />
+                  </Box>
+                ))}
           </VStack>
           {isDisable ? null : (
             <IconButton
@@ -177,7 +168,7 @@ export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
               padding={"5"}
               variant={"ghost"}
               colorScheme={colorTheme}
-              onClick={onMoreClicked}
+              onClick={onMoreButtonClicked}
             >
               <MdExpandMore />
             </IconButton>
