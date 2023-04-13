@@ -5,6 +5,7 @@ import {
   HStack,
   Heading,
   IconButton,
+  Text,
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -12,6 +13,7 @@ import MainPage from "./MainPage";
 import StartCard from "./StartCard";
 import Link from "next/link";
 import { MdExpandMore } from "react-icons/md";
+import { HiSpeakerphone } from "react-icons/hi";
 import IntroduceModal from "./IntroduceModal";
 import { useEffect, useState } from "react";
 import { INotes } from "@/pages/notes/[category]";
@@ -67,6 +69,15 @@ export default function MainScroll() {
       >
         <MainPage />
         <VStack w={"100%"} justifyContent={"center"}>
+          <HStack border={"1px dashed"} p={10} my={10}>
+            <Box fontSize={"3xl"}>
+              <HiSpeakerphone />
+            </Box>
+            <Text>
+              Firebase 무료 요금제여서... 대역폭 한도가 금방차네요! 한동한
+              이미지 업로드 기능은 제한할 예정입니다!
+            </Text>
+          </HStack>
           <Heading py={10}>START!</Heading>
           <HStack w={"full"}>
             <Center w={"full"}>
@@ -75,21 +86,21 @@ export default function MainScroll() {
                   <StartCard
                     heading="Introduce"
                     text="응애 나 애기 개발자 꿈나무"
-                    src="https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fprofile.jpeg?alt=media&token=9f24e1a0-9580-4fbd-b086-344f45116885"
+                    src={`/assets/imgs/icon/profile.jpeg`}
                   />
                 </Box>
                 <Link href="https://github.com/OU9999" target="_blank">
                   <StartCard
                     heading="Github"
                     text="OU9999"
-                    src="https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fgithub.png?alt=media&token=5fd8376a-906d-4a38-a0bf-5d31dd6a3f66"
+                    src={`/assets/imgs/icon/github.png`}
                   />
                 </Link>
                 <Link href="https://velog.io/@ou9999" target="_blank">
                   <StartCard
                     heading="Velog"
                     text="이전 블로그"
-                    src="https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fvelog.webp?alt=media&token=7050e148-17e9-4bdd-b3fa-42c16e3c19bf"
+                    src={`/assets/imgs/icon/velog.webp`}
                   />
                 </Link>
               </HStack>

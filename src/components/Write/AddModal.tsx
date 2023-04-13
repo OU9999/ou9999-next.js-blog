@@ -195,7 +195,6 @@ export default function AddModal({
           md: md,
           title: title,
           category: selectedCategory,
-          createdAt: Date.now(),
         });
         onClose();
         toast({
@@ -217,7 +216,6 @@ export default function AddModal({
       md: md,
       title: title,
       category: selectedCategory,
-      createdAt: Date.now(),
       thumbnailUrl: getThumbnailUrl,
     });
     toast({

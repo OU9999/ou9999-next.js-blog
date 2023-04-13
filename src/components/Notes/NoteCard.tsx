@@ -8,7 +8,6 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Stack,
   Text,
   useColorModeValue,
@@ -27,6 +26,7 @@ import {
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
+import Image from "next/image";
 
 interface INoteCardProps {
   title: string;
@@ -82,25 +82,26 @@ export default function NoteCard({
           transition={"0.5s"}
         >
           <CardBody>
-            <Box overflow={"hidden"} borderRadius="lg">
+            <Box overflow={"hidden"} borderRadius="lg" h="44" bgColor={"gray"}>
               <Link href={`/entry/${urlTitle}/${link}`}>
-                <Image
-                  width={"full"}
-                  h={"48"}
-                  src={
-                    thumbnailUrl === ""
-                      ? selectBasicThumbnail(category)
-                      : thumbnailUrl
-                  }
-                  alt="thumbnail"
-                  borderRadius="lg"
+                <Box
                   transform={"auto"}
                   scale={hover ? 1.05 : 1}
                   transition={"0.5s"}
-                  cursor="pointer"
-                />
+                >
+                  <Image
+                    src={selectBasicThumbnail(category)}
+                    width={350}
+                    height={180}
+                    alt="thumbnail"
+                    style={{
+                      objectFit: "cover",
+                    }}
+                  />
+                </Box>
               </Link>
             </Box>
+
             <Stack mt="6" spacing="3">
               <Link href={`/entry/${urlTitle}/${link}`}>
                 <Flex h={"12"} alignItems={"center"}>

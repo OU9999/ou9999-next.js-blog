@@ -2,7 +2,6 @@ import {
   Box,
   Heading,
   HStack,
-  Image,
   Text,
   useColorModeValue,
   VStack,
@@ -23,6 +22,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
+import Image from "next/image";
 
 interface IPostProps {
   reverse: boolean;
@@ -155,24 +155,28 @@ export default function Post({
             zIndex={5}
             justifyContent="center"
             alignItems={"center"}
+            pos={"relative"}
           >
             <Link
               href={`/entry/${urlTitle}/${link}`}
               style={{ width: "100%", height: "100%" }}
             >
-              <Image
-                alt="thumbnail"
-                src={
-                  thumbnailUrl === ""
-                    ? selectBasicThumbnail(category)
-                    : thumbnailUrl
-                }
-                width={"100%"}
-                height={"100%"}
-                transform="auto"
+              <Box
+                transform={"auto"}
                 scale={hover ? 1.05 : 1}
-                transition={"0.8s"}
-              />
+                transition={"0.5s"}
+                w="full"
+                h="full"
+              >
+                <Image
+                  src={selectBasicThumbnail(category)}
+                  fill={true}
+                  alt="thumbnail"
+                  style={{
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
             </Link>
           </VStack>
         </HStack>

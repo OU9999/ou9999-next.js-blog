@@ -221,15 +221,15 @@ export default function GBInput() {
                   <Box>
                     <Avatar
                       src={userIconPic}
-                      cursor={"pointer"}
-                      onClick={onUserIconPicButtonClicked}
+                      // cursor={"pointer"}
+                      // onClick={onUserIconPicButtonClicked}
                     />
                   </Box>
                 ) : (
                   <Avatar
                     icon={userIcon.icon}
-                    onClick={onUserIconPicButtonClicked}
-                    cursor={"pointer"}
+                    // onClick={onUserIconPicButtonClicked}
+                    // cursor={"pointer"}
                   />
                 )}
                 <input
@@ -268,7 +268,7 @@ export default function GBInput() {
                 </HStack>
 
                 <HStack>
-                  <Box>
+                  {/* <Box>
                     <Button onClick={onGuestBookImgButtonClicked}>
                       방명록 이미지 첨부
                     </Button>
@@ -279,7 +279,7 @@ export default function GBInput() {
                       ref={guestBookImgInput}
                       style={{ display: "none" }}
                     />
-                  </Box>
+                  </Box> */}
                 </HStack>
               </HStack>
               <Textarea

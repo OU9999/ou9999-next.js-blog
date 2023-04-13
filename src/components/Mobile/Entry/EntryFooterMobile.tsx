@@ -78,7 +78,7 @@ export default function EntryFooterMobile({
             h="40vh"
             position={"absolute"}
             zIndex={-1}
-            src={backgroundImage}
+            src={`/assets/imgs/main/${backgroundImage}`}
           />
           <Box
             w="100vw"

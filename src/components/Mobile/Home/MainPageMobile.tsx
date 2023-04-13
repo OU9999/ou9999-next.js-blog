@@ -25,6 +25,7 @@ import PostMobile from "./PostMobile";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
+import { HiSpeakerphone } from "react-icons/hi";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -122,7 +123,15 @@ export default function MainPageMobile() {
           <Text fontWeight={"bold"}>{quote}</Text>
           <FaQuoteRight />
         </HStack>
-
+        <HStack border={"1px dashed"} p={3} my={10}>
+          <Box fontSize={"3xl"}>
+            <HiSpeakerphone />
+          </Box>
+          <Text>
+            Firebase 무료 요금제여서... 대역폭 한도가 금방차네요! 한동한 이미지
+            업로드 기능은 제한할 예정입니다!
+          </Text>
+        </HStack>
         <Divider />
         <Heading py={10}>최신 글 🔥</Heading>
         <VStack w="full" px={10} gap={10} spacing={0}>

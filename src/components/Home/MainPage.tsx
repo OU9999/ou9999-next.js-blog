@@ -168,7 +168,7 @@ export default function MainPage() {
         backgroundAttachment={"fixed"}
         backgroundSize="cover"
         backgroundPosition={"center center"}
-        backgroundImage={backgroundImage}
+        backgroundImage={`/assets/imgs/main/${backgroundImage}`}
         as={motion.div}
         variants={backgroundVariants}
         animate={backgroundAni}

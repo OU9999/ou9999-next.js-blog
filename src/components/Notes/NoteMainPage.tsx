@@ -122,7 +122,7 @@ export default function NotesMainPage({ category, size }: INotesMainPageProps) {
           backgroundAttachment={"fixed"}
           backgroundSize="cover"
           backgroundPosition={"center center"}
-          backgroundImage="https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/imgs%2Fmiles.jpeg?alt=media&token=57761a5b-3caa-437a-a1d5-9cb79a4a9fc1"
+          backgroundImage="/assets/imgs/main/miles.jpeg"
         />
         <Box
           w="100vw"

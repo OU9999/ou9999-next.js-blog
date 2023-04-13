@@ -43,11 +43,7 @@ export default function OtherCardMobile({
             <HStack w="100%">
               <Image
                 alt="thumbNail"
-                src={
-                  thumbnailUrl === ""
-                    ? selectBasicThumbnail(category)
-                    : thumbnailUrl
-                }
+                src={selectBasicThumbnail(category)}
                 w="14"
                 h="10"
                 rounded={5}

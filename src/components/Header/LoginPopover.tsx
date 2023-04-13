@@ -50,9 +50,7 @@ export default function LoginPopover() {
             zIndex={99}
             size="md"
             name="OU9999"
-            src={
-              "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fprofile.jpeg?alt=media&token=9f24e1a0-9580-4fbd-b086-344f45116885"
-            }
+            src={`/assets/imgs/icon/profile.jpeg`}
             cursor="pointer"
             onClick={onToggle}
           />
@@ -70,9 +68,7 @@ export default function LoginPopover() {
                 <Avatar
                   size="2xl"
                   name="Ryan Florence"
-                  src={
-                    "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fprofile.jpeg?alt=media&token=9f24e1a0-9580-4fbd-b086-344f45116885"
-                  }
+                  src={`/assets/imgs/icon/profile.jpeg`}
                   cursor="pointer"
                 />
                 <VStack spacing={-1}>

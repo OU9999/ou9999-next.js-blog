@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, HStack, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, HStack, Text } from "@chakra-ui/react";
 import { BiTimeFive } from "react-icons/bi";
 import {
   dateFormatter,
@@ -7,6 +7,7 @@ import {
 } from "@/utils/utilFn";
 import Link from "next/link";
 import { GoThreeBars } from "react-icons/go";
+import Image from "next/image";
 
 interface INoteCardProps {
   title: string;
@@ -37,18 +38,17 @@ export default function PostMobile({
           overflow={"hidden"}
           boxShadow={"dark-lg"}
         >
-          <Image
-            alt="thumbNail"
-            src={
-              thumbnailUrl === ""
-                ? selectBasicThumbnail(category)
-                : thumbnailUrl
-            }
-            w="full"
-            h="full"
-            zIndex={-1}
-            pos="absolute"
-          />
+          <Box w="full" h="44" zIndex={-1} pos={"absolute"}>
+            <Image
+              src={selectBasicThumbnail(category)}
+              fill={true}
+              alt="thumbnail"
+              style={{
+                objectFit: "cover",
+              }}
+              priority={true}
+            />
+          </Box>
 
           <Flex
             justifyContent={"flex-end"}
@@ -57,7 +57,7 @@ export default function PostMobile({
             flexDir={"column"}
           >
             <Box pb={3} px={3} color={"white"}>
-              <Heading fontSize={"xl"} noOfLines={1}>
+              <Heading fontSize={"md"} noOfLines={1}>
                 {title}
               </Heading>
               <HStack gap={2}>
@@ -71,7 +71,7 @@ export default function PostMobile({
                   </Box>
                   <Text
                     textShadow={"#000 1px 0 10px"}
-                    fontSize={"xs"}
+                    fontSize={"2xs"}
                     fontWeight={"bold"}
                     noOfLines={1}
                   >

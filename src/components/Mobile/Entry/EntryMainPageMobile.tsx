@@ -87,11 +87,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
           h={"30vh"}
           position={"absolute"}
           zIndex={-1}
-          src={
-            detail.thumbnailUrl === ""
-              ? selectBasicThumbnail(detail.category)
-              : detail.thumbnailUrl
-          }
+          src={selectBasicThumbnail(detail.category)}
         />
         <Box
           w="100vw"
@@ -177,11 +173,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
         <Box px={10} py={16}>
           <Image
             alt="thumbnail"
-            src={
-              detail.thumbnailUrl === ""
-                ? selectBasicThumbnail(detail.category)
-                : detail.thumbnailUrl
-            }
+            src={selectBasicThumbnail(detail.category)}
             rounded="3xl"
             h="auto"
             w={"auto"}

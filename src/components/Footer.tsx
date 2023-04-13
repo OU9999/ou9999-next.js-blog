@@ -1,4 +1,4 @@
-import { isEntryAtom, tocAtom, writeAtom } from "@/utils/atoms";
+import { writeAtom } from "@/utils/atoms";
 import {
   Avatar,
   Box,
@@ -103,9 +103,7 @@ export default function Footer() {
         </HStack>
       </VStack>
       <Avatar
-        src={
-          "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fhug_me.png?alt=media&token=c44657ff-630e-4edb-a382-b78495387339"
-        }
+        src={`/assets/imgs/icon/hug_me.png`}
         display={invisible ? "none" : "block"}
         size={mobileView ? "md" : "xl"}
         position={"fixed"}

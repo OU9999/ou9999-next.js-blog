@@ -102,7 +102,7 @@ export default function MainImgMobile() {
           h={"30vh"}
           position={"absolute"}
           zIndex={-1}
-          src={backgroundImage}
+          src={`/assets/imgs/main/${backgroundImage}`}
           as={motion.img}
           variants={backgroundVariants}
           animate={backgroundAni}

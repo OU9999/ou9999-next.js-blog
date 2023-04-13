@@ -12,7 +12,6 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Text,
   useColorModeValue,
   useDisclosure,
@@ -29,6 +28,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import { useEffect, useState } from "react";
 import Toc from "@/components/Entry/TOC";
 import "@fontsource/noto-sans-kr";
+import Image from "next/image";
 
 //custom style for md view
 const CustomStyle = styled.div`
@@ -187,21 +187,27 @@ export default function EntryMainPage({ detail, docId }: IEntryProps) {
         </Center>
 
         <Box py={32}>
-          <Image
-            alt="thumbnail"
-            src={
-              detail.thumbnailUrl === ""
-                ? selectBasicThumbnail(detail.category)
-                : detail.thumbnailUrl
-            }
+          <Box
+            overflow={"hidden"}
             rounded="3xl"
-            h="auto"
+            w="3xl"
+            h="md"
             maxW={"50vw"}
             transform={"auto"}
             boxShadow={"dark-lg"}
-            border={"0px solid"}
-          />
+          >
+            <Image
+              aria-label="thumbnail"
+              src={selectBasicThumbnail(detail.category)}
+              fill={true}
+              alt="thumbnail"
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </Box>
         </Box>
+
         <Flex
           w="full"
           position={"relative"}

@@ -226,15 +226,15 @@ export default function GBInputMobile() {
                   <Box>
                     <Avatar
                       src={userIconPic}
-                      cursor={"pointer"}
-                      onClick={onUserIconPicButtonClicked}
+                      // cursor={"pointer"}
+                      // onClick={onUserIconPicButtonClicked}
                     />
                   </Box>
                 ) : (
                   <Avatar
                     icon={userIcon.icon}
-                    onClick={onUserIconPicButtonClicked}
-                    cursor={"pointer"}
+                    // onClick={onUserIconPicButtonClicked}
+                    // cursor={"pointer"}
                   />
                 )}
                 <input
@@ -284,7 +284,7 @@ export default function GBInputMobile() {
               <Flex width={"full"} justifyContent={"flex-end"}>
                 <HStack w={"50%"} gap={4}>
                   <HStack>
-                    <Box>
+                    {/* <Box>
                       <IconButton
                         aria-label="ImgUpload"
                         onClick={onGuestBookImgButtonClicked}
@@ -298,7 +298,7 @@ export default function GBInputMobile() {
                         ref={guestBookImgInput}
                         style={{ display: "none" }}
                       />
-                    </Box>
+                    </Box> */}
                   </HStack>
                   {guestBookImg ? (
                     <HStack alignItems={"center"}>

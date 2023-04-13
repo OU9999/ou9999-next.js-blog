@@ -76,7 +76,7 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
             backgroundAttachment={"fixed"}
             backgroundSize="cover"
             backgroundPosition={"center center"}
-            backgroundImage={backgroundImage}
+            backgroundImage={`/assets/imgs/main/${backgroundImage}`}
           />
           <Box
             w="100vw"

@@ -167,12 +167,12 @@ export default function GBComment({
       >
         <HStack w={"full"} justifyContent={"space-between"}>
           <HStack alignItems={"center"} gap={4}>
-            {userIconPic !== "" ? (
+            {/* {userIconPic !== "" ? (
               <Avatar src={userIconPic} />
             ) : (
               <Avatar icon={icon} />
-            )}
-
+            )} */}
+            <Avatar icon={icon} />
             <VStack alignItems={"flex-start"}>
               <Heading fontSize={"2xl"}>{nickname}</Heading>
               <HStack>
@@ -210,7 +210,7 @@ export default function GBComment({
               onChange={(e) => setNewComment(e.currentTarget.value)}
             />
             <Flex w={"full"} gap={5} alignItems={"center"}>
-              <Box>
+              {/* <Box>
                 <Button size={"sm"} onClick={onGuestBookImgButtonClicked}>
                   <FaImage />
                 </Button>
@@ -221,7 +221,7 @@ export default function GBComment({
                   ref={guestBookImgInput}
                   style={{ display: "none" }}
                 />
-              </Box>
+              </Box> */}
               <Box w={"50%"}>
                 {newGuestBookImg ? (
                   <HStack>
@@ -258,9 +258,9 @@ export default function GBComment({
             <Text wordBreak={"break-all"} textAlign={"center"}>
               {comment}
             </Text>
-            {guestBookImg !== "" ? (
+            {/* {guestBookImg !== "" ? (
               <Image src={guestBookImg} h="auto" rounded={"3xl"} alt="GBIMG" />
-            ) : null}
+            ) : null} */}
           </VStack>
         )}
       </VStack>

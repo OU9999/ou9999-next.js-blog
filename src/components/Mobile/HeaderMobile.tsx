@@ -16,6 +16,7 @@ import {
   useColorMode,
   useColorModeValue,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
@@ -46,6 +47,7 @@ export default function HeaderMobile() {
   const relativeColor = useColorModeValue(lightColor, darkColor);
   const Icon = useColorModeValue(FaMoon, FaSun);
   const { toggleColorMode } = useColorMode();
+  const toast = useToast();
 
   useEffect(() => {
     const [lc, dc, hbc] = returnColors(colorTheme);
@@ -53,6 +55,20 @@ export default function HeaderMobile() {
     setDarkColor(dc);
     setBgColor(hbc);
   }, [colorTheme]);
+
+  const onEmailButtonClicked = () => {
+    toast({
+      title: `복사 완료!`,
+      position: "top",
+      isClosable: true,
+      icon: (
+        <Box fontSize={"2xl"}>
+          <MdEmail />
+        </Box>
+      ),
+    });
+    navigator.clipboard.writeText("omh232323@gmail.com");
+  };
 
   return (
     <>
@@ -117,9 +133,7 @@ export default function HeaderMobile() {
                 mt={10}
                 size={"xl"}
                 name="OU9999"
-                src={
-                  "https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fprofile.jpeg?alt=media&token=9f24e1a0-9580-4fbd-b086-344f45116885"
-                }
+                src={`/assets/imgs/icon/profile.jpeg`}
               />
               <HStack w="full" justifyContent={"center"}>
                 <Flex gap={1}>
@@ -140,6 +154,18 @@ export default function HeaderMobile() {
                     px={"3"}
                     py={"8"}
                     colorScheme={"twitter"}
+                    onClick={() =>
+                      toast({
+                        title: `사실 트위터 안함 ㅋ`,
+                        position: "top",
+                        isClosable: true,
+                        icon: (
+                          <Box fontSize={"2xl"}>
+                            <FaTwitter />
+                          </Box>
+                        ),
+                      })
+                    }
                   >
                     <FaTwitter />
                   </Button>
@@ -149,6 +175,18 @@ export default function HeaderMobile() {
                     px={"3"}
                     py={"8"}
                     colorScheme={"pink"}
+                    onClick={() =>
+                      toast({
+                        title: `사실 인스타 안함 ㅋ`,
+                        position: "top",
+                        isClosable: true,
+                        icon: (
+                          <Box fontSize={"2xl"}>
+                            <FaInstagram />
+                          </Box>
+                        ),
+                      })
+                    }
                   >
                     <FaInstagram />
                   </Button>
@@ -158,7 +196,7 @@ export default function HeaderMobile() {
                     px={"3"}
                     py={"8"}
                     colorScheme={"green"}
-                    // onClick={onEmailButtonClicked}
+                    onClick={onEmailButtonClicked}
                   >
                     <MdEmail />
                   </Button>

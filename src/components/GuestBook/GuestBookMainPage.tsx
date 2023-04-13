@@ -27,7 +27,7 @@ export default function GuestBookMainPage() {
           backgroundAttachment={"fixed"}
           backgroundSize="cover"
           backgroundPosition={"center center"}
-          backgroundImage="https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fjerry.gif?alt=media&token=b7813d8a-f932-46ee-a480-dca70707d3c6"
+          backgroundImage="/assets/imgs/icon/jerry.gif"
         />
         <Box
           w="100vw"
