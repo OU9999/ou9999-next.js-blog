@@ -56,10 +56,7 @@ export default function Entry({ detail, docId }: IEntryProps) {
           description: `${desc} | OU9999's First Blog`,
           images: [
             {
-              url:
-                detail.thumbnailUrl === ""
-                  ? (selectBasicThumbnail(detail.category) as string)
-                  : (detail.thumbnailUrl as string),
+              url: selectBasicThumbnail(detail.category) as string,
               width: 285,
               height: 167,
               alt: "thumbnail",

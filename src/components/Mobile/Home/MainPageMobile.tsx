@@ -118,6 +118,7 @@ export default function MainPageMobile() {
           variants={backgroundVariants}
           animate={backgroundAni}
           initial={"normal"}
+          py={3}
         >
           <FaQuoteLeft />
           <Text fontWeight={"bold"}>{quote}</Text>

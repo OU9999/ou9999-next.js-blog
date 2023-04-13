@@ -1,4 +1,3 @@
-import NoteMainPageMobile from "@/components/Mobile/Notes/NoteMainPageMobile";
 import NotesMainPage from "@/components/Notes/NoteMainPage";
 import { dbService } from "@/utils/firebase";
 import { useMediaQuery } from "@chakra-ui/react";
