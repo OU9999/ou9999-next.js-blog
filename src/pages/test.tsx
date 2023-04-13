@@ -1,6 +1,10 @@
 import { images } from "@/constants/mainpageArray";
 import { colorThemeAtom, writeAtom } from "@/utils/atoms";
-import { returnColors } from "@/utils/utilFn";
+import {
+  dateFormatter,
+  dateFormatterMobile,
+  returnColors,
+} from "@/utils/utilFn";
 import { Box, Center, Flex, HStack } from "@chakra-ui/react";
 import { motion, useAnimation, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -8,6 +12,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
 import TestText from "@/components/Test/TestText";
+import moment from "moment";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -79,7 +84,7 @@ export default function MainPage() {
         backgroundAttachment={"fixed"}
         backgroundSize="cover"
         backgroundPosition={"center center"}
-        backgroundImage={backgroundImage}
+        backgroundImage={`/assets/imgs/main/${backgroundImage}`}
         as={motion.div}
         variants={backgroundVariants}
         animate={backgroundAni}

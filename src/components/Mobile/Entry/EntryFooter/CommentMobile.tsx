@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { dateFormatter } from "@/utils/utilFn";
+import { dateFormatterMobile } from "@/utils/utilFn";
 import {
   collection,
   deleteDoc,
@@ -73,7 +73,7 @@ export default function CommentMobile({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
-  const date = dateFormatter(createdAt);
+  const date = dateFormatterMobile(createdAt);
 
   const onDeleteClick = async () => {
     const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
@@ -194,7 +194,7 @@ export default function CommentMobile({
               <HStack>
                 <Text fontSize={"xs"}>
                   {date}
-                  {edited ? "(수정됨)" : null}
+                  {edited ? " (수정됨)" : null}
                 </Text>
               </HStack>
             </VStack>

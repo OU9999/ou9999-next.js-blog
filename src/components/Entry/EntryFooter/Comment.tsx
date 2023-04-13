@@ -21,7 +21,7 @@ import CommentDeleteModal from "./CommentDeleteModal";
 import { userIcons } from "./CommentInput";
 import CommentPopover from "./CommentPopover";
 import CommentReplyInput from "./CommentReplyInput";
-import { dateFormatter } from "@/utils/utilFn";
+import { dateFormatterMobile } from "@/utils/utilFn";
 import {
   collection,
   doc,
@@ -78,7 +78,7 @@ export default function Comment({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
-  const date = dateFormatter(createdAt);
+  const date = dateFormatterMobile(createdAt);
 
   const onUpdateButtonClick = async () => {
     if (newComment.length > 500) {
@@ -163,7 +163,7 @@ export default function Comment({
               <HStack>
                 <Text fontSize={"xs"}>
                   {date}
-                  {edited ? "(수정됨)" : null}
+                  {edited ? " (수정됨)" : null}
                 </Text>
               </HStack>
             </VStack>

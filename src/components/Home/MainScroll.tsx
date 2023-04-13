@@ -28,6 +28,22 @@ import {
 } from "firebase/firestore";
 import { dbService } from "@/utils/firebase";
 import Post from "./Post";
+import { motion } from "framer-motion";
+
+const item = {
+  hidden: { opacity: 0 },
+  show: (idx: number) => {
+    return {
+      opacity: [0, 1],
+      y: [100, 0],
+      transition: {
+        duration: 0.5,
+        type: "linear",
+        delay: 0.05 * idx,
+      },
+    };
+  },
+};
 
 export default function MainScroll() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -111,16 +127,29 @@ export default function MainScroll() {
           <Heading py={10}>최신 글 🔥</Heading>
           <VStack gap={10}>
             {notes?.map((note, index) => (
-              <Post
+              <Box
                 key={note.id}
-                link={note.id}
-                title={note.title}
-                md={note.md}
-                thumbnailUrl={note.thumbnailUrl}
-                category={note.category}
-                createdAt={note.createdAt}
-                reverse={index % 2 === 0 ? true : false}
-              />
+                as={motion.div}
+                initial={{
+                  opacity: 0,
+                  y: 100,
+                }}
+                variants={item}
+                whileInView={"show"}
+                custom={index}
+                viewport={{ once: true }}
+              >
+                <Post
+                  key={note.id}
+                  link={note.id}
+                  title={note.title}
+                  md={note.md}
+                  thumbnailUrl={note.thumbnailUrl}
+                  category={note.category}
+                  createdAt={note.createdAt}
+                  reverse={index % 2 === 0 ? true : false}
+                />
+              </Box>
             ))}
             <IconButton
               aria-label="expand"

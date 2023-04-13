@@ -29,6 +29,38 @@ export const dateFormatter = (time: number | Date) => {
   return formattedDateKR;
 };
 
+export const dateFormatterMobile = (time: number | Date) => {
+  const oldDate = new Date(time);
+  const now = new Date();
+  const diffTime = now.getTime() - oldDate.getTime();
+  const diffDay = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDay === 0) {
+    return oldDate.toLocaleString("ko-KR", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  } else if (diffDay < 365) {
+    return oldDate.toLocaleString("ko-KR", {
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  } else {
+    return oldDate.toLocaleString("ko-KR", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  }
+};
+
 export const selectBasicThumbnail = (category: string) => {
   switch (category) {
     case "React":

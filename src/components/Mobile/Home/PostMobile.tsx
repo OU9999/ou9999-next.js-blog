@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, HStack, Text } from "@chakra-ui/react";
 import { BiTimeFive } from "react-icons/bi";
 import {
-  dateFormatter,
+  dateFormatterMobile,
   returnUrlTitle,
   selectBasicThumbnail,
 } from "@/utils/utilFn";
@@ -24,7 +24,7 @@ export default function PostMobile({
   thumbnailUrl,
   link,
 }: INoteCardProps) {
-  const date = dateFormatter(createdAt);
+  const date = dateFormatterMobile(createdAt);
   const urlTitle = returnUrlTitle(title);
 
   return (

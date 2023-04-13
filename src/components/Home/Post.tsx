@@ -12,6 +12,7 @@ import { BiTimeFive } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import {
   dateFormatter,
+  dateFormatterMobile,
   returnColors,
   returnDescription,
   returnUrlTitle,
@@ -49,7 +50,7 @@ export default function Post({
     "rgba(45,55,72,1)"
   );
   const colorMode = useColorModeValue("light", "dark");
-  const date = dateFormatter(createdAt);
+  const date = dateFormatterMobile(createdAt);
   const urlTitle = returnUrlTitle(title);
   const desc = returnDescription(md);
   const colorTheme = useRecoilValue(colorThemeAtom);

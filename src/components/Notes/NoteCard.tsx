@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { FaEye, FaRegCommentDots } from "react-icons/fa";
 import { BiTimeFive } from "react-icons/bi";
 import {
-  dateFormatter,
+  dateFormatterMobile,
   returnColors,
   returnDescription,
   returnUrlTitle,
@@ -51,7 +51,7 @@ export default function NoteCard({
     "rgba(255,255,255,1)",
     "rgba(45,55,72,1)"
   );
-  const date = dateFormatter(createdAt);
+  const date = dateFormatterMobile(createdAt);
   const urlTitle = returnUrlTitle(title);
   const desc = returnDescription(md);
 
@@ -126,14 +126,6 @@ export default function NoteCard({
                   overflow={"hidden"}
                   data-color-mode={colorMode}
                 >
-                  {/* <NoStyle>
-                    <MarkdownPreview
-                      source={md}
-                      style={{
-                        backgroundColor: mdBgColor,
-                      }}
-                    />
-                  </NoStyle> */}
                   <Text>{desc}</Text>
                 </Box>
                 <Box

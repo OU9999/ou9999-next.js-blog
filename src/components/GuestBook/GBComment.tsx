@@ -21,7 +21,7 @@ import { FaCommentSlash, FaImage } from "react-icons/fa";
 import GBCommentDeleteModal from "./GBCommentDeleteModal";
 import GBCommentPopover from "./GBCommentPopover";
 import { userIcons } from "./GBInput";
-import { dateFormatter } from "@/utils/utilFn";
+import { dateFormatterMobile } from "@/utils/utilFn";
 import { doc, updateDoc } from "firebase/firestore";
 import { dbService, storageService } from "@/utils/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
@@ -61,7 +61,7 @@ export default function GBComment({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
-  const date = dateFormatter(createdAt);
+  const date = dateFormatterMobile(createdAt);
   const guestBookImgInput = useRef<HTMLInputElement>(null);
 
   const onUpdateButtonClick = async () => {
@@ -178,7 +178,7 @@ export default function GBComment({
               <HStack>
                 <Text fontSize={"xs"}>
                   {date}
-                  {edited ? "(수정됨)" : null}
+                  {edited ? " (수정됨)" : null}
                 </Text>
               </HStack>
             </VStack>

@@ -1,5 +1,6 @@
-import { Box, Image, Center, Heading, Text } from "@chakra-ui/react";
+import { Box, Center, Heading, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
 
 interface IStartCardProps {
@@ -63,19 +64,27 @@ export default function StartCard({ heading, text, src }: IStartCardProps) {
             </Center>
           </Center>
         </Center>
-        <Image
-          alt="src"
-          src={src}
-          bgColor={"red"}
+        <Box
+          transform={"auto"}
+          transition={"0.5s"}
           w="full"
           h="full"
           position={"absolute"}
           top="0"
-          transform={"auto"}
-          transition={"0.5s"}
           scale={show ? 1.1 : 1}
           zIndex={2}
-        />
+        >
+          <Image
+            src={src}
+            fill={true}
+            alt="thumbnail"
+            style={{
+              objectFit: "cover",
+            }}
+            placeholder="blur"
+            blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
+          />
+        </Box>
       </Box>
     </>
   );
