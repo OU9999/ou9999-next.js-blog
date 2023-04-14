@@ -91,6 +91,7 @@ export default function NoteCard({
                 >
                   <Image
                     src={selectBasicThumbnail(category)}
+                    quality={30}
                     width={350}
                     height={180}
                     alt="thumbnail"

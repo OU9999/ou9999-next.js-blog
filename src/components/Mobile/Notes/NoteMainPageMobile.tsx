@@ -25,9 +25,9 @@ export default function NoteMainPageMobile({
         position={"relative"}
         overflow={"hidden"}
       >
-        <VStack position={"relative"}>
+        <VStack position={"relative"} w="full">
           <NoteCategorySelectorMobile category={category} />
-          <VStack px={10} gap={10}>
+          <VStack px={10} gap={10} w="full">
             <NoteGridMobile category={category} size={size} />
           </VStack>
           <Divider py={3} />

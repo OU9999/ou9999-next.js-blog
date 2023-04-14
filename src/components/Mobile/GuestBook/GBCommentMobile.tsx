@@ -5,7 +5,6 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Text,
   Textarea,
   useColorModeValue,
@@ -22,6 +21,7 @@ import { uuidv4 } from "@firebase/util";
 import { userIcons } from "./GBInputMobile";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
+import Image from "next/image";
 
 interface ICommentProps {
   nickname: string;
@@ -203,7 +203,23 @@ export default function GBCommentMobile({
             ) : (
               <Avatar src={userIconPic} size={"sm"} />
             )} */}
-            <Avatar src={userIconPic} size={"sm"} />
+            {userIconPic !== "" ? (
+              <Avatar overflow={"hidden"}>
+                <Image
+                  src={userIconPic}
+                  fill={true}
+                  alt="userIconPic"
+                  quality={10}
+                  style={{
+                    objectFit: "cover",
+                  }}
+                  placeholder="blur"
+                  blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
+                />
+              </Avatar>
+            ) : (
+              <Avatar icon={icon} />
+            )}
             <VStack alignItems={"flex-start"} spacing={0}>
               <Heading fontSize={"xl"}>{nickname}</Heading>
               <HStack>
@@ -277,12 +293,22 @@ export default function GBCommentMobile({
           </VStack>
         ) : (
           <VStack w="full" alignItems={"flex-start"} gap={3}>
-            <Text wordBreak={"break-all"} textAlign={"center"}>
-              {comment}
-            </Text>
-            {/* {guestBookImg !== "" ? (
-              <Image src={guestBookImg} h="auto" rounded={"3xl"} alt="GBIMG" />
-            ) : null} */}
+            <Text wordBreak={"break-all"}>{comment}</Text>
+            <Box w="full" h="auto" rounded={"md"} overflow={"hidden"}>
+              {guestBookImg !== "" ? (
+                <Image
+                  src={guestBookImg}
+                  alt="GBImg"
+                  width={800}
+                  height={800}
+                  style={{
+                    objectFit: "cover",
+                  }}
+                  placeholder="blur"
+                  blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
+                />
+              ) : null}
+            </Box>
           </VStack>
         )}
       </VStack>
