@@ -4,12 +4,17 @@ import { Center, Heading, VStack, Box, Divider } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import NoteCategorySelector from "./NoteCategorySelector";
-import NoteGridPage from "./NoteGridPage";
+import dynamic from "next/dynamic";
+import LoadingGrid from "./LoadingGrid";
 
 interface INotesMainPageProps {
   category: string;
   size: number;
 }
+
+const NoteGridPage = dynamic(() => import("./NoteGridPage"), {
+  loading: () => <LoadingGrid />,
+});
 
 export default function NotesMainPage({ category, size }: INotesMainPageProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
@@ -53,6 +58,7 @@ export default function NotesMainPage({ category, size }: INotesMainPageProps) {
         </Center>
         <VStack position={"relative"}>
           <NoteCategorySelector category={category} />
+
           <NoteGridPage category={category} size={size} />
           <Divider py={3} />
         </VStack>

@@ -1,9 +1,8 @@
-import EntryFooter from "@/components/Entry/EntryFooter";
 import { selectBasicThumbnail } from "@/utils/utilFn";
 import { Box, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import EntryHeader from "./EntryHeader";
-import EntryMarkdown from "./EntryMarkdown";
+import dynamic from "next/dynamic";
 
 export interface IDetail {
   category: string;
@@ -17,6 +16,9 @@ export interface IEntryProps {
   detail: IDetail;
   docId: string;
 }
+
+const DynamicEntryMarkdown = dynamic(() => import("./EntryMarkdown"));
+const DynamicEntryFooter = dynamic(() => import("./EntryFooter"));
 
 export default function EntryMainPage({ detail, docId }: IEntryProps) {
   return (
@@ -34,7 +36,6 @@ export default function EntryMainPage({ detail, docId }: IEntryProps) {
             boxShadow={"dark-lg"}
           >
             <Image
-              aria-label="thumbnail"
               src={selectBasicThumbnail(detail.category)}
               fill={true}
               alt="thumbnail"
@@ -46,9 +47,9 @@ export default function EntryMainPage({ detail, docId }: IEntryProps) {
             />
           </Box>
         </Box>
-        <EntryMarkdown md={detail.md} />
+        <DynamicEntryMarkdown md={detail.md} />
         <Box position={"relative"} w="full" h="auto" zIndex={32}>
-          <EntryFooter category={detail.category} docId={docId} />
+          <DynamicEntryFooter category={detail.category} docId={docId} />
         </Box>
       </VStack>
     </>

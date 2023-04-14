@@ -1,7 +1,7 @@
 import { INotes } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
 import { dbService } from "@/utils/firebase";
-import { Box, IconButton, VStack } from "@chakra-ui/react";
+import { Box, IconButton } from "@chakra-ui/react";
 import {
   collection,
   getDocs,
@@ -13,7 +13,6 @@ import {
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import PostMobile from "../Home/PostMobile";
-import LoadingCardMobile from "./LoadingCardMobile";
 import { MdExpandMore } from "react-icons/md";
 
 interface INoteGridMobileProps {
@@ -72,23 +71,18 @@ export default function NoteGridMobile({
 
   return (
     <>
-      <VStack px={10} gap={10}>
-        {!notes
-          ? Array.from({ length: 3 }).map((_, index) => (
-              <LoadingCardMobile key={index} />
-            ))
-          : notes.map((note) => (
-              <Box key={note.id} w="full">
-                <PostMobile
-                  link={note.id}
-                  title={note.title}
-                  thumbnailUrl={note.thumbnailUrl}
-                  category={note.category}
-                  createdAt={note.createdAt}
-                />
-              </Box>
-            ))}
-      </VStack>
+      {notes.map((note) => (
+        <Box key={note.id} w="full">
+          <PostMobile
+            link={note.id}
+            title={note.title}
+            thumbnailUrl={note.thumbnailUrl}
+            category={note.category}
+            createdAt={note.createdAt}
+          />
+        </Box>
+      ))}
+
       {isDisable ? null : (
         <IconButton
           aria-label="expand"

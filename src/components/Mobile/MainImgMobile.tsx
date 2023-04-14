@@ -3,7 +3,6 @@ import {
   Center,
   Flex,
   HStack,
-  Image,
   Text,
   VStack,
   useColorModeValue,
@@ -18,6 +17,7 @@ import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -96,18 +96,28 @@ export default function MainImgMobile() {
         overflow={"hidden"}
         display={isEntry ? "none" : undefined}
       >
-        <Image
-          alt="mainImg"
+        <Box
           w="100vw"
           h={"30vh"}
           position={"absolute"}
           zIndex={-1}
-          src={`/assets/imgs/main/${backgroundImage}`}
-          as={motion.img}
+          as={motion.div}
           variants={backgroundVariants}
           animate={backgroundAni}
           initial={"normal"}
-        />
+        >
+          <Image
+            src={`/assets/imgs/main/${backgroundImage}`}
+            fill={true}
+            alt="background"
+            style={{
+              objectFit: "cover",
+            }}
+            placeholder="blur"
+            blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
+          />
+        </Box>
+
         <Box
           w="100vw"
           h={"30vh"}

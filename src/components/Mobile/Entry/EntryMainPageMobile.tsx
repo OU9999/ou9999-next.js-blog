@@ -2,11 +2,10 @@ import { isEntryAtom } from "@/utils/atoms";
 import { selectBasicThumbnail } from "@/utils/utilFn";
 import { Box, Center, VStack } from "@chakra-ui/react";
 import { useSetRecoilState } from "recoil";
-import EntryFooterMobile from "./EntryFooterMobile";
 import { useEffect } from "react";
 import Image from "next/image";
 import EntryHeaderMobile from "./EntryHeaderMobile";
-import EntryMarkdownMobile from "./EntryMarkdownMobile";
+import dynamic from "next/dynamic";
 
 export interface IDetail {
   category: string;
@@ -20,6 +19,11 @@ interface IEntryProps {
   detail: IDetail;
   docId: string;
 }
+
+const DynamicEntryMarkdownMobile = dynamic(
+  () => import("./EntryMarkdownMobile")
+);
+const DynamicEntryFooterMobile = dynamic(() => import("./EntryFooterMobile"));
 
 export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
   const setIsEntry = useSetRecoilState(isEntryAtom);
@@ -51,7 +55,6 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
             boxShadow={"dark-lg"}
           >
             <Image
-              aria-label="thumbnail"
               src={selectBasicThumbnail(detail.category)}
               fill={true}
               alt="thumbnail"
@@ -64,7 +67,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
           </Box>
         </Center>
 
-        <EntryMarkdownMobile md={detail.md} />
+        <DynamicEntryMarkdownMobile md={detail.md} />
 
         <Box
           position={"relative"}
@@ -73,7 +76,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
           overflow={"hidden"}
           zIndex={32}
         >
-          <EntryFooterMobile category={detail.category} docId={docId} />
+          <DynamicEntryFooterMobile category={detail.category} docId={docId} />
         </Box>
       </VStack>
     </>

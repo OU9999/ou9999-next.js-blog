@@ -2,7 +2,7 @@ import NoteGrid from "@/components/Notes/NoteGrid";
 import { INotes } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
 import { dbService } from "@/utils/firebase";
-import { IconButton, Grid } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
 import {
   collection,
   getDocs,
@@ -13,7 +13,6 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import LoadingCard from "./LoadingCard";
 import { MdExpandMore } from "react-icons/md";
 
 interface INoteGridPageProps {
@@ -73,21 +72,7 @@ export default function NoteGridPage({ category, size }: INoteGridPageProps) {
 
   return (
     <>
-      {!notes ? (
-        <Grid
-          templateColumns={"repeat(3, 1fr)"}
-          px={10}
-          columnGap={8}
-          rowGap={16}
-          pb={20}
-        >
-          {Array.from({ length: 3 }).map((_, index) => (
-            <LoadingCard key={index} />
-          ))}
-        </Grid>
-      ) : (
-        <NoteGrid notes={notes} />
-      )}
+      <NoteGrid notes={notes} />
       {isDisable ? null : (
         <IconButton
           aria-label="expand"
