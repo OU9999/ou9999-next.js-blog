@@ -6,7 +6,6 @@ import {
   Heading,
   HStack,
   IconButton,
-  Image,
   Text,
   Textarea,
   Tooltip,
@@ -26,6 +25,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { dbService, storageService } from "@/utils/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { uuidv4 } from "@firebase/util";
+import Image from "next/image";
 
 interface ICommentProps {
   nickname: string;
@@ -167,12 +167,24 @@ export default function GBComment({
       >
         <HStack w={"full"} justifyContent={"space-between"}>
           <HStack alignItems={"center"} gap={4}>
-            {/* {userIconPic !== "" ? (
-              <Avatar src={userIconPic} />
+            {userIconPic !== "" ? (
+              <Avatar overflow={"hidden"}>
+                <Image
+                  src={userIconPic}
+                  fill={true}
+                  alt="userIconPic"
+                  quality={10}
+                  style={{
+                    objectFit: "cover",
+                  }}
+                  placeholder="blur"
+                  blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
+                />
+              </Avatar>
             ) : (
               <Avatar icon={icon} />
-            )} */}
-            <Avatar icon={icon} />
+            )}
+            {/* <Avatar icon={icon} /> */}
             <VStack alignItems={"flex-start"}>
               <Heading fontSize={"2xl"}>{nickname}</Heading>
               <HStack>
@@ -226,7 +238,17 @@ export default function GBComment({
                 {newGuestBookImg ? (
                   <HStack>
                     <Box h={"10"} w={"10"}>
-                      <Image src={newGuestBookImg} alt="newGBImg" />
+                      <Image
+                        src={newGuestBookImg}
+                        alt="newGBImg"
+                        fill={true}
+                        quality={10}
+                        style={{
+                          objectFit: "cover",
+                        }}
+                        placeholder="blur"
+                        blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
+                      />
                     </Box>
                     <Button size={"sm"} onClick={onClearButtonClicked}>
                       삭제
@@ -258,9 +280,21 @@ export default function GBComment({
             <Text wordBreak={"break-all"} textAlign={"center"}>
               {comment}
             </Text>
-            {/* {guestBookImg !== "" ? (
-              <Image src={guestBookImg} h="auto" rounded={"3xl"} alt="GBIMG" />
-            ) : null} */}
+            <Box w="full" h="auto" rounded={"md"} overflow={"hidden"}>
+              {guestBookImg !== "" ? (
+                <Image
+                  src={guestBookImg}
+                  alt="GBImg"
+                  width={800}
+                  height={800}
+                  style={{
+                    objectFit: "cover",
+                  }}
+                  placeholder="blur"
+                  blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
+                />
+              ) : null}
+            </Box>
           </VStack>
         )}
       </VStack>

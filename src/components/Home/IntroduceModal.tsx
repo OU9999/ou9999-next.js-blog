@@ -1,6 +1,6 @@
 import {
+  Box,
   Button,
-  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,6 +11,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import Image from "next/image";
 
 interface IIntroduceModalProps {
   isOpen: boolean;
@@ -35,8 +36,14 @@ export default function IntroduceModal({
               </Text>
               <Image
                 alt="ddabbong"
-                rounded={"3xl"}
-                src="https://firebasestorage.googleapis.com/v0/b/ou9999-first-blog.appspot.com/o/icons%2Fthumbs_up.gif?alt=media&token=acc97150-574c-49c1-ab13-23daa87e646b"
+                src={"/assets/imgs/icon/thumbs_up.gif"}
+                width={400}
+                height={300}
+                style={{
+                  objectFit: "cover",
+                }}
+                placeholder="blur"
+                blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
               />
             </VStack>
           </ModalBody>
