@@ -14,6 +14,7 @@ interface INotesMainPageProps {
 
 const NoteGridPage = dynamic(() => import("./NoteGridPage"), {
   loading: () => <LoadingGrid />,
+  ssr: false,
 });
 
 export default function NotesMainPage({ category, size }: INotesMainPageProps) {
