@@ -1,5 +1,5 @@
 import { dbService } from "@/utils/firebase";
-import { returnDescription, selectBasicThumbnail } from "@/utils/utilFn";
+import { selectBasicThumbnail } from "@/utils/utilFn";
 import { useMediaQuery } from "@chakra-ui/react";
 import { doc, getDoc } from "firebase/firestore";
 import { NextSeo } from "next-seo";
@@ -23,6 +23,7 @@ export interface IDetail {
   md: string;
   thumbnailUrl: string;
   title: string;
+  description: string;
 }
 
 interface IEntryProps {
@@ -37,7 +38,7 @@ export default function Entry({ detail, docId }: IEntryProps) {
   });
   const [EntryMainPageMobile, setEntryMainPageMobile] =
     useState<React.ComponentType<IEntryProps> | null>(null);
-  const desc = returnDescription(detail.md);
+
   useEffect(() => {
     import("@/components/Mobile/Entry/EntryMainPageMobile").then((module) => {
       setEntryMainPageMobile(() => module.default);
@@ -48,12 +49,12 @@ export default function Entry({ detail, docId }: IEntryProps) {
     <>
       <NextSeo
         title={`${detail.title} | OU9999's First Blog`}
-        description={`${desc} | OU9999's First Blog`}
+        description={`${detail.description} | OU9999's First Blog`}
         openGraph={{
           type: "website",
           url: "no",
           title: `${detail.title} | OU9999's First Blog`,
-          description: `${desc} | OU9999's First Blog`,
+          description: `${detail.description} | OU9999's First Blog`,
           images: [
             {
               url: selectBasicThumbnail(detail.category) as string,
