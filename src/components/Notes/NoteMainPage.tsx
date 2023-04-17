@@ -12,27 +12,19 @@ interface INotesMainPageProps {
   size: number;
 }
 
-// const NoteGridPage = dynamic(() => import("./NoteGridPage"), {
-//   loading: () => <LoadingGrid />,
-//   ssr: false,
-// });
+const NoteGridPage = dynamic(() => import("./NoteGridPage"), {
+  loading: () => <LoadingGrid />,
+  ssr: false,
+});
 
 export default function NotesMainPage({ category, size }: INotesMainPageProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [lightColor, setLightColor] = useState("");
-  const [NoteGridPage, setNoteGridPage] =
-    useState<React.ComponentType<INotesMainPageProps> | null>(null);
 
   useEffect(() => {
     const [lc, dc, hbc] = returnColors(colorTheme);
     setLightColor(lc);
   }, [colorTheme]);
-
-  useEffect(() => {
-    import("./NoteGridPage").then((module) => {
-      setNoteGridPage(() => module.default);
-    });
-  }, []);
 
   return (
     <>
@@ -68,11 +60,7 @@ export default function NotesMainPage({ category, size }: INotesMainPageProps) {
         <VStack position={"relative"}>
           <NoteCategorySelector category={category} />
 
-          {NoteGridPage ? (
-            <NoteGridPage category={category} size={size} />
-          ) : (
-            <LoadingGrid />
-          )}
+          <NoteGridPage category={category} size={size} />
           <Divider py={3} />
         </VStack>
       </VStack>

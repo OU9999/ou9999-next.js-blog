@@ -12,6 +12,7 @@ export interface INotes {
   title: string;
   md: string;
   thumbnailUrl: string;
+  description: string;
 }
 
 export interface ICategorys {

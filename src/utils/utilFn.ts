@@ -117,5 +117,5 @@ export const returnLinkTitle = (title: string) => {
 };
 
 export const returnDescription = (md: string) => {
-  return markdownToTxt(md).substring(0, 300) + "...";
+  return markdownToTxt(md).substring(0, 150) + "...";
 };

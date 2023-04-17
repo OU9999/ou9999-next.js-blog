@@ -19,7 +19,6 @@ import { BiTimeFive } from "react-icons/bi";
 import {
   dateFormatterMobile,
   returnColors,
-  returnDescription,
   returnUrlTitle,
   selectBasicThumbnail,
 } from "@/utils/utilFn";
@@ -30,20 +29,20 @@ import Image from "next/image";
 
 interface INoteCardProps {
   title: string;
-  md: string;
   category: string;
   createdAt: number;
   thumbnailUrl: string;
   link: string;
+  description: string;
 }
 
 export default function NoteCard({
   title,
-  md,
   category,
   createdAt,
   thumbnailUrl,
   link,
+  description,
 }: INoteCardProps) {
   const [hover, setHover] = useState(false);
   const colorMode = useColorModeValue("light", "dark");
@@ -53,7 +52,6 @@ export default function NoteCard({
   );
   const date = dateFormatterMobile(createdAt);
   const urlTitle = returnUrlTitle(title);
-  const desc = returnDescription(md);
 
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [lightColor, setLightColor] = useState("");
@@ -127,7 +125,7 @@ export default function NoteCard({
                   overflow={"hidden"}
                   data-color-mode={colorMode}
                 >
-                  <Text>{desc}</Text>
+                  <Text>{description}</Text>
                 </Box>
                 <Box
                   position={"absolute"}

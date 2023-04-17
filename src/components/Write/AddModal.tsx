@@ -1,4 +1,5 @@
 import { dbService, storageService } from "@/utils/firebase";
+import { returnDescription } from "@/utils/utilFn";
 import {
   Accordion,
   AccordionButton,
@@ -82,6 +83,7 @@ export default function AddModal({
     defaultCategory
   );
   const toast = useToast();
+  const description = returnDescription(md);
 
   const getCategorys = async () => {
     const q = query(
@@ -173,11 +175,12 @@ export default function AddModal({
       category: selectedCategory,
       createdAt: Date.now(),
       thumbnailUrl: getThumbnailUrl,
+      description: description,
     });
     setThumbnail(undefined);
     setSelectedCategory(undefined);
     onClose();
-    router.push("/notes/ALL");
+    router.push(`/notes/${selectedCategory}`);
     toast({
       title: "노트작성 완료!",
       position: "top",
@@ -195,6 +198,7 @@ export default function AddModal({
           md: md,
           title: title,
           category: selectedCategory,
+          description: description,
         });
         onClose();
         toast({
@@ -202,7 +206,7 @@ export default function AddModal({
           position: "top",
           isClosable: true,
         });
-        router.push("/notes/ALL");
+        router.push(`/notes/${selectedCategory}`);
         return;
       }
       const response = await uploadString(
@@ -217,13 +221,14 @@ export default function AddModal({
       title: title,
       category: selectedCategory,
       thumbnailUrl: getThumbnailUrl,
+      description: description,
     });
     toast({
       title: "노트 업데이트 완료!",
       position: "top",
       isClosable: true,
     });
-    router.push("/notes/ALL");
+    router.push(`/notes/${selectedCategory}`);
     onClose();
   };
 
@@ -310,7 +315,7 @@ export default function AddModal({
                 py={2}
                 rounded="lg"
               >
-                {md}
+                {description}
               </Text>
               <Divider />
             </VStack>

@@ -63,7 +63,7 @@ export default function NoteGrid({ notes }: INoteGridProps) {
                   key={note.id}
                   link={note.id}
                   title={note.title}
-                  md={note.md}
+                  description={note.description}
                   category={note.category}
                   createdAt={note.createdAt}
                   thumbnailUrl={note.thumbnailUrl}

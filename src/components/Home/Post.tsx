@@ -11,10 +11,8 @@ import { GoThreeBars } from "react-icons/go";
 import { BiTimeFive } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import {
-  dateFormatter,
   dateFormatterMobile,
   returnColors,
-  returnDescription,
   returnUrlTitle,
   selectBasicThumbnail,
 } from "@/utils/utilFn";
@@ -28,21 +26,21 @@ import Image from "next/image";
 interface IPostProps {
   reverse: boolean;
   title: string;
-  md: string;
   category: string;
   createdAt: number;
   thumbnailUrl: string;
   link: string;
+  description: string;
 }
 
 export default function Post({
   reverse,
   title,
-  md,
   category,
   createdAt,
   thumbnailUrl,
   link,
+  description,
 }: IPostProps) {
   const [hover, setHover] = useState(false);
   const mdBgColor = useColorModeValue(
@@ -52,7 +50,6 @@ export default function Post({
   const colorMode = useColorModeValue("light", "dark");
   const date = dateFormatterMobile(createdAt);
   const urlTitle = returnUrlTitle(title);
-  const desc = returnDescription(md);
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [lightColor, setLightColor] = useState("");
   const [darkColor, setDarkColor] = useState("");
@@ -136,7 +133,7 @@ export default function Post({
                 overflow="hidden"
                 wordBreak={"break-all"}
               >
-                <Text>{desc}</Text>
+                <Text>{description}</Text>
               </Box>
               <Box
                 position={"absolute"}
