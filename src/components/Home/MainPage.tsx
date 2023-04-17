@@ -157,6 +157,14 @@ export default function MainPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startAnimation]);
 
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.src = `/assets/imgs/main/${backgroundImage}`;
+  }, [backgroundImage]);
+
   return (
     <>
       <Box
@@ -168,6 +176,7 @@ export default function MainPage() {
         backgroundAttachment={"fixed"}
         backgroundSize="cover"
         backgroundPosition={"center center"}
+        opacity={imageLoaded ? 1 : 0}
         backgroundImage={`/assets/imgs/main/${backgroundImage}`}
         as={motion.div}
         variants={backgroundVariants}
