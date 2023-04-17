@@ -68,6 +68,9 @@ export const images = [
   "wallpaperflare.com_wallpaper.jpg",
   "weather.jpeg",
   "zootopia.jpeg",
+  "mal.gif",
+  "ranni.jpeg",
+  "eldenring.jpeg",
 ];
 
 export const quotes = [
