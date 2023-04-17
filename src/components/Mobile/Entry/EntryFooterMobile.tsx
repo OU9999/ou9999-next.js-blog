@@ -52,7 +52,10 @@ export default function EntryFooterMobile({
       onSnapshot(q, (snapshot) => {
         const notesArr: any = snapshot.docs.map((note) => ({
           id: note.id + "",
-          ...note.data(),
+          title: note.data().title,
+          category: note.data().category,
+          createdAt: note.data().createdAt,
+          thumbnailUrl: note.data().thumbnailUrl,
         }));
         setNotes(notesArr);
       });

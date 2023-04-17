@@ -47,7 +47,11 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
       onSnapshot(q, (snapshot) => {
         const notesArr: any = snapshot.docs.map((note) => ({
           id: note.id + "",
-          ...note.data(),
+          title: note.data().title,
+          category: note.data().category,
+          createdAt: note.data().createdAt,
+          thumbnailUrl: note.data().thumbnailUrl,
+          description: note.data().description,
         }));
         setNotes(notesArr);
       });
@@ -126,7 +130,7 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
               key={note.id}
               title={note.title}
               thumbnailUrl={note.thumbnailUrl}
-              md={note.md}
+              description={note.description}
               category={note.category}
               link={note.id}
               createdAt={note.createdAt}
