@@ -4,12 +4,17 @@ import styled from "styled-components";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import "@fontsource/noto-sans-kr";
+import { colorThemeAtom } from "@/utils/atoms";
+import { useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
+import { returnColors } from "@/utils/utilFn";
 
 //custom style for md view
-const CustomStyle = styled.div`
+const CustomStyle = styled.div<{ colorTheme: string }>`
   blockquote {
     background-color: gray;
     border: none;
+    border-left: 10px solid ${(props) => props.colorTheme};
     padding: 10px;
     color: white;
     border-radius: 10px;
@@ -39,7 +44,17 @@ interface IEntryMarkdownMobileProps {
 }
 
 export default function EntryMarkdownMobile({ md }: IEntryMarkdownMobileProps) {
+  const colorTheme = useRecoilValue(colorThemeAtom);
+  const [lightColor, setLightColor] = useState("");
+  const [darkColor, setDarkColor] = useState("");
+  const relativeColor = useColorModeValue(lightColor, darkColor);
   const colorMode = useColorModeValue("light", "dark");
+
+  useEffect(() => {
+    const [lc, dc, hbc] = returnColors(colorTheme);
+    setLightColor(lc);
+    setDarkColor(dc);
+  }, [colorTheme]);
 
   return (
     <>
@@ -50,7 +65,7 @@ export default function EntryMarkdownMobile({ md }: IEntryMarkdownMobileProps) {
         justifyContent={"center"}
       >
         <Box width={"80vw"} height="auto" data-color-mode={colorMode}>
-          <CustomStyle>
+          <CustomStyle colorTheme={relativeColor}>
             <MarkdownPreview
               source={md}
               style={{

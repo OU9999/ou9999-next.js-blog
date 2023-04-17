@@ -59,7 +59,6 @@ export default function NotesMainPage({ category, size }: INotesMainPageProps) {
         </Center>
         <VStack position={"relative"}>
           <NoteCategorySelector category={category} />
-
           <NoteGridPage category={category} size={size} />
           <Divider py={3} />
         </VStack>
