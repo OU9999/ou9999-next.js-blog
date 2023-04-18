@@ -1,7 +1,10 @@
 import { Divider, VStack } from "@chakra-ui/react";
 import NoteCategorySelectorMobile from "./NoteCategorySelectorMobile";
 import dynamic from "next/dynamic";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import LoadingGridMobile from "./LoadingGridMobile";
+import { dbService } from "@/utils/firebase";
+import { useEffect, useState } from "react";
 
 interface INotesMainPageProps {
   category: string;
@@ -13,6 +16,28 @@ const NoteGridMobile = dynamic(() => import("./NoteGridMobile"), {
 });
 
 export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
+  const [size, setSize] = useState(0);
+  const getSize = async (category: string) => {
+    let q;
+    if (category === "ALL") {
+      q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
+    } else {
+      q = query(
+        collection(dbService, "notes"),
+        where("category", "==", category),
+        orderBy("createdAt", "desc")
+      );
+    }
+    const snapshot = await getDocs(q);
+    const snapsize = snapshot.size;
+    setSize(snapsize);
+  };
+
+  useEffect(() => {
+    getSize(category);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category]);
+
   return (
     <>
       <VStack
