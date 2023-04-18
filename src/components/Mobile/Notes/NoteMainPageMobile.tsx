@@ -5,7 +5,6 @@ import LoadingGridMobile from "./LoadingGridMobile";
 
 interface INotesMainPageProps {
   category: string;
-  size: number;
 }
 
 const NoteGridMobile = dynamic(() => import("./NoteGridMobile"), {
@@ -13,10 +12,7 @@ const NoteGridMobile = dynamic(() => import("./NoteGridMobile"), {
   ssr: false,
 });
 
-export default function NoteMainPageMobile({
-  category,
-  size,
-}: INotesMainPageProps) {
+export default function NoteMainPageMobile({ category }: INotesMainPageProps) {
   return (
     <>
       <VStack
