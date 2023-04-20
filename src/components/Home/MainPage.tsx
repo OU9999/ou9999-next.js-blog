@@ -361,7 +361,7 @@ export default function MainPage() {
           cursor="pointer"
           transition={"0.5s"}
           _hover={{
-            color: "#1A94DA",
+            color: lightColor,
           }}
           onClick={onScrollDownClicked}
         >

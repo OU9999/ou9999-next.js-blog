@@ -29,6 +29,7 @@
     "next": "13.2.4",
     "next-remove-imports": "^1.0.10",
     "next-seo": "^5.15.0",
+    "next-sitemap": "^4.0.7",
     "react": "18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "18.2.0",
