@@ -4,17 +4,24 @@ import { dbService } from "@/utils/firebase";
 import { returnUrlTitle } from "@/utils/utilFn";
 
 export const getServerSideProps = async (context: any) => {
-  const q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
-  const snapshot = await getDocs(q);
-  const notesArr: any = snapshot.docs.slice(0, 10).map((note) => ({
-    id: note.id + "",
-    title: note.data().title,
-    category: note.data().category,
-    createdAt: note.data().createdAt,
-    thumbnailUrl: note.data().thumbnailUrl,
-    description: note.data().description,
-  }));
-  const notes = notesArr;
+  const getNotes = async () => {
+    const q = query(
+      collection(dbService, "notes"),
+      orderBy("createdAt", "desc")
+    );
+    const snapshot = await getDocs(q);
+    const notesArr: any = await snapshot.docs.slice(0, 10).map((note) => ({
+      id: note.id + "",
+      title: note.data().title,
+      category: note.data().category,
+      createdAt: note.data().createdAt,
+      thumbnailUrl: note.data().thumbnailUrl,
+      description: note.data().description,
+    }));
+    return notesArr;
+  };
+
+  const notes = await getNotes();
 
   const sitemapFields: ISitemapField[] = notes.map((note: any) => {
     const urlTitle = returnUrlTitle(note.title);
@@ -29,4 +36,8 @@ export const getServerSideProps = async (context: any) => {
   return getServerSideSitemap(context, sitemapFields);
 };
 
-export default getServerSideProps;
+export default function Sitemap() {
+  // This is here to satisfy Next.js' requirement for a default export
+  // This page will not be rendered since we're only using it to generate a sitemap.xml file
+  return null;
+}
