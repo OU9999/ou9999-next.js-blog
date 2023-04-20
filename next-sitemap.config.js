@@ -9,6 +9,8 @@ module.exports = {
   exclude: [
     "/guestbook", // 페이지 주소 하나만 제외시키는 경우
     "/notes/**", // 하위 주소 전체를 제외시키는 경우
+    "/test",
+    "/write/**",
   ], // sitemap 등록 제외 페이지 주소
   robotsTxtOptions: {
     // 정책 설정

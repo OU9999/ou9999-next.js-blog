@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /notes
+
+# Host
+Host: https://ou9999-next-js-blog.vercel.app/
+
+# Sitemaps
+Sitemap: https://ou9999-next-js-blog.vercel.app/sitemap.xml
+Sitemap: https://ou9999-next-js-blog.vercel.app/sitemap/entry-sitemap.xml
