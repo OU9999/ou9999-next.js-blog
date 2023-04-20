@@ -28,3 +28,5 @@ export const getServerSideProps = async (context: any) => {
 
   return getServerSideSitemap(context, sitemapFields);
 };
+
+export default getServerSideProps;
