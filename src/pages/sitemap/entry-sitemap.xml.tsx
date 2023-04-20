@@ -13,24 +13,19 @@ export const getServerSideProps = async (context: any) => {
     const notesArr: any = await snapshot.docs.slice(0, 5).map((note) => ({
       id: note.id + "",
       title: note.data().title,
-      category: note.data().category,
-      createdAt: note.data().createdAt,
-      thumbnailUrl: note.data().thumbnailUrl,
-      description: note.data().description,
     }));
     return notesArr;
   };
 
   const notes = await getNotes();
   console.log(notes.map((note: any) => console.log(note)));
-  const sitemapFields: ISitemapField[] = notes.map((note: any, idx: number) => {
+  const sitemapFields: ISitemapField[] = notes.map((note: any) => {
     const id = note.id;
     const urlTitle = returnUrlTitle(note.title);
     return {
       loc: `https://ou9999-next-js-blog.vercel.app/entry/${urlTitle}/${id}`, // 페이지 경로
       lastmod: new Date().toISOString(), // 최근변경일자
       changefreq: "daily", // 페이지 주소 변경 빈도 (검색엔진에 제공됨) - always, daily, hourly, monthly, never, weekly, yearly 중 택 1
-      priority: idx + 1, // 페이지 주소 우선순위 (검색엔진에 제공됨, 우선순위가 높은 순서대로 크롤링함)
     };
   });
 

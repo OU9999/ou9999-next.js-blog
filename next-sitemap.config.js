@@ -10,6 +10,7 @@ module.exports = {
     "/guestbook", // 페이지 주소 하나만 제외시키는 경우
     "/notes/**", // 하위 주소 전체를 제외시키는 경우
     "/test",
+    "/write",
     "/write/**",
   ], // sitemap 등록 제외 페이지 주소
   robotsTxtOptions: {
@@ -22,6 +23,7 @@ module.exports = {
           "/notes", // exclude로 시작하는 페이지 주소 크롤링 금지
           "/guestbook",
           "/test",
+          "/write",
           "/write/**",
         ],
       },

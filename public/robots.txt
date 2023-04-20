@@ -2,6 +2,9 @@
 User-agent: *
 Allow: /
 Disallow: /notes
+Disallow: /guestbook
+Disallow: /test
+Disallow: /write/**
 
 # Host
 Host: https://ou9999-next-js-blog.vercel.app/
