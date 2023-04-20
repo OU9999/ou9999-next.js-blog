@@ -22,5 +22,8 @@ module.exports = {
       },
       // 추가 정책이 필요할 경우 배열 요소로 추가 작성
     ],
+    additionalSitemaps: [
+      "https://ou9999-next-js-blog.vercel.app/sitemap/entry-sitemap.xml",
+    ],
   }, // robots.txt 옵션 설정
 };
