@@ -10,7 +10,7 @@ export const getServerSideProps = async (context: any) => {
       orderBy("createdAt", "desc")
     );
     const snapshot = await getDocs(q);
-    const notesArr: any = await snapshot.docs.slice(0, 10).map((note) => ({
+    const notesArr: any = await snapshot.docs.slice(0, 5).map((note) => ({
       id: note.id + "",
       title: note.data().title,
       category: note.data().category,
@@ -22,22 +22,20 @@ export const getServerSideProps = async (context: any) => {
   };
 
   const notes = await getNotes();
-
-  const sitemapFields: ISitemapField[] = notes.map((note: any) => {
+  console.log(notes.map((note: any) => console.log(note)));
+  const sitemapFields: ISitemapField[] = notes.map((note: any, idx: number) => {
     const urlTitle = returnUrlTitle(note.title);
     return {
       loc: `https://ou9999-next-js-blog.vercel.app/entry/${urlTitle}/${note.id}`, // 페이지 경로
       lastmod: new Date().toISOString(), // 최근변경일자
       changefreq: "daily", // 페이지 주소 변경 빈도 (검색엔진에 제공됨) - always, daily, hourly, monthly, never, weekly, yearly 중 택 1
-      priority: 1, // 페이지 주소 우선순위 (검색엔진에 제공됨, 우선순위가 높은 순서대로 크롤링함)
+      priority: idx, // 페이지 주소 우선순위 (검색엔진에 제공됨, 우선순위가 높은 순서대로 크롤링함)
     };
   });
 
   return getServerSideSitemap(context, sitemapFields);
 };
 
-export default function Sitemap() {
-  // This is here to satisfy Next.js' requirement for a default export
-  // This page will not be rendered since we're only using it to generate a sitemap.xml file
+export default function Sitemap({ notes }: any) {
   return null;
 }
