@@ -4,6 +4,7 @@ Allow: /
 Disallow: /notes
 Disallow: /guestbook
 Disallow: /test
+Disallow: /write
 Disallow: /write/**
 
 # Host

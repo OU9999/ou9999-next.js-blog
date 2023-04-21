@@ -157,7 +157,9 @@ export default function NoteCard({
                 alignItems={"center"}
               >
                 <BiTimeFive />
-                <Text>{date}</Text>
+                <Text pos={"relative"} top={"-1px"}>
+                  {date}
+                </Text>
               </HStack>
             </HStack>
           </CardFooter>

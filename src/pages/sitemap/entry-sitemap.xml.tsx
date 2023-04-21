@@ -18,7 +18,6 @@ export const getServerSideProps = async (context: any) => {
   };
 
   const notes = await getNotes();
-  console.log(notes.map((note: any) => console.log(note)));
   const sitemapFields: ISitemapField[] = notes.map((note: any) => {
     const id = note.id;
     const urlTitle = returnUrlTitle(note.title);

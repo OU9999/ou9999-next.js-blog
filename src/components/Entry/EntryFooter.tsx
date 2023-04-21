@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import {
   collection,
-  limit,
   onSnapshot,
   orderBy,
   query,
@@ -21,28 +20,35 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import NoteCard from "../Notes/NoteCard";
 import CommentInput from "./EntryFooter/CommentInput";
 import Comments from "./EntryFooter/Comments";
+import AnotherCard from "./EntryFooter/AnotherCard";
+import OtherPost from "./EntryFooter/OtherPost/OtherPost";
 
 interface IEntryFooterProps {
   category: string;
   docId: string;
 }
 
+export interface INextPrev {
+  id: string;
+  title: string;
+}
+
 export default function EntryFooter({ category, docId }: IEntryFooterProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [notes, setNotes] = useState<INotes[] | undefined>(undefined);
+  const [previousNote, setPreviousNote] = useState<INextPrev | null>(null);
+  const [nextNote, setNextNote] = useState<INextPrev | null>(null);
   const bgColor = useColorModeValue("white", "#1A202C");
 
-  const getNotes = async (category: string) => {
+  const getNotes = async (category: string, docId: string) => {
     try {
       const q = query(
         collection(dbService, "notes"),
         where("category", "==", category),
-        orderBy("createdAt", "desc"),
-        limit(3)
+        orderBy("createdAt", "desc")
       );
       onSnapshot(q, (snapshot) => {
         const notesArr: any = snapshot.docs.map((note) => ({
@@ -53,7 +59,26 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
           thumbnailUrl: note.data().thumbnailUrl,
           description: note.data().description,
         }));
+
         setNotes(notesArr);
+
+        const currentNoteIndex = notesArr.findIndex(
+          (note: INotes) => note.id === docId
+        );
+        const nextNoteIndex =
+          currentNoteIndex > 0 ? currentNoteIndex - 1 : null;
+        const previousNoteIndex =
+          currentNoteIndex < notesArr.length - 1 ? currentNoteIndex + 1 : null;
+
+        const previousNoteValue =
+          previousNoteIndex !== null ? notesArr[previousNoteIndex] : null;
+        const nextNoteValue =
+          nextNoteIndex !== null ? notesArr[nextNoteIndex] : null;
+
+        setPreviousNote(previousNoteIndex !== null ? previousNoteValue : null);
+        setNextNote(nextNoteIndex !== null ? nextNoteValue : null);
+        console.log("next:", nextNoteValue);
+        console.log("prev:", previousNoteValue);
       });
     } catch (error: any) {}
   };
@@ -63,11 +88,12 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
   }, []);
 
   useEffect(() => {
-    getNotes(category);
-  }, [category]);
+    getNotes(category, docId);
+  }, [category, docId]);
 
   return (
     <>
+      <OtherPost next={nextNote} prev={previousNote} />
       <Box w="full" zIndex={1} position="relative" pb={"28"}>
         <Box py={"10"} />
         <Box width={"full"} height={"auto"} position={"relative"}>
@@ -125,15 +151,14 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
           position="relative"
           zIndex={4}
         >
-          {notes?.map((note) => (
-            <NoteCard
+          {notes?.slice(0, 4).map((note) => (
+            <AnotherCard
               key={note.id}
-              title={note.title}
-              thumbnailUrl={note.thumbnailUrl}
-              description={note.description}
-              category={note.category}
               link={note.id}
+              title={note.title}
               createdAt={note.createdAt}
+              thumbnailUrl={note.thumbnailUrl}
+              category={note.category}
             />
           ))}
         </Center>
