@@ -34,7 +34,11 @@ export default function NoteGrid({ notes }: INoteGridProps) {
   return (
     <>
       <Grid
-        templateColumns={"repeat(3, 1fr)"}
+        templateColumns={{
+          md: "repeat(2, 1fr)",
+          lg: "repeat(2, 1fr)",
+          xl: "repeat(3, 1fr)",
+        }}
         px={10}
         columnGap={8}
         rowGap={16}

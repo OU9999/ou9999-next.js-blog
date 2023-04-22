@@ -113,7 +113,8 @@ export const returnLinkTitle = (title: string) => {
   const setSix = setFive.replaceAll("💻", "");
   const setSeven = setSix.replaceAll("(", "");
   const setEight = setSeven.replaceAll(")", "");
-  return setEight.toLowerCase();
+  const setNine = setEight.replaceAll(",", "");
+  return setNine.toLowerCase();
 };
 
 export const returnDescription = (md: string) => {
