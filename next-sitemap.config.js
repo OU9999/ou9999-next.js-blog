@@ -18,6 +18,6 @@ module.exports = {
   },
 
   sitemap: {
-    path: "/static/sitemap.xml",
+    path: "/public/sitemap.xml",
   },
 };
