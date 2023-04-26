@@ -1,22 +1,19 @@
-import { getServerSideSitemap, ISitemapField } from "next-sitemap";
+import { ISitemapField } from "next-sitemap";
 import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import { dbService } from "@/utils/firebase";
 import { returnUrlTitle } from "@/utils/utilFn";
 
-export const getServerSideProps = async (context: any) => {
-  const getNotes = async () => {
-    const q = query(
-      collection(dbService, "notes"),
-      orderBy("createdAt", "desc")
-    );
-    const snapshot = await getDocs(q);
-    const notesArr: any = await snapshot.docs.slice(0, 5).map((note) => ({
-      id: note.id + "",
-      title: note.data().title,
-    }));
-    return notesArr;
-  };
+const getNotes = async () => {
+  const q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
+  const snapshot = await getDocs(q);
+  const notesArr: any = await snapshot.docs.slice(0, 5).map((note) => ({
+    id: note.id + "",
+    title: note.data().title,
+  }));
+  return notesArr;
+};
 
+export async function getStaticProps() {
   const notes = await getNotes();
   const sitemapFields: ISitemapField[] = notes.map((note: any) => {
     const id = note.id;
@@ -28,9 +25,12 @@ export const getServerSideProps = async (context: any) => {
     };
   });
 
-  return getServerSideSitemap(context, sitemapFields);
-};
-
-export default function Sitemap() {
-  return null;
+  return {
+    props: {
+      sitemapFields,
+    },
+  };
 }
+
+const Sitemap = () => null;
+export default Sitemap;
