@@ -26,12 +26,14 @@ const plugins = [
       ],
     },
   ],
-  withSitemap,
-  {
-    sitemap: {
-      path: "/static/sitemap.xml",
+  [
+    withSitemap,
+    {
+      sitemap: {
+        path: "/static/sitemap.xml",
+      },
     },
-  },
+  ],
 ];
 
 module.exports = withPlugins(plugins, {
