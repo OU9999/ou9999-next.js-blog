@@ -30,7 +30,7 @@ const plugins = [
     withSitemap,
     {
       sitemap: {
-        path: "/static/sitemap.xml",
+        path: "/sitemap.xml",
       },
     },
   ],
