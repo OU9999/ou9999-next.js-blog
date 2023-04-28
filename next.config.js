@@ -30,7 +30,7 @@ const plugins = [
     withSitemap,
     {
       sitemap: {
-        path: "/sitemap.xml",
+        path: "/public/sitemap.xml",
         baseUrl: "https://ou9999-next-js-blog.vercel.app/",
       },
     },
