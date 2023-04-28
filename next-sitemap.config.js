@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 
-const { getNotes } = require("./src/pages/sitemap/entry-sitemap");
+const { getNotes } = require("@/pages/sitemap/entry-sitemap");
 const { returnUrlTitle } = require("@/utils/utilFn");
 
 module.exports = {
@@ -22,18 +22,18 @@ module.exports = {
 
   sitemap: {
     path: "/public/sitemap.xml",
-    dynamic: {
-      async generateSitemap() {
-        const notes = await getNotes();
-        const sitemapFields = notes.map((note) => ({
-          loc: `https://ou9999-next-js-blog.vercel.app/entry/${returnUrlTitle(
-            note.title
-          )}/${note.id}`,
-          lastmod: new Date().toISOString(),
-          changefreq: "daily",
-        }));
-        return sitemapFields;
-      },
-    },
+    // dynamic: {
+    //   async generateSitemap() {
+    //     const notes = await getNotes();
+    //     const sitemapFields = notes.map((note) => ({
+    //       loc: `https://ou9999-next-js-blog.vercel.app/entry/${returnUrlTitle(
+    //         note.title
+    //       )}/${note.id}`,
+    //       lastmod: new Date().toISOString(),
+    //       changefreq: "daily",
+    //     }));
+    //     return sitemapFields;
+    //   },
+    // },
   },
 };
