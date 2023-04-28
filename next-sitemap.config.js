@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 
-const { getNotes } = require("@/pages/sitemap/entry-sitemap");
+const entrySitemap = require("@/pages/sitemap/entry-sitemap");
 const { returnUrlTitle } = require("@/utils/utilFn");
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
     dynamic: {
       // This function should return an array of objects representing the dynamic routes
       async generateSitemap() {
-        const notes = await getNotes();
+        const notes = await entrySitemap.getNotes();
         const sitemapFields = notes.map((note) => ({
           loc: `https://ou9999-next-js-blog.vercel.app/entry/${returnUrlTitle(
             note.title
