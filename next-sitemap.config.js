@@ -19,6 +19,6 @@ module.exports = {
 
   sitemap: {
     path: "/public/sitemap.xml",
-    publicPath: "./",
+    exclude: ["/sitemap-page.xml"],
   },
 };
