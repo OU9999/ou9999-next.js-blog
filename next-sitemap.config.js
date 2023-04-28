@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 
-const entrySitemap = require("@/pages/sitemap/entry-sitemap");
+const entrySitemap = require("../../pages/sitemap/entry-sitemap");
 const { returnUrlTitle } = require("@/utils/utilFn");
 
 module.exports = {
