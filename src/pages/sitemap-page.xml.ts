@@ -20,6 +20,7 @@ export async function getServerSideProps(): Promise<{ props: SitemapProps }> {
     lastmod: new Date(note.createdAt).toISOString(),
     changefreq: "daily",
   }));
+  console.log(urls);
   return { props: { urls } };
 }
 

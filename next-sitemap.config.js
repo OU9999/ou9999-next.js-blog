@@ -6,7 +6,6 @@ module.exports = {
   sitemapSize: 7000,
   changefreq: "daily",
   priority: 1,
-  exclude: ["/guestbook", "/notes/**", "/test", "/write", "/write/**"],
   robotsTxtOptions: {
     policies: [
       {
@@ -16,9 +15,7 @@ module.exports = {
       },
     ],
   },
-
   sitemap: {
     path: "/public/sitemap.xml",
-    exclude: ["/sitemap-page.xml"],
   },
 };
