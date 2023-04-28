@@ -1,8 +1,5 @@
 /** @type {import('next-sitemap').IConfig} */
 
-const { getNotes } = require("@/pages/sitemap/entry-sitemap");
-const { returnUrlTitle } = require("@/utils/utilFn");
-
 module.exports = {
   siteUrl: "https://ou9999-next-js-blog.vercel.app/",
   generateRobotsTxt: true,
