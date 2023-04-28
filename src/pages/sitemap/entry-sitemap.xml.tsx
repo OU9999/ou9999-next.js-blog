@@ -3,7 +3,7 @@ import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import { dbService } from "@/utils/firebase";
 import { returnUrlTitle } from "@/utils/utilFn";
 
-const getNotes = async () => {
+export const getNotes = async () => {
   const q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
   const snapshot = await getDocs(q);
   const notesArr: any = await snapshot.docs.slice(0, 5).map((note) => ({
