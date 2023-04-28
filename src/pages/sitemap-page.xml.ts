@@ -17,7 +17,7 @@ export async function getServerSideProps(): Promise<{ props: SitemapProps }> {
     loc: `https://ou9999-next-js-blog.vercel.app/entry/${returnUrlTitle(
       note.title
     )}/${note.id}`,
-    lastmod: new Date(note.updatedAt).toISOString(),
+    lastmod: new Date(note.createdAt).toISOString(),
     changefreq: "daily",
   }));
   return { props: { urls } };

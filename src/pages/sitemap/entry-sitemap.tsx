@@ -9,6 +9,7 @@ export const getNotes = async () => {
   const notesArr: any = await snapshot.docs.slice(0, 5).map((note) => ({
     id: note.id + "",
     title: note.data().title,
+    createdAt: note.data().createdAt,
   }));
   return notesArr;
 };
