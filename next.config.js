@@ -3,8 +3,6 @@
 const removeImports = require("next-remove-imports")();
 const withPlugins = require("next-compose-plugins");
 const nextRuntimeDotenv = require("next-runtime-dotenv");
-const withSitemap = require("nextjs-sitemap-generator");
-const path = require("path");
 
 const nextConfig = {
   images: {
@@ -25,15 +23,6 @@ const plugins = [
         "NEXT_PUBLIC_MESSAGING_SENDER_ID",
         "NEXT_PUBLIC_APP_ID",
       ],
-    },
-  ],
-  [
-    withSitemap,
-    {
-      sitemap: {
-        path: path.join(__dirname, "public", "sitemap.xml"),
-        baseUrl: "https://ou9999-next-js-blog.vercel.app/",
-      },
     },
   ],
 ];
