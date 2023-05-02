@@ -105,7 +105,7 @@ export default function Header() {
         transition={"0.3s"}
         px={5}
         py={5}
-        h={"10vh"}
+        h={20}
         backgroundColor={"transparent"}
         position={"fixed"}
         zIndex={"98"}
@@ -255,7 +255,7 @@ export default function Header() {
           opacity={0.3}
           zIndex={1}
           w="110vw"
-          h="10vh"
+          h={20}
           as={motion.div}
           style={{ scaleX: scrollYProgress }}
           transformOrigin="left"
