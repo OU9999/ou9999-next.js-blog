@@ -1,4 +1,5 @@
 import { writeAtom } from "@/utils/atoms";
+import { vhToPixels } from "@/utils/utilFn";
 import {
   Avatar,
   Box,
@@ -17,8 +18,9 @@ import { useRecoilValue } from "recoil";
 
 const hugmeVariants: Variants = {
   hello: (ani: boolean) => {
+    const px = vhToPixels(100);
     return {
-      y: ani ? 0 : -1000,
+      y: ani ? 0 : -px!,
       transition: {
         type: "spring",
       },
@@ -120,11 +122,6 @@ export default function Footer() {
         }}
         custom={hugmeAni}
       />
-      {/* {isEntry && (
-        <Box position={"fixed"} right={0} top={150} zIndex={1}>
-          <Toc md={tocMd} />
-        </Box>
-      )} */}
     </>
   );
 }

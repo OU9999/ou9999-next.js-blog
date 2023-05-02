@@ -32,20 +32,6 @@ const headerVariants: Variants = {
   scroll: { backgroundColor: "rgba(223, 230, 233,0.8)" },
 };
 
-const hugmeVariants: Variants = {
-  top: (vh: number) => {
-    return {
-      y: -vh,
-    };
-  },
-  scroll: {
-    y: 0,
-    transition: {
-      type: "spring",
-    },
-  },
-};
-
 export default function Header() {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeAtom);
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
