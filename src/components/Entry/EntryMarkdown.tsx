@@ -4,7 +4,6 @@ import styled from "styled-components";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import { useEffect, useState } from "react";
-import Toc from "@/components/Entry/TOC";
 import "@fontsource/noto-sans-kr";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
@@ -28,6 +27,10 @@ const CustomStyle = styled.div<{ colorTheme: string }>`
 `;
 
 const MarkdownPreview = dynamic(() => import("@uiw/react-markdown-preview"), {
+  ssr: false,
+});
+
+const Toc = dynamic(() => import("@/components/Entry/TOC"), {
   ssr: false,
 });
 
