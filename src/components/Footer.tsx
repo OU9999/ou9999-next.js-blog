@@ -118,7 +118,7 @@ export default function Footer() {
         variants={hugmeVariants}
         animate={"hello"}
         initial={{
-          y: -1000,
+          y: -vhToPixels(100)!,
         }}
         custom={hugmeAni}
       />

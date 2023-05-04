@@ -2,6 +2,7 @@ import {
   Box,
   Center,
   Divider,
+  Flex,
   HStack,
   Heading,
   IconButton,
@@ -128,8 +129,13 @@ export default function MainScroll() {
           </HStack>
 
           <Divider py={8} />
-          <Heading py={10}>최신 글 🔥</Heading>
-          <VStack gap={10}>
+          <VStack gap={10} w={"full"} h="auto">
+            <Flex w="full" justifyContent={"center"}>
+              <Heading py={10} fontSize={"6xl"}>
+                최신 글
+              </Heading>
+            </Flex>
+
             {notes?.map((note, index) => (
               <Box
                 key={note.id}

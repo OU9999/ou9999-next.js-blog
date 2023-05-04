@@ -8,7 +8,7 @@ export default function Document() {
       <Head>
         <link rel="shortcut icon" href="/apple.ico" />
       </Head>
-      <body>
+      <body style={{ overflowX: "hidden" }}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Main />
         <NextScript />

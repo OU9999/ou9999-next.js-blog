@@ -73,6 +73,7 @@ export const images = [
   "ash.jpeg",
   "fade.jpg",
   "ori.jpeg",
+  "yoru.jpg",
 ];
 
 export const quotes = [
