@@ -1,4 +1,4 @@
-import { ICategorys, allCategory } from "@/pages/notes/[category]";
+import { ICategorys } from "@/pages/notes/[category]";
 import { dbService } from "@/utils/firebase";
 import {
   Box,
@@ -9,39 +9,22 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
 } from "@chakra-ui/react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
 
-interface INoteCategorySelectorMobileProps {
+interface INoteCategorySelectorProps {
   category: string;
+  categoryArr: ICategorys[];
 }
 
 export default function NoteCategorySelectorMobile({
   category,
-}: INoteCategorySelectorMobileProps) {
-  const [categorys, setCategorys] = useState<ICategorys[]>([]);
-
-  const getCategorys = async () => {
-    const q = query(
-      collection(dbService, "categorys"),
-      orderBy("createdAt", "asc")
-    );
-    onSnapshot(q, (snapshot) => {
-      const categoryArr: any = snapshot.docs.map((category) => ({
-        id: category.id + "",
-        ...category.data(),
-      }));
-      setCategorys([allCategory, ...categoryArr]);
-    });
-  };
-
-  useEffect(() => {
-    getCategorys();
-  }, []);
-
+  categoryArr,
+}: INoteCategorySelectorProps) {
   return (
     <>
       <HStack
@@ -61,7 +44,7 @@ export default function NoteCategorySelectorMobile({
               variant="outline"
             />
             <MenuList zIndex={99}>
-              {categorys.map((category) => (
+              {categoryArr.map((category) => (
                 <>
                   <Link href={`/notes/${category.category}`}>
                     <MenuItem
@@ -69,7 +52,10 @@ export default function NoteCategorySelectorMobile({
                       value={category.category}
                       px={"7"}
                     >
-                      {category.category}
+                      <Text>{category.category}</Text>
+                      <Text marginLeft={1} color={"gray"}>
+                        ({category.size})
+                      </Text>
                     </MenuItem>
                   </Link>
                 </>

@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import dynamic from "next/dynamic";
 import LoadingGrid from "./LoadingGrid";
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import { dbService } from "@/utils/firebase";
+import { ICategorys, INotes } from "@/pages/notes/[category]";
 
 const NoteCategorySelector = dynamic(() => import("./NoteCategorySelector"), {
   ssr: false,
@@ -19,38 +18,24 @@ const NoteGridPage = dynamic(() => import("./NoteGridPage"), {
 
 interface INotesMainPageProps {
   category: string;
+  notesArr: INotes[];
+  categoryArr: ICategorys[];
+  snapsize: number;
 }
 
-export default function NotesMainPage({ category }: INotesMainPageProps) {
+export default function NotesMainPage({
+  category,
+  notesArr,
+  categoryArr,
+  snapsize,
+}: INotesMainPageProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [lightColor, setLightColor] = useState("");
-  const [size, setSize] = useState(0);
 
   useEffect(() => {
     const [lc, dc, hbc] = returnColors(colorTheme);
     setLightColor(lc);
   }, [colorTheme]);
-
-  const getSize = async (category: string) => {
-    let q;
-    if (category === "ALL") {
-      q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
-    } else {
-      q = query(
-        collection(dbService, "notes"),
-        where("category", "==", category),
-        orderBy("createdAt", "desc")
-      );
-    }
-    const snapshot = await getDocs(q);
-    const snapsize = snapshot.size;
-    setSize(snapsize);
-  };
-
-  useEffect(() => {
-    getSize(category);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category]);
 
   return (
     <VStack h="auto" justifyContent={"flex-start"} position={"relative"}>
@@ -83,8 +68,8 @@ export default function NotesMainPage({ category }: INotesMainPageProps) {
         </Heading>
       </Center>
       <VStack position={"relative"}>
-        <NoteCategorySelector category={category} />
-        <NoteGridPage category={category} size={size} />
+        <NoteCategorySelector categoryArr={categoryArr} category={category} />
+        <NoteGridPage notesArr={notesArr} snapsize={snapsize} />
         <Divider py={3} />
       </VStack>
     </VStack>

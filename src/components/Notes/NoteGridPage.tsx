@@ -1,82 +1,39 @@
 import NoteGrid from "@/components/Notes/NoteGrid";
 import { INotes } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
-import { dbService } from "@/utils/firebase";
 import { IconButton } from "@chakra-ui/react";
-import {
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { MdExpandMore } from "react-icons/md";
 
 interface INoteGridPageProps {
-  category: string;
-  size: number;
+  notesArr: INotes[];
+  snapsize: number;
 }
 
-export default function NoteGridPage({ category, size }: INoteGridPageProps) {
+export default function NoteGridPage({
+  notesArr,
+  snapsize,
+}: INoteGridPageProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
-  const [notes, setNotes] = useState<INotes[]>([]);
-  const [limitSize, setLimitSize] = useState(9);
-  const [isDisable, setIsDisable] = useState(false);
-
-  const onMoreButtonClicked = () => {
-    setLimitSize((prev) => prev + 9);
-  };
-
-  const getNotes = async (category: string, limitSize: number) => {
-    let q;
-    if (category === "ALL") {
-      q = query(
-        collection(dbService, "notes"),
-        orderBy("createdAt", "desc"),
-        limit(limitSize)
-      );
-    } else {
-      q = query(
-        collection(dbService, "notes"),
-        where("category", "==", category),
-        orderBy("createdAt", "desc"),
-        limit(limitSize)
-      );
-    }
-    const snapshot = await getDocs(q);
-    const notesArr: any = snapshot.docs.map((note) => ({
-      id: note.id + "",
-      title: note.data().title,
-      category: note.data().category,
-      createdAt: note.data().createdAt,
-      thumbnailUrl: note.data().thumbnailUrl,
-      description: note.data().description,
-    }));
-    setNotes(notesArr);
-  };
+  const [isDisable, setIsDisable] = useState(true);
+  const [count, setCount] = useState(9);
 
   useEffect(() => {
-    setLimitSize(9);
-  }, [category]);
-
-  useEffect(() => {
-    if (size >= limitSize) {
+    if (snapsize > count) {
       setIsDisable(false);
     } else {
       setIsDisable(true);
     }
-  }, [limitSize, size]);
+  }, [count, snapsize]);
 
-  useEffect(() => {
-    getNotes(category, limitSize);
-  }, [category, limitSize]);
+  const onMoreButtonClicked = () => {
+    setCount((prev) => prev + 9);
+  };
 
   return (
     <>
-      <NoteGrid notes={notes} />
+      <NoteGrid notes={notesArr} count={count} />
       {isDisable ? null : (
         <IconButton
           aria-label="expand"

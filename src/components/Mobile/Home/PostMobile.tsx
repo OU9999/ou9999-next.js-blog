@@ -41,7 +41,7 @@ export default function PostMobile({
           <Box w="full" h="44" zIndex={-1} pos={"absolute"}>
             <Image
               src={selectBasicThumbnail(category)}
-              quality={30}
+              quality={75}
               fill={true}
               alt="thumbnail"
               style={{

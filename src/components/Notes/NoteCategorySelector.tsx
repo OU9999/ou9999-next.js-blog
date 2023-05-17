@@ -1,5 +1,4 @@
-import { ICategorys, allCategory } from "@/pages/notes/[category]";
-import { dbService } from "@/utils/firebase";
+import { ICategorys } from "@/pages/notes/[category]";
 import {
   Heading,
   Menu,
@@ -9,39 +8,20 @@ import {
   IconButton,
   HStack,
   Box,
+  Text,
 } from "@chakra-ui/react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
 
 interface INoteCategorySelectorProps {
   category: string;
+  categoryArr: ICategorys[];
 }
 
 export default function NoteCategorySelector({
   category,
+  categoryArr,
 }: INoteCategorySelectorProps) {
-  const [categorys, setCategorys] = useState<ICategorys[]>([]);
-
-  const getCategorys = async () => {
-    const q = query(
-      collection(dbService, "categorys"),
-      orderBy("createdAt", "asc")
-    );
-    onSnapshot(q, (snapshot) => {
-      const categoryArr: any = snapshot.docs.map((category) => ({
-        id: category.id + "",
-        ...category.data(),
-      }));
-      setCategorys([allCategory, ...categoryArr]);
-    });
-  };
-
-  useEffect(() => {
-    getCategorys();
-  }, []);
-
   return (
     <>
       <HStack
@@ -61,7 +41,7 @@ export default function NoteCategorySelector({
               variant="outline"
             />
             <MenuList>
-              {categorys.map((category) => (
+              {categoryArr.map((category) => (
                 <>
                   <Link href={`/notes/${category.category}`}>
                     <MenuItem
@@ -69,7 +49,10 @@ export default function NoteCategorySelector({
                       value={category.category}
                       px={"7"}
                     >
-                      {category.category}
+                      <Text>{category.category}</Text>
+                      <Text marginLeft={1} color={"gray"}>
+                        ({category.size})
+                      </Text>
                     </MenuItem>
                   </Link>
                 </>

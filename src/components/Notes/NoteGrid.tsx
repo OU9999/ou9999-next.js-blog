@@ -28,9 +28,10 @@ const item = {
 
 interface INoteGridProps {
   notes: INotes[];
+  count: number;
 }
 
-export default function NoteGrid({ notes }: INoteGridProps) {
+export default function NoteGrid({ notes, count }: INoteGridProps) {
   return (
     <>
       <Grid
@@ -49,7 +50,7 @@ export default function NoteGrid({ notes }: INoteGridProps) {
         animate="show"
       >
         {notes &&
-          notes.map((note, idx: number) => (
+          notes.slice(0, count).map((note, idx: number) => (
             <>
               <Box
                 key={note.id}

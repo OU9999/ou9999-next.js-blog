@@ -1,12 +1,37 @@
 import { dbService } from "@/utils/firebase";
-import { selectBasicThumbnail } from "@/utils/utilFn";
+import { returnUrlTitle, selectBasicThumbnail } from "@/utils/utilFn";
 import { useMediaQuery } from "@chakra-ui/react";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { NextSeo } from "next-seo";
 import EntryMainPage from "@/components/Entry/EntryMainPage";
 import { useEffect, useState } from "react";
 
-export const getServerSideProps = async ({ params }: any) => {
+export const getStaticPaths = async () => {
+  const q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
+  const snapshot = await getDocs(q);
+  const notesArr: any = snapshot.docs.map((note) => ({
+    id: note.id + "",
+    title: note.data().title,
+  }));
+
+  const paths = notesArr.map((note: any) => ({
+    params: { slug: [returnUrlTitle(note.title), note.id] },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params }: any) => {
   const docId = params.slug[1];
   const ref = await doc(dbService, "notes", docId);
   const snap = await getDoc(ref);
