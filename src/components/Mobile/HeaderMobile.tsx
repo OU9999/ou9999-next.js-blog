@@ -23,6 +23,7 @@ import { RxSlash } from "react-icons/rx";
 import { GoThreeBars } from "react-icons/go";
 import {
   FaGithub,
+  FaHome,
   FaInstagram,
   FaMoon,
   FaSun,
@@ -35,7 +36,11 @@ import { colorThemeAtom } from "@/utils/atoms";
 import Link from "next/link";
 import { motion, useScroll } from "framer-motion";
 import { SiFirebase, SiNextdotjs, SiReact, SiTypescript } from "react-icons/si";
-import { MdEmail } from "react-icons/md";
+import { MdEmail, MdLibraryBooks } from "react-icons/md";
+import { useRouter } from "next/router";
+import HeaderButton from "./Header/HeaderButton";
+import { BsPersonFill } from "react-icons/bs";
+import ModeSwitch from "./Header/ModeSwitch";
 
 export default function HeaderMobile() {
   const { scrollYProgress } = useScroll();
@@ -45,9 +50,10 @@ export default function HeaderMobile() {
   const [darkColor, setDarkColor] = useState("");
   const [bgColor, setBgColor] = useState("");
   const relativeColor = useColorModeValue(lightColor, darkColor);
-  const Icon = useColorModeValue(FaMoon, FaSun);
+  const Icon = useColorModeValue(FaSun, FaMoon);
   const { toggleColorMode } = useColorMode();
   const toast = useToast();
+  const router = useRouter();
 
   useEffect(() => {
     const [lc, dc, hbc] = returnColors(colorTheme);
@@ -72,19 +78,6 @@ export default function HeaderMobile() {
 
   return (
     <>
-      <Box
-        bgColor={bgColor}
-        opacity={0.3}
-        zIndex={99}
-        w="105vw"
-        h="2"
-        as={motion.div}
-        style={{ scaleX: scrollYProgress }}
-        transformOrigin="left"
-        position="fixed"
-        left={-3}
-        top={0}
-      ></Box>
       <Button
         colorScheme={colorTheme}
         onClick={onOpen}
@@ -200,16 +193,6 @@ export default function HeaderMobile() {
                   >
                     <MdEmail />
                   </Button>
-                  <Button
-                    fontSize={"xl"}
-                    variant="ghost"
-                    px={"3"}
-                    py={"8"}
-                    colorScheme={colorTheme}
-                    onClick={toggleColorMode}
-                  >
-                    <Icon />
-                  </Button>
                 </Flex>
               </HStack>
 
@@ -224,25 +207,47 @@ export default function HeaderMobile() {
                 >
                   Color Theme
                 </Text>
+
                 <HStack>
-                  <Button
-                    colorScheme="purple"
+                  <VStack>
+                    <Box pos="relative" left={-1}>
+                      <Icon />
+                    </Box>
+                    <ModeSwitch />
+                  </VStack>
+                  <Box
+                    w="10"
+                    h="10"
+                    pos="relative"
+                    rounded={"md"}
+                    borderBottom={"20px solid #7F5AD5"}
+                    borderTop={"20px solid #C7A8F7"}
+                    borderLeft={"20px solid #7F5AD5"}
+                    borderRight={"20px solid #C7A8F7"}
                     onClick={() => setColorTheme("purple")}
-                  >
-                    Purple
-                  </Button>
-                  <Button
-                    colorScheme="teal"
+                  />
+                  <Box
+                    w="10"
+                    h="10"
+                    pos="relative"
+                    rounded={"md"}
+                    borderBottom={"20px solid #319795"}
+                    borderTop={"20px solid #81E6D9"}
+                    borderLeft={"20px solid #319795"}
+                    borderRight={"20px solid #81E6D9"}
                     onClick={() => setColorTheme("teal")}
-                  >
-                    Teal
-                  </Button>
-                  <Button
-                    colorScheme="cyan"
+                  />
+                  <Box
+                    w="10"
+                    h="10"
+                    pos="relative"
+                    rounded={"md"}
+                    borderBottom={"20px solid #00B5D8"}
+                    borderTop={"20px solid #9DECF9"}
+                    borderLeft={"20px solid #00B5D8"}
+                    borderRight={"20px solid #9DECF9"}
                     onClick={() => setColorTheme("cyan")}
-                  >
-                    Cyan
-                  </Button>
+                  />
                 </HStack>
               </VStack>
               <Divider />
@@ -252,16 +257,30 @@ export default function HeaderMobile() {
                 justifyContent={"center"}
                 alignItems={"center"}
                 gap={2}
+                w="full"
               >
-                <Link href={"/"} onClick={onClose}>
-                  <Button>Home</Button>
-                </Link>
-                <Link href={"/notes/ALL"} onClick={onClose}>
-                  <Button>Notes</Button>
-                </Link>
-                <Link href={"/guestbook"} onClick={onClose}>
-                  <Button>Guest Book</Button>
-                </Link>
+                <HeaderButton
+                  bgColor={relativeColor}
+                  leftIcon={<FaHome />}
+                  onClose={onClose}
+                  text="Home"
+                  link="/"
+                />
+                <HeaderButton
+                  bgColor={relativeColor}
+                  leftIcon={<MdLibraryBooks />}
+                  onClose={onClose}
+                  text="Notes"
+                  link="/notes/ALL"
+                  notes
+                />
+                <HeaderButton
+                  bgColor={relativeColor}
+                  leftIcon={<BsPersonFill />}
+                  onClose={onClose}
+                  text="Guest Book"
+                  link="/guestbook"
+                />
               </VStack>
             </VStack>
           </DrawerBody>

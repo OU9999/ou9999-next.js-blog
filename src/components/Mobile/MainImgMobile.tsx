@@ -167,7 +167,15 @@ export default function MainImgMobile() {
             <Text fontWeight={router.pathname === "/" ? "bold" : undefined}>
               Home
             </Text>
-
+            <Box
+              w="full"
+              h="1"
+              bgColor={"transparent"}
+              pos={"absolute"}
+              bottom={0}
+              as={motion.div}
+              layoutId="underBar"
+            />
             {router.pathname === "/" ? (
               <Box
                 w="full"

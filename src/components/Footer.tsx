@@ -20,6 +20,7 @@ const hugmeVariants: Variants = {
   hello: (ani: boolean) => {
     const px = vhToPixels(100);
     return {
+      opacity: 1,
       y: ani ? 0 : -px!,
       transition: {
         type: "spring",
@@ -104,24 +105,27 @@ export default function Footer() {
           </Box>
         </HStack>
       </VStack>
-      <Avatar
-        src={`/assets/imgs/icon/hug_me.png`}
-        display={invisible ? "none" : "block"}
-        size={mobileView ? "md" : "xl"}
-        position={"fixed"}
-        zIndex={99}
-        bottom={3}
-        right={3}
-        cursor="pointer"
-        onClick={onHugMeClicked}
-        as={motion.div}
-        variants={hugmeVariants}
-        animate={"hello"}
-        initial={{
-          y: -vhToPixels(100)!,
-        }}
-        custom={hugmeAni}
-      />
+      {mobileView ? null : (
+        <Avatar
+          src={`/assets/imgs/icon/hug_me.png`}
+          display={invisible ? "none" : "block"}
+          size={mobileView ? "md" : "xl"}
+          position={"fixed"}
+          zIndex={99}
+          bottom={3}
+          right={3}
+          cursor="pointer"
+          onClick={onHugMeClicked}
+          as={motion.div}
+          variants={hugmeVariants}
+          animate={"hello"}
+          initial={{
+            y: -vhToPixels(100)!,
+            opacity: 0,
+          }}
+          custom={hugmeAni}
+        />
+      )}
     </>
   );
 }
