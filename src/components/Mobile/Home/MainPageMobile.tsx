@@ -13,19 +13,15 @@ import { MdExpandMore } from "react-icons/md";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
 import { INotes } from "@/pages/notes/[category]";
-import {
-  collection,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
-import { dbService } from "@/utils/firebase";
 import PostMobile from "./PostMobile";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { HiSpeakerphone } from "react-icons/hi";
+
+interface IMainPageMobileProps {
+  notesArr: INotes[];
+}
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -47,9 +43,9 @@ const backgroundVariants: Variants = {
   },
 };
 
-export default function MainPageMobile() {
+export default function MainPageMobile({ notesArr }: IMainPageMobileProps) {
+  const [time, setTime] = useState(0);
   const [quote, setQuote] = useState<string>("");
-  const [notes, setNotes] = useState<INotes[] | undefined>();
   const [limitCount, setLimitCount] = useState(4);
   const colorTheme = useRecoilValue(colorThemeAtom);
   const backgroundAni = useAnimation();
@@ -69,33 +65,9 @@ export default function MainPageMobile() {
     await backgroundAni.start("done");
   };
 
-  const getNotes = async (limitCount: number) => {
-    const q = query(
-      collection(dbService, "notes"),
-      orderBy("createdAt", "desc"),
-      limit(limitCount)
-    );
-    onSnapshot(q, (snapshot) => {
-      const notesArr: any = snapshot.docs.map((note) => ({
-        id: note.id + "",
-        title: note.data().title,
-        category: note.data().category,
-        createdAt: note.data().createdAt,
-        thumbnailUrl: note.data().thumbnailUrl,
-      }));
-      setNotes(notesArr);
-    });
-  };
-
   useEffect(() => {
     setQt();
   }, []);
-
-  useEffect(() => {
-    getNotes(limitCount);
-  }, [limitCount]);
-
-  const [time, setTime] = useState(0);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -139,7 +111,7 @@ export default function MainPageMobile() {
         <Divider />
         <Heading py={10}>최신 글 🔥</Heading>
         <VStack w="full" px={10} gap={10} spacing={0}>
-          {notes?.map((note) => (
+          {notesArr?.slice(0, limitCount).map((note) => (
             <Box key={note.id} w="full">
               <PostMobile
                 link={note.id}

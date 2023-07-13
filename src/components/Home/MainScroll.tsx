@@ -16,20 +16,16 @@ import Link from "next/link";
 import { MdExpandMore } from "react-icons/md";
 import { HiSpeakerphone } from "react-icons/hi";
 import IntroduceModal from "./IntroduceModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { INotes } from "@/pages/notes/[category]";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
-import {
-  collection,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
-import { dbService } from "@/utils/firebase";
 import Post from "./Post";
 import { motion } from "framer-motion";
+
+interface IMainScrollProps {
+  notesArr: INotes[];
+}
 
 const item = {
   hidden: { opacity: 0 },
@@ -46,38 +42,14 @@ const item = {
   },
 };
 
-export default function MainScroll() {
+export default function MainScroll({ notesArr }: IMainScrollProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [notes, setNotes] = useState<INotes[] | undefined>();
   const [limitCount, setLimitCount] = useState(4);
   const colorTheme = useRecoilValue(colorThemeAtom);
 
   const onMoreClicked = () => {
     setLimitCount((prev) => prev + 4);
   };
-
-  const getNotes = async (limitCount: number) => {
-    const q = query(
-      collection(dbService, "notes"),
-      orderBy("createdAt", "desc"),
-      limit(limitCount)
-    );
-    onSnapshot(q, (snapshot) => {
-      const notesArr: any = snapshot.docs.map((note) => ({
-        id: note.id + "",
-        title: note.data().title,
-        category: note.data().category,
-        createdAt: note.data().createdAt,
-        thumbnailUrl: note.data().thumbnailUrl,
-        description: note.data().description,
-      }));
-      setNotes(notesArr);
-    });
-  };
-
-  useEffect(() => {
-    getNotes(limitCount);
-  }, [limitCount]);
 
   return (
     <>
@@ -136,7 +108,7 @@ export default function MainScroll() {
               </Heading>
             </Flex>
 
-            {notes?.map((note, index) => (
+            {notesArr?.slice(0, limitCount).map((note, index) => (
               <Box
                 key={note.id}
                 as={motion.div}

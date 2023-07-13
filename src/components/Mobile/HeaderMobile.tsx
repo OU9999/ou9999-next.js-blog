@@ -231,10 +231,10 @@ export default function HeaderMobile() {
                     h="10"
                     pos="relative"
                     rounded={"md"}
-                    borderBottom={"20px solid #319795"}
+                    borderBottom={"20px solid #81E6D9"}
                     borderTop={"20px solid #81E6D9"}
                     borderLeft={"20px solid #319795"}
-                    borderRight={"20px solid #81E6D9"}
+                    borderRight={"20px solid #319795"}
                     onClick={() => setColorTheme("teal")}
                   />
                   <Box
@@ -243,7 +243,7 @@ export default function HeaderMobile() {
                     pos="relative"
                     rounded={"md"}
                     borderBottom={"20px solid #00B5D8"}
-                    borderTop={"20px solid #9DECF9"}
+                    borderTop={"20px solid #00B5D8"}
                     borderLeft={"20px solid #00B5D8"}
                     borderRight={"20px solid #9DECF9"}
                     onClick={() => setColorTheme("cyan")}

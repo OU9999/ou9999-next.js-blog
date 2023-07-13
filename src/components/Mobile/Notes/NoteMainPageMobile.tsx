@@ -13,7 +13,6 @@ interface INotesMainPageProps {
 
 const NoteGridMobile = dynamic(() => import("./NoteGridMobile"), {
   loading: () => <LoadingGridMobile />,
-  ssr: false,
 });
 
 export default function NoteMainPageMobile({

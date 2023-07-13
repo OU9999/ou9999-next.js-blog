@@ -7,13 +7,13 @@ import dynamic from "next/dynamic";
 import LoadingGrid from "./LoadingGrid";
 import { ICategorys, INotes } from "@/pages/notes/[category]";
 
-const NoteCategorySelector = dynamic(() => import("./NoteCategorySelector"), {
-  ssr: false,
-});
+const NoteCategorySelector = dynamic(
+  () => import("./NoteCategorySelector"),
+  {}
+);
 
 const NoteGridPage = dynamic(() => import("./NoteGridPage"), {
   loading: () => <LoadingGrid />,
-  ssr: false,
 });
 
 interface INotesMainPageProps {

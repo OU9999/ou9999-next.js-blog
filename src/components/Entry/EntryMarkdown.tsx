@@ -31,7 +31,7 @@ const MarkdownPreview = dynamic(() => import("@uiw/react-markdown-preview"), {
 });
 
 const Toc = dynamic(() => import("@/components/Entry/TOC"), {
-  ssr: false,
+  ssr: true,
 });
 
 interface IEntryMainPageProps {
@@ -66,7 +66,12 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
         overflow={"hidden"}
         justifyContent={"center"}
       >
-        <Box width={"55vw"} height="auto" data-color-mode={colorMode}>
+        <Box
+          pos={"relative"}
+          width={"55vw"}
+          height="auto"
+          data-color-mode={colorMode}
+        >
           <CustomStyle colorTheme={relativeColor}>
             <MarkdownPreview
               source={md}
@@ -76,12 +81,12 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
               }}
             />
           </CustomStyle>
+          {re && (
+            <Box position={"fixed"} right={7} top={150} zIndex={1}>
+              <Toc md={md} />
+            </Box>
+          )}
         </Box>
-        {re && (
-          <Box position={"fixed"} right={10} top={150} zIndex={1}>
-            <Toc md={md} />
-          </Box>
-        )}
       </Flex>
     </>
   );
