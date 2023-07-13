@@ -96,6 +96,7 @@ export default function Footer() {
         <HStack>
           <FaGithub />
           <Box
+            aria-label="gitlink"
             color={"gray"}
             _hover={{
               borderBottom: "1px solid",
@@ -107,6 +108,7 @@ export default function Footer() {
       </VStack>
       {mobileView ? null : (
         <Avatar
+          aria-label="hugme"
           src={`/assets/imgs/icon/hug_me.png`}
           display={invisible ? "none" : "block"}
           size={mobileView ? "md" : "xl"}

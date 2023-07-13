@@ -188,6 +188,7 @@ export default function Header() {
             <Menu>
               <MenuButton
                 as={IconButton}
+                aria-label="colorThemeButton"
                 fontSize="xl"
                 icon={<FaPalette />}
                 zIndex={99}

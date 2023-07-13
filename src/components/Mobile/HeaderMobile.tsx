@@ -79,6 +79,7 @@ export default function HeaderMobile() {
   return (
     <>
       <Button
+        aria-label="option"
         colorScheme={colorTheme}
         onClick={onOpen}
         position={"fixed"}

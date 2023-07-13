@@ -262,6 +262,7 @@ export default function MainPage() {
             </HStack>
             <Flex gap={10}>
               <Button
+                aria-label="gitlink"
                 fontSize={"4xl"}
                 variant="ghost"
                 px={"3"}
@@ -273,6 +274,7 @@ export default function MainPage() {
                 </Link>
               </Button>
               <Button
+                aria-label="twitterlink"
                 fontSize={"4xl"}
                 variant="ghost"
                 px={"3"}
@@ -294,6 +296,7 @@ export default function MainPage() {
                 <FaTwitter />
               </Button>
               <Button
+                aria-label="instargramlink"
                 fontSize={"4xl"}
                 variant="ghost"
                 px={"3"}
@@ -315,6 +318,7 @@ export default function MainPage() {
                 <FaInstagram />
               </Button>
               <Button
+                aria-label="emaillink"
                 fontSize={"4xl"}
                 variant="ghost"
                 px={"3"}
