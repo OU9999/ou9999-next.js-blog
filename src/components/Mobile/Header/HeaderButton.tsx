@@ -28,7 +28,7 @@ export default function HeaderButton({
     : null;
   return (
     <Box w="full" pos={"relative"}>
-      <Link href={link} onClick={onClose}>
+      <Link href={link} onClick={onClose} prefetch>
         <Button w="full" variant={"ghost"}>
           <HStack w="full">
             <Box>{leftIcon}</Box>

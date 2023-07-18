@@ -65,10 +65,6 @@ export default function MainImgMobile() {
   }, []);
 
   useEffect(() => {
-    console.log(router.pathname);
-  }, [router]);
-
-  useEffect(() => {
     const [lc, dc, hbc] = returnColors(colorTheme);
     setLightColor(lc);
     setDarkColor(dc);

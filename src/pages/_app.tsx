@@ -18,6 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
     fallback: false, // return false on the server, and re-evaluate on the client side
   });
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const showRoute = [
       "/",
