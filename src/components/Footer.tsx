@@ -29,7 +29,11 @@ const hugmeVariants: Variants = {
   },
 };
 
-export default function Footer() {
+interface IFooterProps {
+  loading: boolean;
+}
+
+export default function Footer({ loading }: IFooterProps) {
   const [mobileView] = useMediaQuery("(max-width: 768px)", {
     ssr: true,
     fallback: false, // return false on the server, and re-evaluate on the client side
@@ -59,75 +63,81 @@ export default function Footer() {
     else setInvisible(false);
   }, [isWrite]);
 
-  return (
-    <>
-      <VStack
-        display={invisible ? "none" : "flex"}
-        position={"relative"}
-        width={"100vw"}
-        zIndex={3}
-        pt={24}
-        pb={10}
-        bgColor={bgColor}
-      >
-        <HStack fontSize={"md"} fontWeight={"semibold"}>
-          <Text color={"gray"}>STACK :</Text>
-          <Box
-            as={motion.div}
-            initial={{
-              rotateZ: 360,
-            }}
-            animate={{
-              rotateZ: 0,
-              transition: {
-                duration: 9,
-                repeat: Infinity,
-                type: "linear",
-              },
-            }}
-          >
-            <SiReact color="#61DAFB" />
-          </Box>
-
-          <SiTypescript color="#3178C6" />
-          <SiFirebase color=" #FFCA28" />
-          <SiNextdotjs />
-        </HStack>
-        <HStack>
-          <FaGithub />
-          <Box
-            aria-label="gitlink"
-            color={"gray"}
-            _hover={{
-              borderBottom: "1px solid",
-            }}
-          >
-            <Link href="https://github.com/OU9999">github.com/OU9999</Link>
-          </Box>
-        </HStack>
-      </VStack>
-      {mobileView ? null : (
-        <Avatar
-          aria-label="hugme"
-          src={`/assets/imgs/icon/hug_me.png`}
-          display={invisible ? "none" : "block"}
-          size={mobileView ? "md" : "xl"}
-          position={"fixed"}
-          zIndex={99}
-          bottom={3}
-          right={3}
-          cursor="pointer"
-          onClick={onHugMeClicked}
+  if (!loading) {
+    return (
+      <>
+        <VStack
+          display={invisible ? "none" : "flex"}
+          position={"relative"}
+          width={"100vw"}
+          zIndex={3}
+          pt={24}
+          pb={10}
+          bgColor={bgColor}
           as={motion.div}
-          variants={hugmeVariants}
-          animate={"hello"}
-          initial={{
-            y: -vhToPixels(100)!,
-            opacity: 0,
-          }}
-          custom={hugmeAni}
-        />
-      )}
-    </>
-  );
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <HStack fontSize={"md"} fontWeight={"semibold"}>
+            <Box
+              as={motion.div}
+              initial={{
+                rotateZ: 360,
+              }}
+              animate={{
+                rotateZ: 0,
+                transition: {
+                  duration: 9,
+                  repeat: Infinity,
+                  type: "linear",
+                },
+              }}
+            >
+              <SiReact color="#61DAFB" />
+            </Box>
+
+            <SiTypescript color="#3178C6" />
+            <SiFirebase color=" #FFCA28" />
+            <SiNextdotjs />
+          </HStack>
+          <HStack>
+            <FaGithub />
+            <Box
+              aria-label="gitlink"
+              color={"gray"}
+              _hover={{
+                borderBottom: "1px solid",
+              }}
+            >
+              <Link href="https://github.com/OU9999">github.com/OU9999</Link>
+            </Box>
+          </HStack>
+        </VStack>
+        {mobileView ? null : (
+          <Avatar
+            aria-label="hugme"
+            src={`/assets/imgs/icon/hug_me.png`}
+            display={invisible ? "none" : "block"}
+            size={mobileView ? "md" : "xl"}
+            position={"fixed"}
+            zIndex={99}
+            bottom={3}
+            right={3}
+            cursor="pointer"
+            onClick={onHugMeClicked}
+            as={motion.div}
+            variants={hugmeVariants}
+            animate={"hello"}
+            initial={{
+              y: -vhToPixels(100)!,
+              opacity: 0,
+            }}
+            custom={hugmeAni}
+          />
+        )}
+      </>
+    );
+  } else {
+    return <></>;
+  }
 }

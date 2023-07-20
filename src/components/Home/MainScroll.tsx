@@ -10,7 +10,6 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import MainPage from "./MainPage";
 import StartCard from "./StartCard";
 import Link from "next/link";
 import { MdExpandMore } from "react-icons/md";
@@ -22,6 +21,7 @@ import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
 import Post from "./Post";
 import { motion } from "framer-motion";
+import MainPage from "./MainPage";
 
 interface IMainScrollProps {
   notesArr: INotes[];

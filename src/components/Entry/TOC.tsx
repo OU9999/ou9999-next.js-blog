@@ -18,12 +18,15 @@ interface Item {
 
 export default function Toc({ md }: ITocProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
+  const [isReady, setIsReady] = useState(false);
   const [lightColor, setLightColor] = useState("");
   const [darkColor, setDarkColor] = useState("");
   const relativeColor = useColorModeValue(lightColor, darkColor);
   const [activeId, setActiveId] = useState("");
   const tocRef = useRef<HTMLDivElement>(null);
+  // console.log("TOCREF >>>>>>>>", tocRef);
 
+  // console.log("ACTIVE ID >>>>>>>", activeId);
   useIntersectionObserve(setActiveId, md);
 
   const titles = md.split(`\n`).filter((t: string) => t.includes("# "));
@@ -44,34 +47,40 @@ export default function Toc({ md }: ITocProps) {
     });
 
   useEffect(() => {
+    setIsReady(false);
     const [lc, dc, hbc] = returnColors(colorTheme);
     setLightColor(lc);
     setDarkColor(dc);
+    setIsReady(true);
   }, [colorTheme]);
 
   return (
-    <Box w="220px" ref={tocRef}>
-      <Box borderLeft={"3px solid gray"} px={1}>
-        <Box h="auto">
-          {result.map((item) => {
-            if (item?.count && item.count <= 30 && item?.title) {
-              return (
-                <Link href={`#${item.link}`} key={item.link}>
-                  <Text
-                    transition={"0.3s"}
-                    color={activeId === item.link ? relativeColor : "gray"}
-                    marginLeft={`${item.count}px`}
-                    overflow={"hidden"}
-                    fontSize={activeId === item.link ? "lg" : "md"}
-                  >
-                    {item.title}
-                  </Text>
-                </Link>
-              );
-            }
-          })}
+    <>
+      {isReady && (
+        <Box w="220px" ref={tocRef}>
+          <Box borderLeft={"3px solid gray"} px={1}>
+            <Box h="auto">
+              {result.map((item) => {
+                if (item?.count && item.count <= 30 && item?.title) {
+                  return (
+                    <Link href={`#${item.link}`} key={item.link}>
+                      <Text
+                        transition={"0.3s"}
+                        color={activeId === item.link ? relativeColor : "gray"}
+                        marginLeft={`${item.count}px`}
+                        overflow={"hidden"}
+                        fontSize={activeId === item.link ? "lg" : "md"}
+                      >
+                        {item.title}
+                      </Text>
+                    </Link>
+                  );
+                }
+              })}
+            </Box>
+          </Box>
         </Box>
-      </Box>
-    </Box>
+      )}
+    </>
   );
 }

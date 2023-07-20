@@ -57,7 +57,7 @@ export default function App({ Component, pageProps }: AppProps) {
           {mobileView ? <HeaderMobile /> : <Header />}
           {mobileView ? <MainImgMobile /> : null}
           <Component {...pageProps} />
-          <Footer />
+          <Footer loading={loading} />
         </AnimatePresence>
       </RecoilRoot>
     </ChakraProvider>

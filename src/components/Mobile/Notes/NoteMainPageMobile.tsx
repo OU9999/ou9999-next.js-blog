@@ -3,6 +3,7 @@ import NoteCategorySelectorMobile from "./NoteCategorySelectorMobile";
 import dynamic from "next/dynamic";
 import LoadingGridMobile from "./LoadingGridMobile";
 import { ICategorys, INotes } from "@/pages/notes/[category]";
+import NoteGridMobile from "./NoteGridMobile";
 
 interface INotesMainPageProps {
   category: string;
@@ -11,9 +12,9 @@ interface INotesMainPageProps {
   snapsize: number;
 }
 
-const NoteGridMobile = dynamic(() => import("./NoteGridMobile"), {
-  loading: () => <LoadingGridMobile />,
-});
+// const NoteGridMobile = dynamic(() => import("./NoteGridMobile"), {
+//   loading: () => <LoadingGridMobile />,
+// });
 
 export default function NoteMainPageMobile({
   category,

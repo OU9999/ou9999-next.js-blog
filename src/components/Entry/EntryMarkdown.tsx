@@ -8,6 +8,7 @@ import "@fontsource/noto-sans-kr";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
 import { returnColors } from "@/utils/utilFn";
+import Toc from "./TOC";
 
 //custom style for md view
 const CustomStyle = styled.div<{ colorTheme: string }>`
@@ -30,9 +31,9 @@ const MarkdownPreview = dynamic(() => import("@uiw/react-markdown-preview"), {
   ssr: false,
 });
 
-const Toc = dynamic(() => import("@/components/Entry/TOC"), {
-  ssr: true,
-});
+// const Toc = dynamic(() => import("@/components/Entry/TOC"), {
+//   ssr: false,
+// });
 
 interface IEntryMainPageProps {
   md: string;
@@ -44,13 +45,6 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
   const [darkColor, setDarkColor] = useState("");
   const relativeColor = useColorModeValue(lightColor, darkColor);
   const colorMode = useColorModeValue("light", "dark");
-  const [re, setRe] = useState(false);
-
-  useEffect(() => {
-    setInterval(() => {
-      setRe(true);
-    }, 500);
-  }, []);
 
   useEffect(() => {
     const [lc, dc, hbc] = returnColors(colorTheme);
@@ -69,6 +63,7 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
         <Box
           pos={"relative"}
           width={"55vw"}
+          maxW={"880px"}
           height="auto"
           data-color-mode={colorMode}
         >
@@ -81,11 +76,10 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
               }}
             />
           </CustomStyle>
-          {re && (
-            <Box position={"fixed"} right={7} top={150} zIndex={1}>
-              <Toc md={md} />
-            </Box>
-          )}
+
+          <Box position={"fixed"} right={7} top={150} zIndex={1}>
+            <Toc md={md} />
+          </Box>
         </Box>
       </Flex>
     </>

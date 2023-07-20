@@ -55,9 +55,7 @@ export default function Home({ notesArr }: IHomeProps) {
 }
 
 export const getStaticProps = async () => {
-  //notes
   const q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
-
   const snapshot = await getDocs(q);
   const notesArr: any = snapshot.docs.map((note) => ({
     id: note.id + "",
