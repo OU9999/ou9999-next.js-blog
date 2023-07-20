@@ -131,11 +131,25 @@ export default function Header() {
             onHoverStart={() => setUnderBar(true)}
             onHoverEnd={() => setUnderBar(false)}
           >
-            <Box fontSize={"4xl"} color={lightColor} pos={"relative"} top={1}>
+            <Box
+              fontSize={{
+                md: "2xl",
+                lg: "3xl",
+                xl: "4xl",
+              }}
+              color={lightColor}
+              pos={"relative"}
+              top={1}
+            >
               <AiOutlineLeft />
             </Box>
             <Link href={"/"}>
               <Heading
+                fontSize={{
+                  md: "2xl",
+                  lg: "3xl",
+                  xl: "4xl",
+                }}
                 zIndex={99}
                 color="white"
                 transform={"auto"}
@@ -147,7 +161,11 @@ export default function Header() {
               </Heading>
             </Link>
             <HStack
-              fontSize={"4xl"}
+              fontSize={{
+                md: "2xl",
+                lg: "3xl",
+                xl: "4xl",
+              }}
               spacing={-3}
               color={lightColor}
               pos={"relative"}
@@ -157,30 +175,38 @@ export default function Header() {
               <AiOutlineRight />
             </HStack>
           </HStack>
-          <LinkButton
-            text="Home"
-            link="/"
-            textColor={textColor}
-            lightColor={lightColor}
-          />
-          <LinkButton
-            text="Notes"
-            link="/notes/ALL"
-            textColor={textColor}
-            lightColor={lightColor}
-          />
-          <LinkButton
-            text="Guest Book"
-            link="/guestbook"
-            textColor={textColor}
-            lightColor={lightColor}
-          />
-          <LinkButton
-            text="Write"
-            link="/write"
-            textColor={textColor}
-            lightColor={lightColor}
-          />
+          <HStack
+            spacing={{
+              md: 0,
+              lg: 1,
+              xl: 2,
+            }}
+          >
+            <LinkButton
+              text="Home"
+              link="/"
+              textColor={textColor}
+              lightColor={lightColor}
+            />
+            <LinkButton
+              text="Notes"
+              link="/notes/ALL"
+              textColor={textColor}
+              lightColor={lightColor}
+            />
+            <LinkButton
+              text="Guest Book"
+              link="/guestbook"
+              textColor={textColor}
+              lightColor={lightColor}
+            />
+            <LinkButton
+              text="Write"
+              link="/write"
+              textColor={textColor}
+              lightColor={lightColor}
+            />
+          </HStack>
         </HStack>
 
         <HStack gap={2}>

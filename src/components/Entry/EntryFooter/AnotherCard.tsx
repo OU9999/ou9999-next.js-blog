@@ -64,7 +64,11 @@ export default function AnotherCard({
         >
           <VStack
             pos="relative"
-            w="72"
+            w={{
+              md: "56",
+              lg: "64",
+              xl: "72",
+            }}
             h="xs"
             bgColor={mdBgColor}
             overflow={"hidden"}

@@ -22,10 +22,10 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import OtherCardMobile from "./EntryFooter/OtherCardMobile";
 import CommentInputMobile from "./EntryFooter/CommentInputMobile";
 import CommentsMobile from "./EntryFooter/CommentsMobile";
 import OtherPostMobile from "./EntryFooter/OtherPostMobile/OtherPostMobile";
+import OtherPost from "./EntryFooter/OtherPost";
 
 interface IEntryFooterProps {
   category: string;
@@ -81,8 +81,6 @@ export default function EntryFooterMobile({
 
         setPreviousNote(previousNoteIndex !== null ? previousNoteValue : null);
         setNextNote(nextNoteIndex !== null ? nextNoteValue : null);
-        console.log("next:", nextNoteValue);
-        console.log("prev:", previousNoteValue);
       });
     } catch (error: any) {}
   };
@@ -118,7 +116,7 @@ export default function EntryFooterMobile({
               "repeating-linear-gradient(0deg,#0e0d0e 25%,#0e0d0e 50%, #171819 50%,  #171819 75%)"
             }
             backgroundSize="10px 10px"
-            opacity={0.3}
+            opacity={0.7}
           />
           <Center
             w="100vw"
@@ -126,7 +124,6 @@ export default function EntryFooterMobile({
             position="relative"
             zIndex={4}
             flexDir={"column"}
-            justifyContent={"space-around"}
           >
             <Flex
               w="full"
@@ -148,15 +145,9 @@ export default function EntryFooterMobile({
                 </Button>
               </Link>
             </Flex>
-            <VStack w="full">
-              {notes?.slice(0, 3).map((note) => (
-                <OtherCardMobile
-                  key={note.id}
-                  title={note.title}
-                  thumbnailUrl={note.thumbnailUrl}
-                  category={note.category}
-                  docId={note.id}
-                />
+            <VStack w="full" alignItems={"flex-start"} p={5} gap={1}>
+              {notes?.slice(0, 4).map((note) => (
+                <OtherPost key={note.id} title={note.title} docId={note.id} />
               ))}
             </VStack>
           </Center>

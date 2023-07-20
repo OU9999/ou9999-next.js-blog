@@ -7,8 +7,12 @@ import {
   Button,
   Center,
   Flex,
+  Grid,
+  GridItem,
   Heading,
+  Text,
   useColorModeValue,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import {
   collection,
@@ -36,11 +40,18 @@ export interface INextPrev {
 }
 
 export default function EntryFooter({ category, docId }: IEntryFooterProps) {
+  const [fullOverlay] = useMediaQuery("(min-width: 1280px)", {
+    ssr: true,
+    fallback: false,
+  });
+  console.log("FULLOVERLAY >>>>", fullOverlay);
+
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [notes, setNotes] = useState<INotes[] | undefined>(undefined);
   const [previousNote, setPreviousNote] = useState<INextPrev | null>(null);
   const [nextNote, setNextNote] = useState<INextPrev | null>(null);
+  const [limit, setLimit] = useState(4);
   const bgColor = useColorModeValue("white", "#1A202C");
 
   const getNotes = async (category: string, docId: string) => {
@@ -77,8 +88,6 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
 
         setPreviousNote(previousNoteIndex !== null ? previousNoteValue : null);
         setNextNote(nextNoteIndex !== null ? nextNoteValue : null);
-        console.log("next:", nextNoteValue);
-        console.log("prev:", previousNoteValue);
       });
     } catch (error: any) {}
   };
@@ -90,6 +99,14 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
   useEffect(() => {
     getNotes(category, docId);
   }, [category, docId]);
+
+  useEffect(() => {
+    if (fullOverlay) {
+      setLimit(4);
+    } else {
+      setLimit(3);
+    }
+  }, [fullOverlay]);
 
   return (
     <>
@@ -144,23 +161,40 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
         </Box>
 
         {/* NoteCards */}
-        <Center
-          w="full"
-          paddingTop={10}
-          gap={20}
-          position="relative"
-          zIndex={4}
-        >
-          {notes?.slice(0, 4).map((note) => (
-            <AnotherCard
-              key={note.id}
-              link={note.id}
-              title={note.title}
-              createdAt={note.createdAt}
-              thumbnailUrl={note.thumbnailUrl}
-              category={note.category}
-            />
-          ))}
+        <Center w={"full"} h="auto">
+          <Grid
+            w={{
+              md: "35vw",
+              lg: "40vw",
+              xl: "55vw",
+            }}
+            templateColumns={{
+              md: "repeat(3, 1fr)",
+              lg: "repeat(3, 1fr)",
+              xl: "repeat(4, 1fr)",
+            }}
+            justifyContent={"center"}
+            alignItems={"center"}
+            position="relative"
+            gap={10}
+            px={10}
+            pt={10}
+            zIndex={4}
+          >
+            {notes?.slice(0, limit).map((note) => (
+              <GridItem key={note.id} colSpan={1} rowSpan={1}>
+                <Flex justifyContent={"center"} alignItems={"center"}>
+                  <AnotherCard
+                    link={note.id}
+                    title={note.title}
+                    createdAt={note.createdAt}
+                    thumbnailUrl={note.thumbnailUrl}
+                    category={note.category}
+                  />
+                </Flex>
+              </GridItem>
+            ))}
+          </Grid>
         </Center>
 
         {/* comments */}

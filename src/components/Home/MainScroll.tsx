@@ -62,11 +62,21 @@ export default function MainScroll({ notesArr }: IMainScrollProps) {
       >
         <MainPage />
         <VStack w={"100%"} justifyContent={"center"}>
-          <HStack border={"1px dashed"} p={10} my={10}>
+          <HStack
+            border={"1px dashed"}
+            rounded={"md"}
+            w={{
+              md: "2xl",
+              lg: "3xl",
+              xl: "5xl",
+            }}
+            p={10}
+            my={10}
+          >
             <Box fontSize={"3xl"}>
               <HiSpeakerphone />
             </Box>
-            <Text>
+            <Text fontSize={"xl"}>
               Firebase 무료 요금제여서... 대역폭 한도가 금방차네요! 한동한
               이미지 업로드 기능은 제한할 예정입니다!
             </Text>

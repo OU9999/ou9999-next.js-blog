@@ -1,16 +1,8 @@
 import { VStack, Divider, Skeleton } from "@chakra-ui/react";
-import dynamic from "next/dynamic";
-import LoadingGrid from "./LoadingGrid";
 import { ICategorys, INotes } from "@/pages/notes/[category]";
 import PageHeader from "../common/PageHeader";
-
-const NoteCategorySelector = dynamic(() => import("./NoteCategorySelector"), {
-  loading: () => <Skeleton w="96" h={"32"} rounded={"md"} />,
-});
-
-const NoteGridPage = dynamic(() => import("./NoteGridPage"), {
-  loading: () => <LoadingGrid />,
-});
+import NoteCategorySelector from "./NoteCategorySelector";
+import NoteGridPage from "./NoteGridPage";
 
 interface INotesMainPageProps {
   category: string;

@@ -8,6 +8,7 @@ import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import { returnColors } from "@/utils/utilFn";
+import MobileMarkdownLoadingView from "./EntryFooter/MobileMarkdownLoadingView";
 
 //custom style for md view
 const CustomStyle = styled.div<{ colorTheme: string }>`
@@ -29,6 +30,7 @@ const CustomStyle = styled.div<{ colorTheme: string }>`
 
 const MarkdownPreview = dynamic(() => import("@uiw/react-markdown-preview"), {
   ssr: false,
+  loading: () => <MobileMarkdownLoadingView />,
 });
 
 export interface IDetail {

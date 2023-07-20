@@ -76,7 +76,8 @@ export default function Footer({ loading }: IFooterProps) {
           bgColor={bgColor}
           as={motion.div}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
         >
           <HStack fontSize={"md"} fontWeight={"semibold"}>
             <Box

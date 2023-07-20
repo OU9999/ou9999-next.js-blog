@@ -13,7 +13,7 @@ import Loading from "@/components/Loading";
 import MainImgMobile from "@/components/Mobile/MainImgMobile";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [mobileView] = useMediaQuery("(max-width: 768px)", {
+  const [mobileView] = useMediaQuery("(max-width: 767px)", {
     ssr: true,
     fallback: false, // return false on the server, and re-evaluate on the client side
   });

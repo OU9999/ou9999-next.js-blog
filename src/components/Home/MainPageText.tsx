@@ -62,7 +62,11 @@ export default function MainPageText({
   return (
     <>
       <Text
-        fontSize={"9xl"}
+        fontSize={{
+          md: "7xl",
+          lg: "8xl",
+          xl: "9xl",
+        }}
         fontWeight={"extrabold"}
         textShadow={`${Click === 0 ? lightColor : randomColor} 1px 0 30px`}
         onClick={onClicked}

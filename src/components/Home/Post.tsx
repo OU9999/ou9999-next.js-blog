@@ -66,7 +66,11 @@ export default function Post({
       <Box
         position={"relative"}
         rounded="2xl"
-        w="5xl"
+        w={{
+          md: "3xl",
+          lg: "4xl",
+          xl: "5xl",
+        }}
         h="xs"
         overflow={"hidden"}
         boxShadow={hover ? `0 0 10px 5px ${relativeColor}` : "dark-lg"}
@@ -96,14 +100,25 @@ export default function Post({
               <Heading
                 noOfLines={2}
                 cursor="pointer"
-                fontSize={"2xl"}
+                fontSize={{
+                  md: "xl",
+                  lg: "xl",
+                  xl: "2xl",
+                }}
                 color={hover ? relativeColor : undefined}
                 transition={"0.3s"}
               >
                 {title}
               </Heading>
             </Link>
-            <HStack gap={1}>
+            <HStack
+              gap={1}
+              fontSize={{
+                md: "sm",
+                lg: "sm",
+                xl: "md",
+              }}
+            >
               <FaEye />
               <FaRegCommentDots />
               <HStack
@@ -112,7 +127,9 @@ export default function Post({
                 alignItems={"center"}
               >
                 <GoThreeBars />
-                <Text>{category}</Text>
+                <Text pos={"relative"} top={"-1px"}>
+                  {category}
+                </Text>
               </HStack>
               <HStack
                 spacing={1}
@@ -120,12 +137,18 @@ export default function Post({
                 alignItems={"center"}
               >
                 <BiTimeFive />
-                <Text>{date}</Text>
+                <Text pos={"relative"} top={"-1px"}>
+                  {date}
+                </Text>
               </HStack>
             </HStack>
             <Box position={"relative"} overflow="hidden">
               <Box
-                width={"md"}
+                w={{
+                  md: "xs",
+                  lg: "sm",
+                  xl: "md",
+                }}
                 h={"24"}
                 noOfLines={5}
                 data-color-mode={colorMode}
@@ -141,7 +164,7 @@ export default function Post({
                 h="full"
                 background={`linear-gradient(to top, ${mdBgColor} 0%,rgba(255,255,255,0) 100%)`}
                 top={0}
-              ></Box>
+              />
             </Box>
           </VStack>
 

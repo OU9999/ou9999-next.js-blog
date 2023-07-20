@@ -14,8 +14,16 @@ export default function StartCard({ heading, text, src }: IStartCardProps) {
   return (
     <>
       <Box
-        w={"80"}
-        h={"52"}
+        w={{
+          md: "56",
+          lg: "64",
+          xl: "80",
+        }}
+        h={{
+          md: "40",
+          lg: "44",
+          xl: "52",
+        }}
         rounded={"3xl"}
         boxShadow={"dark-lg"}
         position={"relative"}

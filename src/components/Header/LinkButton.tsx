@@ -35,6 +35,11 @@ export default function LinkButton({
         >
           <DarkMode>
             <Text
+              fontSize={{
+                md: "xs",
+                lg: "sm",
+                xl: "md",
+              }}
               transition={"0.3s"}
               textColor={!textColor ? "white" : underBar ? lightColor : "black"}
               textShadow={`${

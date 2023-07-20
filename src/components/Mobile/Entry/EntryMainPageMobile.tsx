@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import EntryHeaderMobile from "./EntryHeaderMobile";
 import dynamic from "next/dynamic";
+import EntryMarkdownMobile from "./EntryMarkdownMobile";
 
 export interface IDetail {
   category: string;
@@ -20,9 +21,6 @@ interface IEntryProps {
   docId: string;
 }
 
-const DynamicEntryMarkdownMobile = dynamic(
-  () => import("./EntryMarkdownMobile")
-);
 const DynamicEntryFooterMobile = dynamic(() => import("./EntryFooterMobile"));
 
 export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
@@ -67,7 +65,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
           </Box>
         </Center>
 
-        <DynamicEntryMarkdownMobile md={detail.md} />
+        <EntryMarkdownMobile md={detail.md} />
 
         <Box
           position={"relative"}

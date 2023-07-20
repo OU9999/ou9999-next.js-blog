@@ -9,6 +9,8 @@ import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
 import { returnColors } from "@/utils/utilFn";
 import Toc from "./TOC";
+import MobileMarkdownLoadingView from "../Mobile/Entry/EntryFooter/MobileMarkdownLoadingView";
+import MarkdownLoadingView from "./MarkdownLoadingView";
 
 //custom style for md view
 const CustomStyle = styled.div<{ colorTheme: string }>`
@@ -29,11 +31,8 @@ const CustomStyle = styled.div<{ colorTheme: string }>`
 
 const MarkdownPreview = dynamic(() => import("@uiw/react-markdown-preview"), {
   ssr: false,
+  loading: () => <MarkdownLoadingView />,
 });
-
-// const Toc = dynamic(() => import("@/components/Entry/TOC"), {
-//   ssr: false,
-// });
 
 interface IEntryMainPageProps {
   md: string;
@@ -77,7 +76,17 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
             />
           </CustomStyle>
 
-          <Box position={"fixed"} right={7} top={150} zIndex={1}>
+          <Box
+            display={{
+              md: "none",
+              lg: "none",
+              xl: "block",
+            }}
+            position={"fixed"}
+            right={7}
+            top={150}
+            zIndex={1}
+          >
             <Toc md={md} />
           </Box>
         </Box>

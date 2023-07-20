@@ -57,7 +57,7 @@ interface IEntryProps {
 }
 
 export default function Entry({ detail, docId }: IEntryProps) {
-  const [desktopView] = useMediaQuery("(min-width: 768px)", {
+  const [desktopView] = useMediaQuery("(min-width: 767px)", {
     ssr: true,
     fallback: false,
   });

@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
 import { useRecoilValue } from "recoil";
-import { colorThemeAtom, isEntryAtom } from "@/utils/atoms";
+import { colorThemeAtom } from "@/utils/atoms";
 import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -41,13 +41,16 @@ const backgroundVariants: Variants = {
 
 export default function MainImgMobile() {
   const [backgroundImage, setBackgroundImage] = useState<string>("");
-  const colorTheme = useRecoilValue(colorThemeAtom);
+  const [isEntry, setIsEntry] = useState(false);
   const [lightColor, setLightColor] = useState("");
   const [darkColor, setDarkColor] = useState("");
+  const colorTheme = useRecoilValue(colorThemeAtom);
   const relativeColor = useColorModeValue(lightColor, darkColor);
   const backgroundAni = useAnimation();
+
   const router = useRouter();
-  const isEntry = useRecoilValue(isEntryAtom);
+
+  console.log("ROUTER >>>>>>", router.pathname);
 
   const setBg = () => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
@@ -84,6 +87,13 @@ export default function MainImgMobile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 
+  useEffect(() => {
+    if (router.pathname === "/entry/[...slug]") {
+      setIsEntry(true);
+    } else {
+      setIsEntry(false);
+    }
+  }, [router.pathname]);
   return (
     <>
       <VStack

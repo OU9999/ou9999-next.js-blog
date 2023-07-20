@@ -27,6 +27,7 @@ import { useRecoilValue } from "recoil";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
+import HomeIconButton from "./HomeIconButton";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -205,8 +206,25 @@ export default function MainPage() {
           position={"relative"}
           zIndex={2}
         >
-          <HStack userSelect={"none"} color={"white"}>
-            <Box fontSize={"9xl"} color={lightColor} pos={"relative"} top={2}>
+          <HStack
+            userSelect={"none"}
+            color={"white"}
+            spacing={{
+              md: 0,
+              lg: 0,
+              xl: 1,
+            }}
+          >
+            <Box
+              fontSize={{
+                md: "7xl",
+                lg: "8xl",
+                xl: "9xl",
+              }}
+              color={lightColor}
+              pos={"relative"}
+              top={2}
+            >
               <AiOutlineLeft />
             </Box>
             <MainPageText text="O" mainTextAni={mainTextAni} />
@@ -216,7 +234,11 @@ export default function MainPage() {
             <MainPageText text="9" mainTextAni={mainTextAni} />
             <MainPageText text="9" mainTextAni={mainTextAni} />
             <HStack
-              fontSize={"9xl"}
+              fontSize={{
+                md: "7xl",
+                lg: "8xl",
+                xl: "9xl",
+              }}
               spacing={-10}
               color={lightColor}
               pos={"relative"}
@@ -233,8 +255,16 @@ export default function MainPage() {
             initial={"normal"}
             animate={mainBoxAni}
             backgroundColor={"red"}
-            width="5xl"
-            height="xs"
+            w={{
+              md: "2xl",
+              lg: "3xl",
+              xl: "5xl",
+            }}
+            h={{
+              md: "64",
+              lg: "72",
+              xl: "80",
+            }}
             background={"rgba(0,0,0,0.5)"}
             borderRadius={"3rem"}
             fontSize={"4xl"}
@@ -248,7 +278,11 @@ export default function MainPage() {
             overflow={"hidden"}
           >
             <HStack
-              fontSize={"2xl"}
+              fontSize={{
+                md: "md",
+                lg: "xl",
+                xl: "2xl",
+              }}
               gap={1}
               as={motion.div}
               variants={quoteVariants}
@@ -261,26 +295,15 @@ export default function MainPage() {
               <FaQuoteRight />
             </HStack>
             <Flex gap={10}>
-              <Button
-                aria-label="gitlink"
-                fontSize={"4xl"}
-                variant="ghost"
-                px={"3"}
-                py={"8"}
-                colorScheme={"gray"}
-              >
-                <Link href="https://github.com/OU9999" target="_blank">
-                  <FaGithub />
-                </Link>
-              </Button>
-              <Button
-                aria-label="twitterlink"
-                fontSize={"4xl"}
-                variant="ghost"
-                px={"3"}
-                py={"8"}
-                colorScheme={"twitter"}
-                onClick={() =>
+              <HomeIconButton
+                icon={<FaGithub />}
+                colorScheme="gray"
+                link="https://github.com/OU9999"
+              />
+              <HomeIconButton
+                icon={<FaTwitter />}
+                colorScheme="twitter"
+                clicked={() =>
                   toast({
                     title: `사실 트위터 안함 ㅋ`,
                     position: "top",
@@ -292,17 +315,11 @@ export default function MainPage() {
                     ),
                   })
                 }
-              >
-                <FaTwitter />
-              </Button>
-              <Button
-                aria-label="instargramlink"
-                fontSize={"4xl"}
-                variant="ghost"
-                px={"3"}
-                py={"8"}
-                colorScheme={"pink"}
-                onClick={() =>
+              />
+              <HomeIconButton
+                icon={<FaInstagram />}
+                colorScheme="pink"
+                clicked={() =>
                   toast({
                     title: `사실 인스타 안함 ㅋ`,
                     position: "top",
@@ -314,20 +331,12 @@ export default function MainPage() {
                     ),
                   })
                 }
-              >
-                <FaInstagram />
-              </Button>
-              <Button
-                aria-label="emaillink"
-                fontSize={"4xl"}
-                variant="ghost"
-                px={"3"}
-                py={"8"}
-                colorScheme={"green"}
-                onClick={onEmailButtonClicked}
-              >
-                <MdEmail />
-              </Button>
+              />
+              <HomeIconButton
+                icon={<MdEmail />}
+                colorScheme="green"
+                clicked={onEmailButtonClicked}
+              />
             </Flex>
             <Box
               as={motion.div}

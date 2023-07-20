@@ -10,12 +10,9 @@ import {
 import { quotes } from "@/constants/mainpageArray";
 import { useEffect, useState } from "react";
 import { MdExpandMore } from "react-icons/md";
-import { useRecoilValue } from "recoil";
-import { colorThemeAtom } from "@/utils/atoms";
 import { INotes } from "@/pages/notes/[category]";
 import PostMobile from "./PostMobile";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
-import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { HiSpeakerphone } from "react-icons/hi";
 
@@ -47,7 +44,6 @@ export default function MainPageMobile({ notesArr }: IMainPageMobileProps) {
   const [time, setTime] = useState(0);
   const [quote, setQuote] = useState<string>("");
   const [limitCount, setLimitCount] = useState(4);
-  const colorTheme = useRecoilValue(colorThemeAtom);
   const backgroundAni = useAnimation();
 
   const onMoreClicked = () => {
@@ -99,17 +95,9 @@ export default function MainPageMobile({ notesArr }: IMainPageMobileProps) {
           <Text fontWeight={"bold"}>{quote}</Text>
           <FaQuoteRight />
         </HStack>
-        <HStack border={"1px dashed"} p={3} my={10}>
-          <Box fontSize={"3xl"}>
-            <HiSpeakerphone />
-          </Box>
-          <Text>
-            Firebase 무료 요금제여서... 대역폭 한도가 금방차네요! 한동한 이미지
-            업로드 기능은 제한할 예정입니다!
-          </Text>
-        </HStack>
+
         <Divider />
-        <Heading py={10}>최신 글 🔥</Heading>
+        <Heading py={5}>최신 글 🔥</Heading>
         <VStack w="full" px={10} gap={10} spacing={0}>
           {notesArr?.slice(0, limitCount).map((note) => (
             <Box key={note.id} w="full">

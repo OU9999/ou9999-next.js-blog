@@ -18,7 +18,6 @@ export interface IEntryProps {
   docId: string;
 }
 
-// const DynamicEntryMarkdown = dynamic(() => import("./EntryMarkdown"));
 const DynamicEntryFooter = dynamic(() => import("./EntryFooter"));
 
 export default function EntryMainPage({ detail, docId }: IEntryProps) {
@@ -48,8 +47,9 @@ export default function EntryMainPage({ detail, docId }: IEntryProps) {
             />
           </Box>
         </Box>
-        {/* <DynamicEntryMarkdown md={detail.md} /> */}
+
         <EntryMarkdown md={detail.md} />
+
         <Box position={"relative"} w="full" h="auto" zIndex={32}>
           <DynamicEntryFooter category={detail.category} docId={docId} />
         </Box>
