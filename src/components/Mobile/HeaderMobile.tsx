@@ -127,7 +127,7 @@ export default function HeaderMobile() {
                 mt={10}
                 size={"xl"}
                 name="OU9999"
-                src={`/assets/imgs/icon/profile.jpeg`}
+                src={`/assets/imgs/icon/profile.webp`}
               />
               <HStack w="full" justifyContent={"center"}>
                 <Flex gap={1}>

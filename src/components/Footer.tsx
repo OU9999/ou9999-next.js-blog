@@ -117,7 +117,7 @@ export default function Footer({ loading }: IFooterProps) {
         {mobileView ? null : (
           <Avatar
             aria-label="hugme"
-            src={`/assets/imgs/icon/hug_me.png`}
+            src={`/assets/imgs/icon/hug_me.webp`}
             display={invisible ? "none" : "block"}
             size={mobileView ? "md" : "xl"}
             position={"fixed"}

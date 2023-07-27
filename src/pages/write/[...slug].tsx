@@ -127,7 +127,7 @@ export default function Write({ titleUrl, docId, detail }: any) {
           description: "Write | OU9999's First Blog",
           images: [
             {
-              url: "/op.png",
+              url: "/op.webp",
               width: 285,
               height: 167,
               alt: "image",

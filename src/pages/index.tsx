@@ -36,7 +36,7 @@ export default function Home({ notesArr }: IHomeProps) {
           description: "OU9999 First Blog!",
           images: [
             {
-              url: "/op.png",
+              url: "/op.webp",
               width: 285,
               height: 167,
               alt: "image",

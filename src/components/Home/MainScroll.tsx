@@ -89,14 +89,14 @@ export default function MainScroll({ notesArr }: IMainScrollProps) {
                   <StartCard
                     heading="Introduce"
                     text="응애 나 애기 개발자 꿈나무"
-                    src={`/assets/imgs/icon/profile.jpeg`}
+                    src={`/assets/imgs/icon/profile.webp`}
                   />
                 </Box>
                 <Link href="https://github.com/OU9999" target="_blank">
                   <StartCard
                     heading="Github"
                     text="OU9999"
-                    src={`/assets/imgs/icon/github.png`}
+                    src={`/assets/imgs/icon/github.webp`}
                   />
                 </Link>
                 <Link href="https://velog.io/@ou9999" target="_blank">

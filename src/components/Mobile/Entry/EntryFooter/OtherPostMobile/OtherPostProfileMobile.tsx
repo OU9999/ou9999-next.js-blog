@@ -30,7 +30,7 @@ export default function OtherPostProfileMobile() {
   };
   return (
     <HStack w="full" p={7} gap={2}>
-      <Avatar src="/assets/imgs/icon/profile.jpeg" size={"2xl"} />
+      <Avatar src="/assets/imgs/icon/profile.webp" size={"2xl"} />
       <VStack alignItems={"flex-start"} gap={0}>
         <Heading fontSize={"xl"}>@OU9999</Heading>
         <Text fontSize={"md"}>

@@ -30,7 +30,7 @@ export default function OtherPostProfile() {
   };
   return (
     <HStack w="full" p={10} gap={5}>
-      <Avatar src="/assets/imgs/icon/profile.jpeg" size={"2xl"} />
+      <Avatar src="/assets/imgs/icon/profile.webp" size={"2xl"} />
       <VStack alignItems={"flex-start"} gap={1}>
         <Heading fontSize={"3xl"}>@OU9999</Heading>
         <Text fontSize={"lg"}>

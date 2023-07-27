@@ -50,7 +50,7 @@ export default function LoginPopover() {
             zIndex={99}
             size="md"
             name="OU9999"
-            src={`/assets/imgs/icon/profile.jpeg`}
+            src={`/assets/imgs/icon/profile.webp`}
             cursor="pointer"
             onClick={onToggle}
           />
@@ -68,7 +68,7 @@ export default function LoginPopover() {
                 <Avatar
                   size="2xl"
                   name="Ryan Florence"
-                  src={`/assets/imgs/icon/profile.jpeg`}
+                  src={`/assets/imgs/icon/profile.webp`}
                   cursor="pointer"
                 />
                 <VStack spacing={-1}>

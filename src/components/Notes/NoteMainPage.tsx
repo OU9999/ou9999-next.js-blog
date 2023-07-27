@@ -19,7 +19,7 @@ export default function NotesMainPage({
 }: INotesMainPageProps) {
   return (
     <VStack h="auto" justifyContent={"flex-start"} position={"relative"}>
-      <PageHeader title="Notes" bgImg="/assets/imgs/main/miles.jpeg" />
+      <PageHeader title="Notes" bgImg="/assets/imgs/main/miles.webp" />
       <VStack position={"relative"}>
         <NoteCategorySelector categoryArr={categoryArr} category={category} />
         <NoteGridPage notesArr={notesArr} snapsize={snapsize} />

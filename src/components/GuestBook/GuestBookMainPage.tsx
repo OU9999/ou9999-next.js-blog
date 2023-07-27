@@ -10,7 +10,7 @@ export default function GuestBookMainPage() {
       <VStack h="auto" justifyContent={"flex-start"} position={"relative"}>
         <PageHeader
           title="Guest Book"
-          bgImg="/assets/imgs/icon/jerry.gif"
+          bgImg="/assets/imgs/main/spiderverse.webp"
           subText="시간 내서 블로그에 방문해주셔서 감사해요~ 익명 작성 가능합니다!"
         />
 
