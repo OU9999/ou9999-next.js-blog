@@ -9,7 +9,6 @@ import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
 import { returnColors } from "@/utils/utilFn";
 import Toc from "./TOC";
-import MobileMarkdownLoadingView from "../Mobile/Entry/EntryFooter/MobileMarkdownLoadingView";
 import MarkdownLoadingView from "./MarkdownLoadingView";
 
 //custom style for md view

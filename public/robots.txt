@@ -7,7 +7,7 @@ Disallow: /test
 Disallow: /write/**
 
 # Host
-Host: https://ou9999-next-js-blog.vercel.app/
+Host: https://ou9999-dev.vercel.app/
 
 # Sitemaps
-Sitemap: https://ou9999-next-js-blog.vercel.app/sitemap.xml
+Sitemap: https://ou9999-dev.vercel.app/sitemap.xml
