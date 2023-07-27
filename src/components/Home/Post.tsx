@@ -196,8 +196,9 @@ export default function Post({
                   style={{
                     objectFit: "cover",
                   }}
-                  placeholder="blur"
-                  blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
+                  priority
+                  // placeholder="blur"
+                  // blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPce/h4PQAHVALI8GDtfQAAAABJRU5ErkJggg=="
                 />
               </Box>
             </Link>
