@@ -44,7 +44,6 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
     ssr: true,
     fallback: false,
   });
-  console.log("FULLOVERLAY >>>>", fullOverlay);
 
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");

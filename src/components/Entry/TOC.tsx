@@ -21,12 +21,11 @@ export default function Toc({ md }: ITocProps) {
   const [isReady, setIsReady] = useState(false);
   const [lightColor, setLightColor] = useState("");
   const [darkColor, setDarkColor] = useState("");
+  const [re, setRe] = useState(false);
   const relativeColor = useColorModeValue(lightColor, darkColor);
   const [activeId, setActiveId] = useState("");
   const tocRef = useRef<HTMLDivElement>(null);
-  // console.log("TOCREF >>>>>>>>", tocRef);
 
-  // console.log("ACTIVE ID >>>>>>>", activeId);
   useIntersectionObserve(setActiveId, md);
 
   const titles = md.split(`\n`).filter((t: string) => t.includes("# "));
@@ -53,6 +52,12 @@ export default function Toc({ md }: ITocProps) {
     setDarkColor(dc);
     setIsReady(true);
   }, [colorTheme]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setRe(true);
+    }, 800);
+  }, []);
 
   return (
     <>

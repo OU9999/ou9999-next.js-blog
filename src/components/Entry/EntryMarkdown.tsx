@@ -10,6 +10,7 @@ import { colorThemeAtom } from "@/utils/atoms";
 import { returnColors } from "@/utils/utilFn";
 import Toc from "./TOC";
 import MarkdownLoadingView from "./MarkdownLoadingView";
+import TOCPlaceHolder from "./TOCPlaceHolder";
 
 //custom style for md view
 const CustomStyle = styled.div<{ colorTheme: string }>`
@@ -41,6 +42,8 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [lightColor, setLightColor] = useState("");
   const [darkColor, setDarkColor] = useState("");
+  const [re, setRe] = useState(false);
+
   const relativeColor = useColorModeValue(lightColor, darkColor);
   const colorMode = useColorModeValue("light", "dark");
 
@@ -49,6 +52,12 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
     setLightColor(lc);
     setDarkColor(dc);
   }, [colorTheme]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setRe(true);
+    }, 800);
+  }, []);
 
   return (
     <>
@@ -86,7 +95,7 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
             top={150}
             zIndex={1}
           >
-            <Toc md={md} />
+            {re ? <Toc md={md} /> : <TOCPlaceHolder md={md} />}
           </Box>
         </Box>
       </Flex>
