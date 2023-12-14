@@ -80,24 +80,25 @@ export default function MainPage() {
         h={"100vh"}
         position={"absolute"}
         zIndex={-1}
-        backgroundRepeat="no-repeat"
-        backgroundAttachment={"fixed"}
-        backgroundSize="cover"
-        backgroundPosition={"center center"}
-        backgroundImage={`/assets/imgs/main/${backgroundImage}`}
-        as={motion.div}
-        variants={backgroundVariants}
-        animate={backgroundAni}
-        initial={"normal"}
+        // backgroundRepeat="no-repeat"
+        // backgroundAttachment={"fixed"}
+        // backgroundSize="cover"
+        // backgroundPosition={"center center"}
+        // backgroundImage={`/assets/imgs/main/${backgroundImage}`}
+        // as={motion.div}
+        // variants={backgroundVariants}
+        // animate={backgroundAni}
+        // initial={"normal"}
+        bgColor={"gray.600"}
       />
       <Box
         w="100vw"
         h={"100vh"}
         position={"absolute"}
         zIndex={1}
-        background={
-          "repeating-linear-gradient(0deg,#0e0d0e 25%,#0e0d0e 50%, #171819 50%,  #171819 75%)"
-        }
+        // background={
+        //   "repeating-linear-gradient(0deg,#0e0d0e 25%,#0e0d0e 50%, #171819 50%,  #171819 75%)"
+        // }
         backgroundSize="10px 10px"
         opacity={0.3}
       />
