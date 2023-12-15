@@ -1,5 +1,4 @@
 import { images } from "@/constants/mainpageArray";
-import { INotes } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
 import { dbService } from "@/utils/firebase";
 import {
@@ -26,6 +25,7 @@ import CommentInputMobile from "./EntryFooter/CommentInputMobile";
 import CommentsMobile from "./EntryFooter/CommentsMobile";
 import OtherPostMobile from "./EntryFooter/OtherPostMobile/OtherPostMobile";
 import OtherPost from "./EntryFooter/OtherPost";
+import { INotesArr } from "@/utils/firebaseTypes";
 
 interface IEntryFooterProps {
   category: string;
@@ -42,7 +42,7 @@ export default function EntryFooterMobile({
 }: IEntryFooterProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
-  const [notes, setNotes] = useState<INotes[] | undefined>(undefined);
+  const [notes, setNotes] = useState<INotesArr[] | undefined>(undefined);
   const [previousNote, setPreviousNote] = useState<INextPrev | null>(null);
   const [nextNote, setNextNote] = useState<INextPrev | null>(null);
   const bgColor = useColorModeValue("white", "#1A202C");
@@ -55,7 +55,7 @@ export default function EntryFooterMobile({
         orderBy("createdAt", "desc")
       );
       onSnapshot(q, (snapshot) => {
-        const notesArr: any = snapshot.docs.map((note) => ({
+        const notesArr = snapshot.docs.map((note) => ({
           id: note.id + "",
           title: note.data().title,
           category: note.data().category,
@@ -67,7 +67,7 @@ export default function EntryFooterMobile({
         setNotes(notesArr);
 
         const currentNoteIndex = notesArr.findIndex(
-          (note: INotes) => note.id === docId
+          (note: INotesArr) => note.id === docId
         );
         const nextNoteIndex =
           currentNoteIndex > 0 ? currentNoteIndex - 1 : null;
@@ -147,7 +147,7 @@ export default function EntryFooterMobile({
             </Flex>
             <VStack w="full" alignItems={"flex-start"} p={5} gap={1}>
               {notes?.slice(0, 4).map((note) => (
-                <OtherPost key={note.id} title={note.title} docId={note.id} />
+                <OtherPost key={note.id} title={note.title!} docId={note.id!} />
               ))}
             </VStack>
           </Center>

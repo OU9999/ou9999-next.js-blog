@@ -16,15 +16,15 @@ import { MdExpandMore } from "react-icons/md";
 import { HiSpeakerphone } from "react-icons/hi";
 import IntroduceModal from "./IntroduceModal";
 import { useState } from "react";
-import { INotes } from "@/pages/notes/[category]";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
 import Post from "./Post";
 import { motion } from "framer-motion";
 import MainPage from "./MainPage";
+import { INotesArr } from "@/utils/firebaseTypes";
 
 interface IMainScrollProps {
-  notesArr: INotes[];
+  notesArr: INotesArr[];
 }
 
 const item = {
@@ -132,13 +132,13 @@ export default function MainScroll({ notesArr }: IMainScrollProps) {
                 viewport={{ once: true }}
               >
                 <Post
-                  key={note.id}
-                  link={note.id}
-                  title={note.title}
-                  description={note.description}
-                  thumbnailUrl={note.thumbnailUrl}
-                  category={note.category}
-                  createdAt={note.createdAt}
+                  key={note.id!}
+                  link={note.id!}
+                  title={note.title!}
+                  description={note.description!}
+                  thumbnailUrl={note.thumbnailUrl!}
+                  category={note.category!}
+                  createdAt={note.createdAt!}
                   reverse={index % 2 === 0 ? true : false}
                 />
               </Box>

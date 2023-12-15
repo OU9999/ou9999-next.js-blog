@@ -1,4 +1,5 @@
-import { ICategorys } from "@/pages/notes/[category]";
+import { ICategoryArr } from "@/utils/firebaseTypes";
+import { FetchCategoryResult } from "@/utils/firebaseUtil";
 import {
   Heading,
   Menu,
@@ -15,7 +16,7 @@ import { GoThreeBars } from "react-icons/go";
 
 interface INoteCategorySelectorProps {
   category: string;
-  categoryArr: ICategorys[];
+  categoryArr: FetchCategoryResult[];
 }
 
 export default function NoteCategorySelector({

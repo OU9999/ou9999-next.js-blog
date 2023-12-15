@@ -1,17 +1,8 @@
 import { images, quotes } from "@/constants/mainpageArray";
 import { colorThemeAtom } from "@/utils/atoms";
 import { returnColors, vhToPixels } from "@/utils/utilFn";
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  HStack,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Center, Flex, HStack, Text, useToast } from "@chakra-ui/react";
 import { motion, useAnimation, Variants } from "framer-motion";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   FaArrowDown,

@@ -1,16 +1,7 @@
 import { Divider, VStack } from "@chakra-ui/react";
 import NoteCategorySelectorMobile from "./NoteCategorySelectorMobile";
-import dynamic from "next/dynamic";
-import LoadingGridMobile from "./LoadingGridMobile";
-import { ICategorys, INotes } from "@/pages/notes/[category]";
 import NoteGridMobile from "./NoteGridMobile";
-
-interface INotesMainPageProps {
-  category: string;
-  notesArr: INotes[];
-  categoryArr: ICategorys[];
-  snapsize: number;
-}
+import { INotesCategoryProps } from "@/pages/notes/[category]";
 
 // const NoteGridMobile = dynamic(() => import("./NoteGridMobile"), {
 //   loading: () => <LoadingGridMobile />,
@@ -21,7 +12,7 @@ export default function NoteMainPageMobile({
   notesArr,
   categoryArr,
   snapsize,
-}: INotesMainPageProps) {
+}: INotesCategoryProps) {
   return (
     <>
       <VStack

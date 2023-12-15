@@ -1,28 +1,16 @@
-import { dbService } from "@/utils/firebase";
 import { returnUrlTitle, selectBasicThumbnail } from "@/utils/utilFn";
 import { useMediaQuery } from "@chakra-ui/react";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-} from "firebase/firestore";
 import { NextSeo } from "next-seo";
 import EntryMainPage from "@/components/Entry/EntryMainPage";
 import { useEffect, useState } from "react";
+import { fetchDetail, fetchNotesArr } from "@/utils/firebaseUtil";
+import { IDetail } from "@/utils/firebaseTypes";
 
 export const getStaticPaths = async () => {
-  const q = query(collection(dbService, "notes"), orderBy("createdAt", "desc"));
-  const snapshot = await getDocs(q);
-  const notesArr: any = snapshot.docs.map((note) => ({
-    id: note.id + "",
-    title: note.data().title,
-  }));
+  const { notesArr } = await fetchNotesArr("ALL");
 
-  const paths = notesArr.map((note: any) => ({
-    params: { slug: [returnUrlTitle(note.title), note.id] },
+  const paths = notesArr.map((note) => ({
+    params: { slug: [returnUrlTitle(note.title!), note.id] },
   }));
 
   return {
@@ -33,25 +21,14 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const docId = params.slug[1];
-  const ref = await doc(dbService, "notes", docId);
-  const snap = await getDoc(ref);
-  const detail = snap.data();
+  const detail = await fetchDetail(docId);
 
   return {
     props: { detail, docId },
   };
 };
 
-export interface IDetail {
-  category: string;
-  createdAt: number;
-  md: string;
-  thumbnailUrl: string;
-  title: string;
-  description: string;
-}
-
-interface IEntryProps {
+export interface IEntryProps {
   detail: IDetail;
   docId: string;
 }
@@ -82,7 +59,7 @@ export default function Entry({ detail, docId }: IEntryProps) {
           description: `${detail.description} | OU9999's First Blog`,
           images: [
             {
-              url: selectBasicThumbnail(detail.category) as string,
+              url: selectBasicThumbnail(detail.category!) as string,
               width: 285,
               height: 167,
               alt: "thumbnail",
@@ -97,7 +74,7 @@ export default function Entry({ detail, docId }: IEntryProps) {
       />
 
       {desktopView ? (
-        <EntryMainPage detail={detail} docId={docId} />
+        <EntryMainPage detail={detail!} docId={docId} />
       ) : (
         EntryMainPageMobile && (
           <EntryMainPageMobile detail={detail} docId={docId} />

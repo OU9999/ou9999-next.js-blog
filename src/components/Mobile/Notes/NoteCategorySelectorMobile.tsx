@@ -1,5 +1,4 @@
-import { ICategorys } from "@/pages/notes/[category]";
-import { dbService } from "@/utils/firebase";
+import { FetchCategoryResult } from "@/utils/firebaseUtil";
 import {
   Box,
   HStack,
@@ -11,14 +10,12 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
 
 interface INoteCategorySelectorProps {
   category: string;
-  categoryArr: ICategorys[];
+  categoryArr: FetchCategoryResult[];
 }
 
 export default function NoteCategorySelectorMobile({

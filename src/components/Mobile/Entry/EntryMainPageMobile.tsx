@@ -7,19 +7,7 @@ import Image from "next/image";
 import EntryHeaderMobile from "./EntryHeaderMobile";
 import dynamic from "next/dynamic";
 import EntryMarkdownMobile from "./EntryMarkdownMobile";
-
-export interface IDetail {
-  category: string;
-  createdAt: number;
-  md: string;
-  thumbnailUrl: string;
-  title: string;
-}
-
-interface IEntryProps {
-  detail: IDetail;
-  docId: string;
-}
+import { IEntryProps } from "@/pages/entry/[...slug]";
 
 const DynamicEntryFooterMobile = dynamic(() => import("./EntryFooterMobile"));
 
@@ -53,7 +41,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
             boxShadow={"dark-lg"}
           >
             <Image
-              src={selectBasicThumbnail(detail.category)}
+              src={selectBasicThumbnail(detail.category!)}
               fill={true}
               alt="thumbnail"
               style={{
@@ -66,7 +54,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
           </Box>
         </Center>
 
-        <EntryMarkdownMobile md={detail.md} />
+        <EntryMarkdownMobile md={detail.md!} />
 
         <Box
           position={"relative"}
@@ -75,7 +63,7 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
           overflow={"hidden"}
           zIndex={32}
         >
-          <DynamicEntryFooterMobile category={detail.category} docId={docId} />
+          <DynamicEntryFooterMobile category={detail.category!} docId={docId} />
         </Box>
       </VStack>
     </>

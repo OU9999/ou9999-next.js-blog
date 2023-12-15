@@ -1,7 +1,7 @@
 import { Box, Grid } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { INotes } from "@/pages/notes/[category]";
 import NoteCard from "./NoteCard";
+import { INotesArr } from "@/utils/firebaseTypes";
 
 const container = {
   hidden: { opacity: 0 },
@@ -27,7 +27,7 @@ const item = {
 };
 
 interface INoteGridProps {
-  notes: INotes[];
+  notes: INotesArr[];
   count: number;
 }
 
@@ -65,13 +65,13 @@ export default function NoteGrid({ notes, count }: INoteGridProps) {
                 viewport={{ once: true }}
               >
                 <NoteCard
-                  key={note.id}
-                  link={note.id}
-                  title={note.title}
-                  description={note.description}
-                  category={note.category}
-                  createdAt={note.createdAt}
-                  thumbnailUrl={note.thumbnailUrl}
+                  key={"noteCard" + note.id!}
+                  link={note.id!}
+                  title={note.title!}
+                  description={note.description!}
+                  category={note.category!}
+                  createdAt={note.createdAt!}
+                  thumbnailUrl={note.thumbnailUrl!}
                 />
               </Box>
             </>

@@ -1,5 +1,4 @@
 import { images } from "@/constants/mainpageArray";
-import { INotes } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
 import { dbService } from "@/utils/firebase";
 import {
@@ -28,6 +27,7 @@ import CommentInput from "./EntryFooter/CommentInput";
 import Comments from "./EntryFooter/Comments";
 import AnotherCard from "./EntryFooter/AnotherCard";
 import OtherPost from "./EntryFooter/OtherPost/OtherPost";
+import { INotesArr } from "@/utils/firebaseTypes";
 
 interface IEntryFooterProps {
   category: string;
@@ -47,7 +47,7 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
 
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
-  const [notes, setNotes] = useState<INotes[] | undefined>(undefined);
+  const [notes, setNotes] = useState<INotesArr[] | undefined>(undefined);
   const [previousNote, setPreviousNote] = useState<INextPrev | null>(null);
   const [nextNote, setNextNote] = useState<INextPrev | null>(null);
   const [limit, setLimit] = useState(4);
@@ -73,7 +73,7 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
         setNotes(notesArr);
 
         const currentNoteIndex = notesArr.findIndex(
-          (note: INotes) => note.id === docId
+          (note: INotesArr) => note.id === docId
         );
         const nextNoteIndex =
           currentNoteIndex > 0 ? currentNoteIndex - 1 : null;
@@ -184,11 +184,11 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
               <GridItem key={note.id} colSpan={1} rowSpan={1}>
                 <Flex justifyContent={"center"} alignItems={"center"}>
                   <AnotherCard
-                    link={note.id}
-                    title={note.title}
-                    createdAt={note.createdAt}
-                    thumbnailUrl={note.thumbnailUrl}
-                    category={note.category}
+                    link={note.id!}
+                    title={note.title!}
+                    createdAt={note.createdAt!}
+                    thumbnailUrl={note.thumbnailUrl!}
+                    category={note.category!}
                   />
                 </Flex>
               </GridItem>
