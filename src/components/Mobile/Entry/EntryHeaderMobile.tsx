@@ -14,14 +14,7 @@ import { BiTimeFive } from "react-icons/bi";
 import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
-
-export interface IDetail {
-  category: string;
-  createdAt: number;
-  md: string;
-  thumbnailUrl: string;
-  title: string;
-}
+import { IDetail } from "@/utils/firebaseTypes";
 
 interface IEntryHeaderMobileProps {
   detail: IDetail;
@@ -34,14 +27,14 @@ export default function EntryHeaderMobile({
 }: IEntryHeaderMobileProps) {
   const isLogin = useRecoilValue(isLoginAtom);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const date = dateFormatter(detail.createdAt);
+  const date = dateFormatter(detail.createdAt!);
 
   return (
     <>
       <Box w="100vw" h={"30vh"} position={"absolute"} zIndex={-1}>
         <Image
           alt="mainImg"
-          src={selectBasicThumbnail(detail.category)}
+          src={selectBasicThumbnail(detail.category!)}
           fill={true}
           style={{
             objectFit: "cover",

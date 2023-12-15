@@ -17,9 +17,7 @@ interface IGuestBookComment {
 }
 
 export default function GBComments() {
-  const [comments, setComments] = useState<IGuestBookComment[] | undefined>(
-    undefined
-  );
+  const [comments, setComments] = useState<IGuestBookComment[] | null>(null);
 
   const getGuestBookComments = async () => {
     try {

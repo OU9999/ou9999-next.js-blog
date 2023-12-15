@@ -10,14 +10,13 @@ import {
 import { quotes } from "@/constants/mainpageArray";
 import { useEffect, useState } from "react";
 import { MdExpandMore } from "react-icons/md";
-import { INotes } from "@/pages/notes/[category]";
 import PostMobile from "./PostMobile";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { Variants, motion, useAnimation } from "framer-motion";
-import { HiSpeakerphone } from "react-icons/hi";
+import { INotesArr } from "@/utils/firebaseTypes";
 
 interface IMainPageMobileProps {
-  notesArr: INotes[];
+  notesArr: INotesArr[];
 }
 
 const backgroundVariants: Variants = {
@@ -102,11 +101,12 @@ export default function MainPageMobile({ notesArr }: IMainPageMobileProps) {
           {notesArr?.slice(0, limitCount).map((note) => (
             <Box key={note.id} w="full">
               <PostMobile
-                link={note.id}
-                title={note.title}
-                thumbnailUrl={note.thumbnailUrl}
-                category={note.category}
-                createdAt={note.createdAt}
+                key={"postMobile" + note.id!}
+                link={note.id!}
+                title={note.title!}
+                thumbnailUrl={note.thumbnailUrl!}
+                category={note.category!}
+                createdAt={note.createdAt!}
               />
             </Box>
           ))}

@@ -1,13 +1,13 @@
 import NoteGrid from "@/components/Notes/NoteGrid";
-import { INotes } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
 import { IconButton } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { MdExpandMore } from "react-icons/md";
+import { INotesArr } from "@/utils/firebaseTypes";
 
 interface INoteGridPageProps {
-  notesArr: INotes[];
+  notesArr: INotesArr[];
   snapsize: number;
 }
 
