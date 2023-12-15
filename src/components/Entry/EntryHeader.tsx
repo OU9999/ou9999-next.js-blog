@@ -19,7 +19,7 @@ import { BiTimeFive } from "react-icons/bi";
 import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
-import { IEntryProps } from "./EntryMainPage";
+import { IEntryProps } from "@/pages/entry/[...slug]";
 
 export interface IDetail {
   category: string;
@@ -31,8 +31,8 @@ export interface IDetail {
 
 export default function EntryHeader({ detail, docId }: IEntryProps) {
   const isLogin = useRecoilValue(isLoginAtom);
-  const date = dateFormatter(detail.createdAt);
-  const urlTitle = returnUrlTitle(detail.title);
+  const date = dateFormatter(detail.createdAt!);
+  const urlTitle = returnUrlTitle(detail.title!);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -40,7 +40,7 @@ export default function EntryHeader({ detail, docId }: IEntryProps) {
       <Box w="100vw" h="50vh" position={"absolute"} zIndex={30}>
         <Image
           aria-label="thumbnail"
-          src={selectBasicThumbnail(detail.category)}
+          src={selectBasicThumbnail(detail.category!)}
           fill={true}
           alt="thumbnail"
           style={{

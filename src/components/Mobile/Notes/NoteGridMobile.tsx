@@ -1,13 +1,13 @@
-import { INotes } from "@/pages/notes/[category]";
 import { colorThemeAtom } from "@/utils/atoms";
 import { Box, IconButton } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import PostMobile from "../Home/PostMobile";
 import { MdExpandMore } from "react-icons/md";
+import { INotesArr } from "@/utils/firebaseTypes";
 
 interface INoteGridMobileProps {
-  notesArr: INotes[];
+  notesArr: INotesArr[];
   snapsize: number;
 }
 
@@ -36,11 +36,12 @@ export default function NoteGridMobile({
       {notesArr.slice(0, count).map((note) => (
         <Box key={note.id} w="full">
           <PostMobile
-            link={note.id}
-            title={note.title}
-            thumbnailUrl={note.thumbnailUrl}
-            category={note.category}
-            createdAt={note.createdAt}
+            key={"postMobile" + note.id}
+            link={note.id!}
+            title={note.title!}
+            thumbnailUrl={note.thumbnailUrl!}
+            category={note.category!}
+            createdAt={note.createdAt!}
           />
         </Box>
       ))}
