@@ -1,10 +1,10 @@
 import { returnUrlTitle, selectBasicThumbnail } from "@/utils/utilFn";
 import { useMediaQuery } from "@chakra-ui/react";
-import { NextSeo } from "next-seo";
 import EntryMainPage from "@/components/Entry/EntryMainPage";
 import { useEffect, useState } from "react";
 import { fetchDetail, fetchNotesArr } from "@/firebase/firebaseUtil";
 import { IDetail, INote } from "@/firebase/firebaseTypes";
+import BlogSEO from "@/components/common/BlogSEO";
 
 export const getStaticPaths = async () => {
   const { notesArr } = await fetchNotesArr("ALL");
@@ -72,28 +72,10 @@ export default function Entry({
 
   return (
     <>
-      <NextSeo
-        title={`${detail.title} | OU9999's First Blog`}
-        description={`${detail.description} | OU9999's First Blog`}
-        openGraph={{
-          type: "website",
-          url: "no",
-          title: `${detail.title} | OU9999's First Blog`,
-          description: `${detail.description} | OU9999's First Blog`,
-          images: [
-            {
-              url: selectBasicThumbnail(detail.category!) as string,
-              width: 285,
-              height: 167,
-              alt: "thumbnail",
-            },
-          ],
-        }}
-        twitter={{
-          handle: "@handle",
-          site: "@site",
-          cardType: "summary_large_image",
-        }}
+      <BlogSEO
+        title={detail.title!}
+        description={detail.description!}
+        image={selectBasicThumbnail(detail.category!) as string}
       />
 
       {desktopView ? (

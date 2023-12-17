@@ -1,4 +1,5 @@
 import NotesMainPage from "@/components/Notes/NoteMainPage";
+import BlogSEO from "@/components/common/BlogSEO";
 import { INote } from "@/firebase/firebaseTypes";
 import {
   FetchCategoryResult,
@@ -6,7 +7,6 @@ import {
   fetchNotesArr,
 } from "@/firebase/firebaseUtil";
 import { useMediaQuery } from "@chakra-ui/react";
-import { NextSeo } from "next-seo";
 import { useEffect, useState } from "react";
 
 export interface INotesCategoryProps {
@@ -72,24 +72,7 @@ export default function NotesCategory({
 
   return (
     <>
-      <NextSeo
-        title="Notes | OU9999's First Blog"
-        description="Notes! | OU9999's First Blog"
-        openGraph={{
-          type: "website",
-          url: "no",
-          title: "OU9999",
-          description: "Notes! | OU9999's First Blog",
-          images: [
-            {
-              url: "/op.webp",
-              width: 285,
-              height: 167,
-              alt: "image",
-            },
-          ],
-        }}
-      />
+      <BlogSEO title="Notes" description="Notes!" image="/op.webp" />
       {desktopView ? (
         <NotesMainPage
           category={category}
