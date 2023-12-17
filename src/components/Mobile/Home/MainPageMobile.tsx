@@ -13,7 +13,7 @@ import { MdExpandMore } from "react-icons/md";
 import PostMobile from "./PostMobile";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { Variants, motion, useAnimation } from "framer-motion";
-import { INotesArr } from "@/utils/firebaseTypes";
+import { INotesArr } from "@/firebase/firebaseTypes";
 
 interface IMainPageMobileProps {
   notesArr: INotesArr[];

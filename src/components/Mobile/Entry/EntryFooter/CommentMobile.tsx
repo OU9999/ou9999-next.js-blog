@@ -24,7 +24,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 import { userIcons } from "./CommentInputMobile";
 import CommentReplyInputMobile from "./CommentReplyInputMobile";
 import CommentReplyMobile from "./CommentReplyMobile";

@@ -22,7 +22,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import AddModal from "@/components/Write/AddModal";
 import { useRouter } from "next/router";
 import { doc, getDoc } from "firebase/firestore";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 import Mobile404 from "@/components/Mobile/404";
 import { NextSeo } from "next-seo";
 import styled from "styled-components";

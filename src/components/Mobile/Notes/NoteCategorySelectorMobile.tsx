@@ -1,4 +1,4 @@
-import { FetchCategoryResult } from "@/utils/firebaseUtil";
+import { FetchCategoryResult } from "@/firebase/firebaseUtil";
 import {
   Box,
   HStack,

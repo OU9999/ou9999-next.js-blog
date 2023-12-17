@@ -11,7 +11,13 @@ import { IEntryProps } from "@/pages/entry/[...slug]";
 
 const DynamicEntryFooterMobile = dynamic(() => import("./EntryFooterMobile"));
 
-export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
+export default function EntryMainPageMobile({
+  detail,
+  docId,
+  notesArr,
+  previousNote,
+  nextNote,
+}: IEntryProps) {
   const setIsEntry = useSetRecoilState(isEntryAtom);
 
   useEffect(() => {
@@ -63,7 +69,13 @@ export default function EntryMainPageMobile({ detail, docId }: IEntryProps) {
           overflow={"hidden"}
           zIndex={32}
         >
-          <DynamicEntryFooterMobile category={detail.category!} docId={docId} />
+          <DynamicEntryFooterMobile
+            category={detail.category!}
+            docId={docId}
+            notesArr={notesArr}
+            previousNote={previousNote}
+            nextNote={nextNote}
+          />
         </Box>
       </VStack>
     </>

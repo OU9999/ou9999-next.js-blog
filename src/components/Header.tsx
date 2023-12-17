@@ -23,7 +23,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { colorThemeAtom, isLoginAtom, writeAtom } from "@/utils/atoms";
 import LoginPopover from "./Header/LoginPopover";
 import LoginModal from "./Header/LoginModal";
-import { authService } from "@/utils/firebase";
+import { authService } from "@/firebase/firebase";
 
 const headerVariants: Variants = {
   top: {

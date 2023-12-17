@@ -1,5 +1,5 @@
 import { isLoginAtom } from "@/utils/atoms";
-import { authService } from "@/utils/firebase";
+import { authService } from "@/firebase/firebase";
 import {
   Button,
   FormControl,

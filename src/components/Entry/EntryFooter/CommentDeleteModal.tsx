@@ -17,7 +17,7 @@ import {
 import { deleteDoc, doc } from "firebase/firestore";
 import { useState } from "react";
 import { FaLock } from "react-icons/fa";
-import { dbService } from "../../../utils/firebase";
+import { dbService } from "../../../firebase/firebase";
 import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
 

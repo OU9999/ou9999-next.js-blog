@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 import { FiCornerDownRight } from "react-icons/fi";
-import { dbService } from "../../../utils/firebase";
+import { dbService } from "../../../firebase/firebase";
 import { userIcons } from "./CommentInput";
 import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";

@@ -22,7 +22,7 @@ import GBCommentPopover from "./GBCommentPopover";
 import { userIcons } from "./GBInput";
 import { dateFormatterMobile } from "@/utils/utilFn";
 import { doc, updateDoc } from "firebase/firestore";
-import { dbService, storageService } from "@/utils/firebase";
+import { dbService, storageService } from "@/firebase/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { uuidv4 } from "@firebase/util";
 import Image from "next/image";

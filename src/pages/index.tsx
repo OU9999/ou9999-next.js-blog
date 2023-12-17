@@ -2,8 +2,8 @@ import { NextSeo } from "next-seo";
 import { useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import MainScroll from "@/components/Home/MainScroll";
-import { fetchNotesArr } from "@/utils/firebaseUtil";
-import { INotesArr } from "@/utils/firebaseTypes";
+import { fetchNotesArr } from "@/firebase/firebaseUtil";
+import { INotesArr } from "@/firebase/firebaseTypes";
 
 interface IHomeProps {
   notesArr: INotesArr[];

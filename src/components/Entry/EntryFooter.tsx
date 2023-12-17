@@ -1,6 +1,5 @@
 import { images } from "@/constants/mainpageArray";
 import { colorThemeAtom } from "@/utils/atoms";
-import { dbService } from "@/utils/firebase";
 import {
   Box,
   Button,
@@ -9,17 +8,9 @@ import {
   Grid,
   GridItem,
   Heading,
-  Text,
   useColorModeValue,
   useMediaQuery,
 } from "@chakra-ui/react";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -27,19 +18,23 @@ import CommentInput from "./EntryFooter/CommentInput";
 import Comments from "./EntryFooter/Comments";
 import AnotherCard from "./EntryFooter/AnotherCard";
 import OtherPost from "./EntryFooter/OtherPost/OtherPost";
-import { INotesArr } from "@/utils/firebaseTypes";
+import { INotesArr } from "@/firebase/firebaseTypes";
 
-interface IEntryFooterProps {
+export interface IEntryFooterProps {
   category: string;
   docId: string;
+  notesArr: INotesArr[];
+  previousNote: INotesArr | null;
+  nextNote: INotesArr | null;
 }
 
-export interface INextPrev {
-  id: string;
-  title: string;
-}
-
-export default function EntryFooter({ category, docId }: IEntryFooterProps) {
+export default function EntryFooter({
+  category,
+  docId,
+  notesArr,
+  previousNote,
+  nextNote,
+}: IEntryFooterProps) {
   const [fullOverlay] = useMediaQuery("(min-width: 1280px)", {
     ssr: true,
     fallback: false,
@@ -47,57 +42,12 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
 
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
-  const [notes, setNotes] = useState<INotesArr[] | undefined>(undefined);
-  const [previousNote, setPreviousNote] = useState<INextPrev | null>(null);
-  const [nextNote, setNextNote] = useState<INextPrev | null>(null);
   const [limit, setLimit] = useState(4);
   const bgColor = useColorModeValue("white", "#1A202C");
-
-  const getNotes = async (category: string, docId: string) => {
-    try {
-      const q = query(
-        collection(dbService, "notes"),
-        where("category", "==", category),
-        orderBy("createdAt", "desc")
-      );
-      onSnapshot(q, (snapshot) => {
-        const notesArr: any = snapshot.docs.map((note) => ({
-          id: note.id + "",
-          title: note.data().title,
-          category: note.data().category,
-          createdAt: note.data().createdAt,
-          thumbnailUrl: note.data().thumbnailUrl,
-          description: note.data().description,
-        }));
-
-        setNotes(notesArr);
-
-        const currentNoteIndex = notesArr.findIndex(
-          (note: INotesArr) => note.id === docId
-        );
-        const nextNoteIndex =
-          currentNoteIndex > 0 ? currentNoteIndex - 1 : null;
-        const previousNoteIndex =
-          currentNoteIndex < notesArr.length - 1 ? currentNoteIndex + 1 : null;
-
-        const previousNoteValue =
-          previousNoteIndex !== null ? notesArr[previousNoteIndex] : null;
-        const nextNoteValue =
-          nextNoteIndex !== null ? notesArr[nextNoteIndex] : null;
-
-        setPreviousNote(previousNoteIndex !== null ? previousNoteValue : null);
-        setNextNote(nextNoteIndex !== null ? nextNoteValue : null);
-      });
-    } catch (error: any) {}
-  };
 
   useEffect(() => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
   }, []);
-
-  useEffect(() => {
-    getNotes(category, docId);
-  }, [category, docId]);
 
   useEffect(() => {
     if (fullOverlay) {
@@ -180,7 +130,7 @@ export default function EntryFooter({ category, docId }: IEntryFooterProps) {
             pt={10}
             zIndex={4}
           >
-            {notes?.slice(0, limit).map((note) => (
+            {notesArr?.slice(0, limit).map((note) => (
               <GridItem key={note.id} colSpan={1} rowSpan={1}>
                 <Flex justifyContent={"center"} alignItems={"center"}>
                   <AnotherCard

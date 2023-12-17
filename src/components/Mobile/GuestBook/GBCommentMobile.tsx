@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaImage, FaUser } from "react-icons/fa";
 import { dateFormatter } from "@/utils/utilFn";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { dbService, storageService } from "@/utils/firebase";
+import { dbService, storageService } from "@/firebase/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { uuidv4 } from "@firebase/util";
 import { userIcons } from "./GBInputMobile";

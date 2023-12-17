@@ -1,6 +1,6 @@
 import { images } from "@/constants/mainpageArray";
 import { colorThemeAtom } from "@/utils/atoms";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 import {
   Box,
   Button,
@@ -25,73 +25,23 @@ import CommentInputMobile from "./EntryFooter/CommentInputMobile";
 import CommentsMobile from "./EntryFooter/CommentsMobile";
 import OtherPostMobile from "./EntryFooter/OtherPostMobile/OtherPostMobile";
 import OtherPost from "./EntryFooter/OtherPost";
-import { INotesArr } from "@/utils/firebaseTypes";
-
-interface IEntryFooterProps {
-  category: string;
-  docId: string;
-}
-export interface INextPrev {
-  id: string;
-  title: string;
-}
+import { INotesArr } from "@/firebase/firebaseTypes";
+import { IEntryFooterProps } from "@/components/Entry/EntryFooter";
 
 export default function EntryFooterMobile({
   category,
   docId,
+  notesArr,
+  previousNote,
+  nextNote,
 }: IEntryFooterProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
-  const [notes, setNotes] = useState<INotesArr[] | undefined>(undefined);
-  const [previousNote, setPreviousNote] = useState<INextPrev | null>(null);
-  const [nextNote, setNextNote] = useState<INextPrev | null>(null);
   const bgColor = useColorModeValue("white", "#1A202C");
-
-  const getNotes = async (category: string, docId: string) => {
-    try {
-      const q = query(
-        collection(dbService, "notes"),
-        where("category", "==", category),
-        orderBy("createdAt", "desc")
-      );
-      onSnapshot(q, (snapshot) => {
-        const notesArr = snapshot.docs.map((note) => ({
-          id: note.id + "",
-          title: note.data().title,
-          category: note.data().category,
-          createdAt: note.data().createdAt,
-          thumbnailUrl: note.data().thumbnailUrl,
-          description: note.data().description,
-        }));
-
-        setNotes(notesArr);
-
-        const currentNoteIndex = notesArr.findIndex(
-          (note: INotesArr) => note.id === docId
-        );
-        const nextNoteIndex =
-          currentNoteIndex > 0 ? currentNoteIndex - 1 : null;
-        const previousNoteIndex =
-          currentNoteIndex < notesArr.length - 1 ? currentNoteIndex + 1 : null;
-
-        const previousNoteValue =
-          previousNoteIndex !== null ? notesArr[previousNoteIndex] : null;
-        const nextNoteValue =
-          nextNoteIndex !== null ? notesArr[nextNoteIndex] : null;
-
-        setPreviousNote(previousNoteIndex !== null ? previousNoteValue : null);
-        setNextNote(nextNoteIndex !== null ? nextNoteValue : null);
-      });
-    } catch (error: any) {}
-  };
 
   useEffect(() => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
   }, []);
-
-  useEffect(() => {
-    getNotes(category, docId);
-  }, [category, docId]);
 
   return (
     <>
@@ -146,7 +96,7 @@ export default function EntryFooterMobile({
               </Link>
             </Flex>
             <VStack w="full" alignItems={"flex-start"} p={5} gap={1}>
-              {notes?.slice(0, 4).map((note) => (
+              {notesArr?.slice(0, 4).map((note) => (
                 <OtherPost key={note.id} title={note.title!} docId={note.id!} />
               ))}
             </VStack>

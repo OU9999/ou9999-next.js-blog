@@ -21,7 +21,7 @@ import { colorThemeAtom } from "@/utils/atoms";
 import Post from "./Post";
 import { motion } from "framer-motion";
 import MainPage from "./MainPage";
-import { INotesArr } from "@/utils/firebaseTypes";
+import { INotesArr } from "@/firebase/firebaseTypes";
 
 interface IMainScrollProps {
   notesArr: INotesArr[];

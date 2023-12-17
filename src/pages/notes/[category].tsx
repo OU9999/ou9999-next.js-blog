@@ -1,10 +1,10 @@
 import NotesMainPage from "@/components/Notes/NoteMainPage";
-import { INotesArr } from "@/utils/firebaseTypes";
+import { INotesArr } from "@/firebase/firebaseTypes";
 import {
   FetchCategoryResult,
   fetchCategory,
   fetchNotesArr,
-} from "@/utils/firebaseUtil";
+} from "@/firebase/firebaseUtil";
 import { useMediaQuery } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 import { useEffect, useState } from "react";

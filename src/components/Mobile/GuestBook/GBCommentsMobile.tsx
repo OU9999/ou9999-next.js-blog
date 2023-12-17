@@ -1,7 +1,7 @@
 import { Center } from "@chakra-ui/react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 import GBCommentMobile from "./GBCommentMobile";
 
 interface IGuestBookComment {

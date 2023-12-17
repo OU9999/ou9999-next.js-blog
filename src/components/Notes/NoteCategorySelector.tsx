@@ -1,5 +1,5 @@
-import { ICategoryArr } from "@/utils/firebaseTypes";
-import { FetchCategoryResult } from "@/utils/firebaseUtil";
+import { ICategoryArr } from "@/firebase/firebaseTypes";
+import { FetchCategoryResult } from "@/firebase/firebaseUtil";
 import {
   Heading,
   Menu,
