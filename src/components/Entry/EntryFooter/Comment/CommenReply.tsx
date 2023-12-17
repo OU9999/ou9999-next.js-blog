@@ -18,15 +18,15 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FaCommentSlash } from "react-icons/fa";
 import { FiCornerDownRight } from "react-icons/fi";
-import { dbService } from "../../../firebase/firebase";
+import { dbService } from "../../../../firebase/firebase";
 import CommentDeleteModal from "./CommentDeleteModal";
-import { userIcons } from "./CommentInput";
+import { userIcons } from "../CommentInput";
 import CommentPopover from "./CommentPopover";
 import { dateFormatter } from "@/utils/utilFn";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
 
-interface ICommentReplyProps {
+interface IReplyCommentProps {
   nickname: string;
   password: string;
   avatar: string;
@@ -44,7 +44,7 @@ export default function CommentReply({
   createdAt,
   id,
   edited,
-}: ICommentReplyProps) {
+}: IReplyCommentProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [icon, setIcon] = useState<JSX.Element>();
   const [option, setOption] = useState(false);

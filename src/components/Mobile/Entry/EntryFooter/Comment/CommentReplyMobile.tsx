@@ -21,7 +21,7 @@ import { dbService } from "@/firebase/firebase";
 import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
 
-interface ICommentReplyProps {
+interface IReplyCommentProps {
   nickname: string;
   password: string;
   avatar: string;
@@ -39,7 +39,7 @@ export default function CommentReplyMobile({
   createdAt,
   id,
   edited,
-}: ICommentReplyProps) {
+}: IReplyCommentProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [icon, setIcon] = useState<JSX.Element>();
   const [option, setOption] = useState(false);

@@ -3,10 +3,10 @@ import { useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import MainScroll from "@/components/Home/MainScroll";
 import { fetchNotesArr } from "@/firebase/firebaseUtil";
-import { INotesArr } from "@/firebase/firebaseTypes";
+import { INote } from "@/firebase/firebaseTypes";
 
 interface IHomeProps {
-  notesArr: INotesArr[];
+  notesArr: INote[];
 }
 
 export default function Home({ notesArr }: IHomeProps) {

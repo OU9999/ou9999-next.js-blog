@@ -3,15 +3,16 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   orderBy,
   query,
   where,
 } from "firebase/firestore";
 import { dbService } from "./firebase";
-import { ICategoryArr, IDetail, INotesArr } from "./firebaseTypes";
+import { ICategory, IComment, IDetail, INote } from "./firebaseTypes";
 
 interface FetchNotesResult {
-  notesArr: INotesArr[];
+  notesArr: INote[];
   snapsize: number;
 }
 
@@ -31,7 +32,7 @@ export const fetchNotesArr = async (
 
   const snapshot = await getDocs(q);
   const snapsize: number = snapshot.size;
-  const notesArr: INotesArr[] = snapshot.docs.map((note) => ({
+  const notesArr: INote[] = snapshot.docs.map((note) => ({
     id: note.id + "",
     title: note.data().title,
     category: note.data().category,
@@ -60,7 +61,7 @@ export const fetchCategory = async (
     orderBy("createdAt", "asc")
   );
   const snapshot = await getDocs(q);
-  const categoryArr: ICategoryArr[] = snapshot.docs.map((category) => ({
+  const categoryArr: ICategory[] = snapshot.docs.map((category) => ({
     id: category.id + "",
     ...category.data(),
   }));
@@ -70,7 +71,7 @@ export const fetchCategory = async (
   }
 
   // categorySizes
-  const categorySizePromises = categoryArr.map(async (c: ICategoryArr) => {
+  const categorySizePromises = categoryArr.map(async (c: ICategory) => {
     const categorySnapshot = await getDocs(
       query(collection(dbService, "notes"), where("category", "==", c.category))
     );
@@ -110,4 +111,34 @@ export const fetchDetail = async (docId: string): Promise<IDetail> => {
   const detail: IDetail = snapData;
 
   return detail;
+};
+
+export const fetchComments = async (docId: string): Promise<IComment[]> => {
+  const q = query(
+    collection(dbService, "comments"),
+    where("docId", "==", docId),
+    orderBy("createdAt", "desc")
+  );
+  const snapshot = await getDocs(q);
+  const commentArr: IComment[] = snapshot.docs.map((comment) => ({
+    id: comment.id + "",
+    ...comment.data(),
+  }));
+
+  return commentArr;
+};
+
+export const fetchReplyComments = async (commentId: string) => {
+  const q = query(
+    collection(dbService, "replyComments"),
+    where("commentId", "==", commentId),
+    orderBy("createdAt", "asc")
+  );
+  const snapshot = await getDocs(q);
+  const replyCommentArr: any[] = snapshot.docs.map((replyComment) => ({
+    id: replyComment.id + "",
+    ...replyComment.data(),
+  }));
+
+  return replyCommentArr;
 };

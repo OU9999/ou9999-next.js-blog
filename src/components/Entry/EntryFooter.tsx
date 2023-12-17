@@ -16,16 +16,16 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import CommentInput from "./EntryFooter/CommentInput";
 import Comments from "./EntryFooter/Comments";
-import AnotherCard from "./EntryFooter/AnotherCard";
+import AnotherCard from "./EntryFooter/Comment/AnotherCard";
 import OtherPost from "./EntryFooter/OtherPost/OtherPost";
-import { INotesArr } from "@/firebase/firebaseTypes";
+import { INote } from "@/firebase/firebaseTypes";
 
 export interface IEntryFooterProps {
   category: string;
   docId: string;
-  notesArr: INotesArr[];
-  previousNote: INotesArr | null;
-  nextNote: INotesArr | null;
+  notesArr: INote[];
+  previousNote: INote | null;
+  nextNote: INote | null;
 }
 
 export default function EntryFooter({

@@ -1,4 +1,4 @@
-import { ICategoryArr } from "@/firebase/firebaseTypes";
+import { ICategory } from "@/firebase/firebaseTypes";
 import { FetchCategoryResult } from "@/firebase/firebaseUtil";
 import {
   Heading,

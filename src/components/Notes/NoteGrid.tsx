@@ -1,7 +1,7 @@
 import { Box, Grid } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import NoteCard from "./NoteCard";
-import { INotesArr } from "@/firebase/firebaseTypes";
+import { INote } from "@/firebase/firebaseTypes";
 
 const container = {
   hidden: { opacity: 0 },
@@ -27,7 +27,7 @@ const item = {
 };
 
 interface INoteGridProps {
-  notes: INotesArr[];
+  notes: INote[];
   count: number;
 }
 

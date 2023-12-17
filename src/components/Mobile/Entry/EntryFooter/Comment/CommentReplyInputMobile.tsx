@@ -20,7 +20,7 @@ import { dbService } from "@/firebase/firebase";
 import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
 
-interface ICommentReplyInputProps {
+interface IReplyCommentInputProps {
   setIsReply: any;
   commentId: string;
 }
@@ -28,7 +28,7 @@ interface ICommentReplyInputProps {
 export default function CommentReplyInputMobile({
   setIsReply,
   commentId,
-}: ICommentReplyInputProps) {
+}: IReplyCommentInputProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
   const [nickname, setNickname] = useState<string>("");
