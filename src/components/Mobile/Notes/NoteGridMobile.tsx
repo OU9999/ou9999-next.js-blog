@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import PostMobile from "../Home/PostMobile";
 import { MdExpandMore } from "react-icons/md";
-import { INotesArr } from "@/firebase/firebaseTypes";
+import { INote } from "@/firebase/firebaseTypes";
 
 interface INoteGridMobileProps {
-  notesArr: INotesArr[];
+  notesArr: INote[];
   snapsize: number;
 }
 

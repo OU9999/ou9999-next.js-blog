@@ -1,5 +1,5 @@
 import NotesMainPage from "@/components/Notes/NoteMainPage";
-import { INotesArr } from "@/firebase/firebaseTypes";
+import { INote } from "@/firebase/firebaseTypes";
 import {
   FetchCategoryResult,
   fetchCategory,
@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 export interface INotesCategoryProps {
   category: string;
   categoryArr: FetchCategoryResult[];
-  notesArr: INotesArr[];
+  notesArr: INote[];
   snapsize: number;
 }
 

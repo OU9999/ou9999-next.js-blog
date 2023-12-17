@@ -14,26 +14,21 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { FaCommentSlash, FaReply } from "react-icons/fa";
 import CommentReply from "./CommenReply";
 import CommentDeleteModal from "./CommentDeleteModal";
-import { userIcons } from "./CommentInput";
+import { userIcons } from "../CommentInput";
 import CommentPopover from "./CommentPopover";
 import CommentReplyInput from "./CommentReplyInput";
 import { dateFormatterMobile } from "@/utils/utilFn";
-import {
-  collection,
-  doc,
-  onSnapshot,
-  orderBy,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { dbService } from "@/firebase/firebase";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
+import { fetchReplyComments } from "@/firebase/firebaseUtil";
+import CommentToolTip from "./CommentToolTip";
+import { IReplyComment } from "@/firebase/firebaseTypes";
 
 interface ICommentProps {
   nickname: string;
@@ -43,17 +38,6 @@ interface ICommentProps {
   createdAt: number;
   commentId: string;
   edited: boolean;
-}
-
-interface ICommentReply {
-  commentId: string;
-  nickname: string;
-  password: string;
-  avatar: string;
-  comment: string;
-  createdAt: number;
-  edited: boolean;
-  id: string;
 }
 
 export default function Comment({
@@ -71,9 +55,9 @@ export default function Comment({
   const [isEdit, setIsEdit] = useState(false);
   const [isReply, setIsReply] = useState(false);
   const [newComment, setNewComment] = useState(comment);
-  const [replyComments, setReplyComments] = useState<
-    ICommentReply[] | undefined
-  >(undefined);
+  const [replyComments, setReplyComments] = useState<IReplyComment[] | null>(
+    null
+  );
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -90,6 +74,7 @@ export default function Comment({
       });
       return;
     }
+
     const commentsRef = doc(dbService, "comments", commentId!);
     await updateDoc(commentsRef, {
       comment: newComment,
@@ -104,20 +89,8 @@ export default function Comment({
   };
 
   const getReplyComments = async (commentId: string) => {
-    try {
-      const q = query(
-        collection(dbService, "replyComments"),
-        where("commentId", "==", commentId),
-        orderBy("createdAt", "asc")
-      );
-      onSnapshot(q, (snapshot) => {
-        const commentsArr: any = snapshot.docs.map((comment) => ({
-          id: comment.id + "",
-          ...comment.data(),
-        }));
-        setReplyComments(commentsArr);
-      });
-    } catch (error: any) {}
+    const fetchData = await fetchReplyComments(commentId);
+    setReplyComments(fetchData);
   };
 
   useEffect(() => {
@@ -170,26 +143,18 @@ export default function Comment({
           </HStack>
           <HStack gap={2} opacity={option ? 1 : 0} transition={"0.5s"}>
             <CommentPopover password={password} setIsEdit={setIsEdit} />
-            <Tooltip label="삭제" aria-label="delete" placement="top">
-              <IconButton
-                fontSize={"xl"}
-                aria-label="delete"
-                variant="ghost"
-                onClick={onOpen}
-              >
-                <FaCommentSlash />
-              </IconButton>
-            </Tooltip>
-            <Tooltip label="답글" aria-label="reply" placement="top">
-              <IconButton
-                fontSize={"xl"}
-                aria-label="reply"
-                variant="ghost"
-                onClick={() => setIsReply(true)}
-              >
-                <FaReply />
-              </IconButton>
-            </Tooltip>
+            <CommentToolTip
+              label="삭제"
+              ariaLabel="delete"
+              clickFn={onOpen}
+              icon={<FaCommentSlash />}
+            />
+            <CommentToolTip
+              label="답글"
+              ariaLabel="reply"
+              clickFn={() => setIsReply(true)}
+              icon={<FaReply />}
+            />
           </HStack>
         </HStack>
         {isEdit ? (
@@ -221,9 +186,9 @@ export default function Comment({
         )}
       </VStack>
 
-      {isReply ? (
+      {isReply && (
         <CommentReplyInput setIsReply={setIsReply} commentId={commentId} />
-      ) : null}
+      )}
       <Center w="full" h={"auto"} flexDir={"column"} gap={10}>
         {replyComments?.map((reply) => (
           <CommentReply

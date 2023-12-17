@@ -4,7 +4,7 @@ import { NextSeo } from "next-seo";
 import EntryMainPage from "@/components/Entry/EntryMainPage";
 import { useEffect, useState } from "react";
 import { fetchDetail, fetchNotesArr } from "@/firebase/firebaseUtil";
-import { IDetail, INotesArr } from "@/firebase/firebaseTypes";
+import { IDetail, INote } from "@/firebase/firebaseTypes";
 
 export const getStaticPaths = async () => {
   const { notesArr } = await fetchNotesArr("ALL");
@@ -26,7 +26,7 @@ export const getStaticProps = async ({ params }: any) => {
 
   //find index
   const currentNoteIndex = notesArr.findIndex(
-    (note: INotesArr) => note.id === docId
+    (note: INote) => note.id === docId
   );
   const nextNoteIndex = currentNoteIndex > 0 ? currentNoteIndex - 1 : null;
   const previousNoteIndex =
@@ -45,9 +45,9 @@ export const getStaticProps = async ({ params }: any) => {
 export interface IEntryProps {
   detail: IDetail;
   docId: string;
-  notesArr: INotesArr[];
-  previousNote: INotesArr | null;
-  nextNote: INotesArr | null;
+  notesArr: INote[];
+  previousNote: INote | null;
+  nextNote: INote | null;
 }
 
 export default function Entry({
@@ -57,7 +57,6 @@ export default function Entry({
   previousNote,
   nextNote,
 }: IEntryProps) {
-  console.log("previousNote>>>", previousNote);
   const [desktopView] = useMediaQuery("(min-width: 767px)", {
     ssr: true,
     fallback: false,

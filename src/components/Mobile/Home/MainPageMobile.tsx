@@ -13,10 +13,10 @@ import { MdExpandMore } from "react-icons/md";
 import PostMobile from "./PostMobile";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { Variants, motion, useAnimation } from "framer-motion";
-import { INotesArr } from "@/firebase/firebaseTypes";
+import { INote } from "@/firebase/firebaseTypes";
 
 interface IMainPageMobileProps {
-  notesArr: INotesArr[];
+  notesArr: INote[];
 }
 
 const backgroundVariants: Variants = {

@@ -1,6 +1,5 @@
 import { images } from "@/constants/mainpageArray";
 import { colorThemeAtom } from "@/utils/atoms";
-import { dbService } from "@/firebase/firebase";
 import {
   Box,
   Button,
@@ -14,7 +13,7 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import CommentInputMobile from "./EntryFooter/CommentInputMobile";
+import CommentInputMobile from "./EntryFooter/Comment/CommentInputMobile";
 import CommentsMobile from "./EntryFooter/CommentsMobile";
 import OtherPostMobile from "./EntryFooter/OtherPostMobile/OtherPostMobile";
 import OtherPost from "./EntryFooter/OtherPost";

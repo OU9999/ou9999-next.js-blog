@@ -25,11 +25,13 @@ import {
   where,
 } from "firebase/firestore";
 import { dbService } from "@/firebase/firebase";
-import { userIcons } from "./CommentInputMobile";
-import CommentReplyInputMobile from "./CommentReplyInputMobile";
-import CommentReplyMobile from "./CommentReplyMobile";
+import { userIcons } from "./Comment/CommentInputMobile";
+import CommentReplyInputMobile from "./Comment/CommentReplyInputMobile";
+import CommentReplyMobile from "./Comment/CommentReplyMobile";
 import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
+import { IReplyComment } from "@/firebase/firebaseTypes";
+import { fetchReplyComments } from "@/firebase/firebaseUtil";
 
 interface ICommentProps {
   nickname: string;
@@ -39,17 +41,6 @@ interface ICommentProps {
   createdAt: number;
   commentId: string;
   edited: boolean;
-}
-
-interface ICommentReply {
-  commentId: string;
-  nickname: string;
-  password: string;
-  avatar: string;
-  comment: string;
-  createdAt: number;
-  edited: boolean;
-  id: string;
 }
 
 export default function CommentMobile({
@@ -66,11 +57,10 @@ export default function CommentMobile({
   const [isEdit, setIsEdit] = useState(false);
   const [isReply, setIsReply] = useState(false);
   const [newComment, setNewComment] = useState(comment);
-  const [replyComments, setReplyComments] = useState<
-    ICommentReply[] | undefined
-  >(undefined);
+  const [replyComments, setReplyComments] = useState<IReplyComment[] | null>(
+    null
+  );
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const date = dateFormatterMobile(createdAt);
@@ -135,20 +125,8 @@ export default function CommentMobile({
   };
 
   const getReplyComments = async (commentId: string) => {
-    try {
-      const q = query(
-        collection(dbService, "replyComments"),
-        where("commentId", "==", commentId),
-        orderBy("createdAt", "asc")
-      );
-      onSnapshot(q, (snapshot) => {
-        const commentsArr: any = snapshot.docs.map((comment) => ({
-          id: comment.id + "",
-          ...comment.data(),
-        }));
-        setReplyComments(commentsArr);
-      });
-    } catch (error: any) {}
+    const fetchData = await fetchReplyComments(commentId);
+    setReplyComments(fetchData);
   };
 
   useEffect(() => {

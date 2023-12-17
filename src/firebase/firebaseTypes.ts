@@ -1,4 +1,4 @@
-export interface INotesArr {
+export interface INote {
   id?: string;
   title?: string;
   category?: string;
@@ -7,7 +7,7 @@ export interface INotesArr {
   description?: string;
 }
 
-export interface ICategoryArr {
+export interface ICategory {
   id?: string;
   category?: string;
   createdAt?: number;
@@ -20,4 +20,26 @@ export interface IDetail {
   thumbnailUrl?: string;
   title?: string;
   description?: string;
+}
+
+export interface IComment {
+  docId?: string;
+  nickname?: string;
+  password?: string;
+  avatar?: string;
+  comment?: string;
+  createdAt?: number;
+  edited?: boolean;
+  id?: string;
+}
+
+export interface IReplyComment {
+  commentId: string;
+  nickname: string;
+  password: string;
+  avatar: string;
+  comment: string;
+  createdAt: number;
+  edited: boolean;
+  id: string;
 }

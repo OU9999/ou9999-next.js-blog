@@ -13,7 +13,7 @@ import { useState } from "react";
 import LeftBox from "./LeftBox";
 import RightBox from "./RightBox";
 import OtherPostProfile from "./OtherPostProfile";
-import { INotesArr } from "@/firebase/firebaseTypes";
+import { INote } from "@/firebase/firebaseTypes";
 
 export interface IBoxProps {
   relativeColor: string;
@@ -23,8 +23,8 @@ export interface IBoxProps {
 }
 
 export interface IOtherPostProps {
-  next: INotesArr | null;
-  prev: INotesArr | null;
+  next: INote | null;
+  prev: INote | null;
 }
 
 export default function OtherPost({ next, prev }: IOtherPostProps) {
