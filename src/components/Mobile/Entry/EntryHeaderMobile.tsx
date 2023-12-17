@@ -14,7 +14,7 @@ import { BiTimeFive } from "react-icons/bi";
 import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
-import { IDetail } from "@/utils/firebaseTypes";
+import { IDetail } from "@/firebase/firebaseTypes";
 
 interface IEntryHeaderMobileProps {
   detail: IDetail;

@@ -8,7 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 
 interface ICommentsProps {
   docId: string;

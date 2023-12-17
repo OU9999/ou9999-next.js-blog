@@ -12,8 +12,8 @@ import { returnColors } from "@/utils/utilFn";
 import { useState } from "react";
 import LeftBox from "./LeftBox";
 import RightBox from "./RightBox";
-import { INextPrev } from "../../EntryFooter";
 import OtherPostProfile from "./OtherPostProfile";
+import { INotesArr } from "@/firebase/firebaseTypes";
 
 export interface IBoxProps {
   relativeColor: string;
@@ -22,9 +22,9 @@ export interface IBoxProps {
   id: string;
 }
 
-interface IOtherPostProps {
-  next: INextPrev | null;
-  prev: INextPrev | null;
+export interface IOtherPostProps {
+  next: INotesArr | null;
+  prev: INotesArr | null;
 }
 
 export default function OtherPost({ next, prev }: IOtherPostProps) {
@@ -50,8 +50,8 @@ export default function OtherPost({ next, prev }: IOtherPostProps) {
                 <LeftBox
                   relativeColor={relativeColor}
                   bgColor={mdBgColor}
-                  title={prev.title}
-                  id={prev.id}
+                  title={prev.title!}
+                  id={prev.id!}
                 />
               )}
             </Box>
@@ -60,8 +60,8 @@ export default function OtherPost({ next, prev }: IOtherPostProps) {
                 <RightBox
                   relativeColor={relativeColor}
                   bgColor={mdBgColor}
-                  title={next.title}
-                  id={next.id}
+                  title={next.title!}
+                  id={next.id!}
                 />
               )}
             </Box>

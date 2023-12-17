@@ -31,7 +31,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 import { useRecoilValue } from "recoil";
 import { colorThemeAtom } from "@/utils/atoms";
 

@@ -1,7 +1,7 @@
 import { Box, Grid } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import NoteCard from "./NoteCard";
-import { INotesArr } from "@/utils/firebaseTypes";
+import { INotesArr } from "@/firebase/firebaseTypes";
 
 const container = {
   hidden: { opacity: 0 },

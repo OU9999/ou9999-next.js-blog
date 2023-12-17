@@ -3,8 +3,8 @@ import { useMediaQuery } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 import EntryMainPage from "@/components/Entry/EntryMainPage";
 import { useEffect, useState } from "react";
-import { fetchDetail, fetchNotesArr } from "@/utils/firebaseUtil";
-import { IDetail } from "@/utils/firebaseTypes";
+import { fetchDetail, fetchNotesArr } from "@/firebase/firebaseUtil";
+import { IDetail, INotesArr } from "@/firebase/firebaseTypes";
 
 export const getStaticPaths = async () => {
   const { notesArr } = await fetchNotesArr("ALL");
@@ -22,18 +22,42 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }: any) => {
   const docId = params.slug[1];
   const detail = await fetchDetail(docId);
+  const { notesArr } = await fetchNotesArr(detail.category!);
+
+  //find index
+  const currentNoteIndex = notesArr.findIndex(
+    (note: INotesArr) => note.id === docId
+  );
+  const nextNoteIndex = currentNoteIndex > 0 ? currentNoteIndex - 1 : null;
+  const previousNoteIndex =
+    currentNoteIndex < notesArr.length - 1 ? currentNoteIndex + 1 : null;
+
+  //find note
+  const previousNote =
+    previousNoteIndex !== null ? notesArr[previousNoteIndex] : null;
+  const nextNote = nextNoteIndex !== null ? notesArr[nextNoteIndex] : null;
 
   return {
-    props: { detail, docId },
+    props: { detail, docId, notesArr, previousNote, nextNote },
   };
 };
 
 export interface IEntryProps {
   detail: IDetail;
   docId: string;
+  notesArr: INotesArr[];
+  previousNote: INotesArr | null;
+  nextNote: INotesArr | null;
 }
 
-export default function Entry({ detail, docId }: IEntryProps) {
+export default function Entry({
+  detail,
+  docId,
+  notesArr,
+  previousNote,
+  nextNote,
+}: IEntryProps) {
+  console.log("previousNote>>>", previousNote);
   const [desktopView] = useMediaQuery("(min-width: 767px)", {
     ssr: true,
     fallback: false,
@@ -74,10 +98,22 @@ export default function Entry({ detail, docId }: IEntryProps) {
       />
 
       {desktopView ? (
-        <EntryMainPage detail={detail!} docId={docId} />
+        <EntryMainPage
+          detail={detail!}
+          docId={docId}
+          notesArr={notesArr}
+          previousNote={previousNote}
+          nextNote={nextNote}
+        />
       ) : (
         EntryMainPageMobile && (
-          <EntryMainPageMobile detail={detail} docId={docId} />
+          <EntryMainPageMobile
+            detail={detail}
+            docId={docId}
+            notesArr={notesArr}
+            previousNote={previousNote}
+            nextNote={nextNote}
+          />
         )
       )}
     </>

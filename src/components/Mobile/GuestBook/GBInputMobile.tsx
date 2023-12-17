@@ -1,4 +1,4 @@
-import { dbService, storageService } from "@/utils/firebase";
+import { dbService, storageService } from "@/firebase/firebase";
 import {
   Avatar,
   Box,

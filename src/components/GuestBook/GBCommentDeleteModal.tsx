@@ -1,4 +1,4 @@
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 import {
   Button,
   Input,

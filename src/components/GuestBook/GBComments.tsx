@@ -2,7 +2,7 @@ import { Center } from "@chakra-ui/react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import GBComment from "./GBComment";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 
 interface IGuestBookComment {
   nickname: string;

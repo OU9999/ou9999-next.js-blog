@@ -20,16 +20,14 @@ import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import { IEntryProps } from "@/pages/entry/[...slug]";
+import { IDetail } from "@/firebase/firebaseTypes";
 
-export interface IDetail {
-  category: string;
-  createdAt: number;
-  md: string;
-  thumbnailUrl: string;
-  title: string;
+interface IEntryHeaderProps {
+  detail: IDetail;
+  docId: string;
 }
 
-export default function EntryHeader({ detail, docId }: IEntryProps) {
+export default function EntryHeader({ detail, docId }: IEntryHeaderProps) {
   const isLogin = useRecoilValue(isLoginAtom);
   const date = dateFormatter(detail.createdAt!);
   const urlTitle = returnUrlTitle(detail.title!);

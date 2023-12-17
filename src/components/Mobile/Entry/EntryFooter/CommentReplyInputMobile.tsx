@@ -16,7 +16,7 @@ import { useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 import { FiCornerDownRight } from "react-icons/fi";
 import { userIcons } from "./CommentInputMobile";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
 

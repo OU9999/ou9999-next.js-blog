@@ -8,7 +8,13 @@ import { IEntryProps } from "@/pages/entry/[...slug]";
 
 const DynamicEntryFooter = dynamic(() => import("./EntryFooter"));
 
-export default function EntryMainPage({ detail, docId }: IEntryProps) {
+export default function EntryMainPage({
+  detail,
+  docId,
+  notesArr,
+  previousNote,
+  nextNote,
+}: IEntryProps) {
   return (
     <>
       <VStack height={"auto"} width="100vw">
@@ -40,7 +46,13 @@ export default function EntryMainPage({ detail, docId }: IEntryProps) {
           <EntryMarkdown md={detail.md!} />
         </VStack>
         <Box position={"relative"} w="full" h="auto" zIndex={32}>
-          <DynamicEntryFooter category={detail.category!} docId={docId} />
+          <DynamicEntryFooter
+            category={detail.category!}
+            docId={docId}
+            notesArr={notesArr}
+            previousNote={previousNote}
+            nextNote={nextNote}
+          />
         </Box>
       </VStack>
     </>

@@ -7,7 +7,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 import CommentMobile from "./CommentMobile";
 
 interface ICommentsProps {

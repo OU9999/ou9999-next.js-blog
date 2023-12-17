@@ -1,5 +1,5 @@
 import { colorThemeAtom } from "@/utils/atoms";
-import { dbService } from "@/utils/firebase";
+import { dbService } from "@/firebase/firebase";
 import {
   Box,
   Button,

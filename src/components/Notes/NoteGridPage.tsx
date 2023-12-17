@@ -4,7 +4,7 @@ import { IconButton } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { MdExpandMore } from "react-icons/md";
-import { INotesArr } from "@/utils/firebaseTypes";
+import { INotesArr } from "@/firebase/firebaseTypes";
 
 interface INoteGridPageProps {
   notesArr: INotesArr[];

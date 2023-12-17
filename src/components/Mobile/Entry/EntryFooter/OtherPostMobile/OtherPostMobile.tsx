@@ -10,21 +10,16 @@ import { useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import { returnColors } from "@/utils/utilFn";
 import { useState } from "react";
-import { INextPrev } from "../../EntryFooterMobile";
 import LeftBoxMobile from "./LeftBoxMobile";
 import RightBoxMobile from "./RightBoxMobile";
 import OtherPostProfileMobile from "./OtherPostProfileMobile";
+import { IOtherPostProps } from "@/components/Entry/EntryFooter/OtherPost/OtherPost";
 
 export interface IBoxProps {
   relativeColor: string;
   bgColor: string;
   title: string;
   id: string;
-}
-
-interface IOtherPostProps {
-  next: INextPrev | null;
-  prev: INextPrev | null;
 }
 
 export default function OtherPostMobile({ next, prev }: IOtherPostProps) {
@@ -50,8 +45,8 @@ export default function OtherPostMobile({ next, prev }: IOtherPostProps) {
                 <LeftBoxMobile
                   relativeColor={relativeColor}
                   bgColor={mdBgColor}
-                  title={prev.title}
-                  id={prev.id}
+                  title={prev.title!}
+                  id={prev.id!}
                 />
               )}
             </Box>
@@ -60,8 +55,8 @@ export default function OtherPostMobile({ next, prev }: IOtherPostProps) {
                 <RightBoxMobile
                   relativeColor={relativeColor}
                   bgColor={mdBgColor}
-                  title={next.title}
-                  id={next.id}
+                  title={next.title!}
+                  id={next.id!}
                 />
               )}
             </Box>

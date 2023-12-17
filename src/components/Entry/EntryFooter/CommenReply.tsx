@@ -18,7 +18,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FaCommentSlash } from "react-icons/fa";
 import { FiCornerDownRight } from "react-icons/fi";
-import { dbService } from "../../../utils/firebase";
+import { dbService } from "../../../firebase/firebase";
 import CommentDeleteModal from "./CommentDeleteModal";
 import { userIcons } from "./CommentInput";
 import CommentPopover from "./CommentPopover";
