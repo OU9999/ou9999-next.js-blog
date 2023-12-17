@@ -11,13 +11,6 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -25,7 +18,6 @@ import CommentInputMobile from "./EntryFooter/CommentInputMobile";
 import CommentsMobile from "./EntryFooter/CommentsMobile";
 import OtherPostMobile from "./EntryFooter/OtherPostMobile/OtherPostMobile";
 import OtherPost from "./EntryFooter/OtherPost";
-import { INotesArr } from "@/firebase/firebaseTypes";
 import { IEntryFooterProps } from "@/components/Entry/EntryFooter";
 
 export default function EntryFooterMobile({
