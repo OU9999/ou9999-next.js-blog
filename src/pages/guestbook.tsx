@@ -1,4 +1,5 @@
 import GuestBookMainPage from "@/components/GuestBook/GuestBookMainPage";
+import BlogSEO from "@/components/common/BlogSEO";
 import { useMediaQuery } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 import { useEffect, useState } from "react";
@@ -21,24 +22,7 @@ export default function GuestBook() {
 
   return (
     <>
-      <NextSeo
-        title="GuestBook | OU9999's First Blog"
-        description="GuestBook! | OU9999's First Blog"
-        openGraph={{
-          type: "website",
-          url: "no",
-          title: "OU9999",
-          description: "GuestBook! | OU9999's First Blog",
-          images: [
-            {
-              url: "/op.webp",
-              width: 285,
-              height: 167,
-              alt: "image",
-            },
-          ],
-        }}
-      />
+      <BlogSEO title="GuestBook" description="GuestBook!" image="/op.webp" />
       {desktopView ? (
         <GuestBookMainPage />
       ) : (

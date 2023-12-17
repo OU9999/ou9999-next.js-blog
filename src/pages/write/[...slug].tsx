@@ -26,6 +26,7 @@ import { dbService } from "@/firebase/firebase";
 import Mobile404 from "@/components/Mobile/404";
 import { NextSeo } from "next-seo";
 import styled from "styled-components";
+import BlogSEO from "@/components/common/BlogSEO";
 
 const CustomStyle = styled.div`
   blockquote {
@@ -117,24 +118,7 @@ export default function Write({ titleUrl, docId, detail }: any) {
 
   return (
     <>
-      <NextSeo
-        title="Write | OU9999's First Blog"
-        description="Write | OU9999's First Blog"
-        openGraph={{
-          type: "website",
-          url: "no",
-          title: "OU9999",
-          description: "Write | OU9999's First Blog",
-          images: [
-            {
-              url: "/op.webp",
-              width: 285,
-              height: 167,
-              alt: "image",
-            },
-          ],
-        }}
-      />
+      <BlogSEO title="Write" description="Write!" image="/op.webp" />
       {mobileView ? (
         <Mobile404 />
       ) : (
