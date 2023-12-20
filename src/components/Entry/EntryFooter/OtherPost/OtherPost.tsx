@@ -1,4 +1,3 @@
-import { colorThemeAtom } from "@/utils/atoms";
 import {
   Box,
   Center,
@@ -6,14 +5,11 @@ import {
   HStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useRecoilValue } from "recoil";
-import { useEffect } from "react";
-import { returnColors } from "@/utils/utilFn";
-import { useState } from "react";
 import LeftBox from "./LeftBox";
 import RightBox from "./RightBox";
 import OtherPostProfile from "./OtherPostProfile";
 import { INote } from "@/firebase/firebaseTypes";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 export interface IBoxProps {
   relativeColor: string;
@@ -28,17 +24,8 @@ export interface IOtherPostProps {
 }
 
 export default function OtherPost({ next, prev }: IOtherPostProps) {
-  const colorTheme = useRecoilValue(colorThemeAtom);
+  const { relativeColor } = useColorTheme();
   const mdBgColor = useColorModeValue("#F9F8FA", "rgba(45,55,72,1)");
-  const [lightColor, setLightColor] = useState("");
-  const [darkColor, setDarkColor] = useState("");
-  const relativeColor = useColorModeValue(lightColor, darkColor);
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-    setDarkColor(dc);
-  }, [colorTheme]);
 
   return (
     <>

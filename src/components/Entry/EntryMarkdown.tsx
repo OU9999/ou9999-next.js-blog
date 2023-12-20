@@ -5,12 +5,10 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import { useEffect, useState } from "react";
 import "@fontsource/noto-sans-kr";
-import { useRecoilValue } from "recoil";
-import { colorThemeAtom } from "@/utils/atoms";
-import { returnColors } from "@/utils/utilFn";
 import Toc from "./TOC";
 import MarkdownLoadingView from "./MarkdownLoadingView";
 import TOCPlaceHolder from "./TOCPlaceHolder";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 //custom style for md view
 const CustomStyle = styled.div<{ colorTheme: string }>`
@@ -39,19 +37,9 @@ interface IEntryMainPageProps {
 }
 
 export default function EntryMarkdown({ md }: IEntryMainPageProps) {
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
-  const [darkColor, setDarkColor] = useState("");
+  const { relativeColor } = useColorTheme();
   const [re, setRe] = useState(false);
-
-  const relativeColor = useColorModeValue(lightColor, darkColor);
   const colorMode = useColorModeValue("light", "dark");
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-    setDarkColor(dc);
-  }, [colorTheme]);
 
   useEffect(() => {
     setTimeout(() => {

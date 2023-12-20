@@ -17,13 +17,13 @@ import { RxSlash } from "react-icons/rx";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { motion, useAnimation, useScroll, Variants } from "framer-motion";
 import Link from "next/link";
-import { returnColors } from "@/utils/utilFn";
 import LinkButton from "./Header/LinkButton";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { colorThemeAtom, isLoginAtom, writeAtom } from "@/utils/atoms";
+import { isLoginAtom, writeAtom } from "@/utils/atoms";
 import LoginPopover from "./Header/LoginPopover";
 import LoginModal from "./Header/LoginModal";
 import { authService } from "@/firebase/firebase";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 const headerVariants: Variants = {
   top: {
@@ -33,7 +33,6 @@ const headerVariants: Variants = {
 };
 
 export default function Header() {
-  const [colorTheme, setColorTheme] = useRecoilState(colorThemeAtom);
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const isWrite = useRecoilValue(writeAtom);
   const [invisible, setInvisible] = useState(false);
@@ -43,21 +42,15 @@ export default function Header() {
   const { scrollY } = useScroll();
   const { scrollYProgress } = useScroll();
   const headerAni = useAnimation();
-  const hugmeAni = useAnimation();
   const [underBar, setUnderBar] = useState(false);
   const [boxShadow, setBoxShadow] = useState(false);
   const [textColor, setTextColor] = useState(false);
-  const [lightColor, setLightColor] = useState("");
-  const [bgColor, setBgColor] = useState("");
+  const { colorTheme, setColorTheme, lightColor, darkColor } = useColorTheme();
 
   const hoverEnd = () => {
     if (scrollY.get() < 80) {
       setBoxShadow(false);
     }
-  };
-
-  const onHugMeClicked = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -73,12 +66,6 @@ export default function Header() {
       }
     });
   }, [headerAni, scrollY]);
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-    setBgColor(hbc);
-  }, [colorTheme]);
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -278,7 +265,7 @@ export default function Header() {
         </HStack>
 
         <Box
-          bgColor={bgColor}
+          bgColor={darkColor}
           opacity={0.3}
           zIndex={1}
           w="110vw"

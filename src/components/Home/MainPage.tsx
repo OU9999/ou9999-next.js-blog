@@ -1,6 +1,5 @@
 import { images, quotes } from "@/constants/mainpageArray";
-import { colorThemeAtom } from "@/utils/atoms";
-import { returnColors, vhToPixels } from "@/utils/utilFn";
+import { vhToPixels } from "@/utils/utilFn";
 import { Box, Center, Flex, HStack, Text, useToast } from "@chakra-ui/react";
 import { motion, useAnimation, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -14,11 +13,11 @@ import {
 } from "react-icons/fa";
 import { MdEmail, MdReplay } from "react-icons/md";
 import MainPageText from "./MainPageText";
-import { useRecoilValue } from "recoil";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
 import HomeIconButton from "./HomeIconButton";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -75,10 +74,9 @@ const resetButtonVariants: Variants = {
 };
 
 export default function MainPage() {
+  const { lightColor } = useColorTheme();
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [quote, setQuote] = useState<string>("");
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
   const [startAnimation, setStartAnimation] = useState(true);
   const mainTextAni = useAnimation();
   const mainBoxAni = useAnimation();
@@ -134,11 +132,6 @@ export default function MainPage() {
   useEffect(() => {
     setBgAndQuote();
   }, []);
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-  }, [colorTheme]);
 
   useEffect(() => {
     if (startAnimation === true) {

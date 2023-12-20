@@ -1,8 +1,5 @@
-import { colorThemeAtom } from "@/utils/atoms";
-import { returnColors } from "@/utils/utilFn";
+import { useColorTheme } from "@/hooks/useColorTheme";
 import { Center, Heading, Box, Text, VStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
 
 interface IPageHeaderProps {
   title?: string;
@@ -15,13 +12,7 @@ export default function PageHeader({
   subText,
   bgImg,
 }: IPageHeaderProps) {
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-  }, [colorTheme]);
+  const { lightColor } = useColorTheme();
 
   return (
     <>

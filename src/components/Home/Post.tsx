@@ -12,16 +12,14 @@ import { BiTimeFive } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import {
   dateFormatterMobile,
-  returnColors,
   returnUrlTitle,
   selectBasicThumbnail,
 } from "@/utils/utilFn";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { colorThemeAtom } from "@/utils/atoms";
+import { useState } from "react";
 import Image from "next/image";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 interface IPostProps {
   reverse: boolean;
@@ -42,6 +40,7 @@ export default function Post({
   link,
   description,
 }: IPostProps) {
+  const { relativeColor } = useColorTheme();
   const [hover, setHover] = useState(false);
   const mdBgColor = useColorModeValue(
     "rgba(255,255,255,1)",
@@ -50,16 +49,6 @@ export default function Post({
   const colorMode = useColorModeValue("light", "dark");
   const date = dateFormatterMobile(createdAt);
   const urlTitle = returnUrlTitle(title);
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
-  const [darkColor, setDarkColor] = useState("");
-  const relativeColor = useColorModeValue(lightColor, darkColor);
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-    setDarkColor(dc);
-  }, [colorTheme]);
 
   return (
     <>

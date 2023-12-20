@@ -13,19 +13,17 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEye, FaRegCommentDots } from "react-icons/fa";
 import { BiTimeFive } from "react-icons/bi";
 import {
   dateFormatterMobile,
-  returnColors,
   returnUrlTitle,
   selectBasicThumbnail,
 } from "@/utils/utilFn";
 import Link from "next/link";
-import { useRecoilValue } from "recoil";
-import { colorThemeAtom } from "@/utils/atoms";
 import Image from "next/image";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 interface INoteCardProps {
   title: string;
@@ -44,6 +42,7 @@ export default function NoteCard({
   link,
   description,
 }: INoteCardProps) {
+  const { colorTheme, relativeColor } = useColorTheme();
   const [hover, setHover] = useState(false);
   const colorMode = useColorModeValue("light", "dark");
   const mdBgColor = useColorModeValue(
@@ -52,17 +51,6 @@ export default function NoteCard({
   );
   const date = dateFormatterMobile(createdAt);
   const urlTitle = returnUrlTitle(title);
-
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
-  const [darkColor, setDarkColor] = useState("");
-  const relativeColor = useColorModeValue(lightColor, darkColor);
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-    setDarkColor(dc);
-  }, [colorTheme]);
 
   return (
     <>

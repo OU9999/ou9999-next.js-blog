@@ -1,18 +1,13 @@
 import { images } from "@/constants/mainpageArray";
-import { colorThemeAtom, writeAtom } from "@/utils/atoms";
-import {
-  dateFormatter,
-  dateFormatterMobile,
-  returnColors,
-} from "@/utils/utilFn";
+import { writeAtom } from "@/utils/atoms";
 import { Box, Center, Flex, HStack } from "@chakra-ui/react";
-import { motion, useAnimation, Variants } from "framer-motion";
+import { useAnimation, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
 import TestText from "@/components/Test/TestText";
-import moment from "moment";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -35,10 +30,9 @@ const backgroundVariants: Variants = {
 };
 
 export default function MainPage() {
+  const { lightColor } = useColorTheme();
   const setIsWrtie = useSetRecoilState(writeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
   const [startAnimation, setStartAnimation] = useState(true);
   const mainTextAni = useAnimation();
   const mainBoxAni = useAnimation();
@@ -58,11 +52,6 @@ export default function MainPage() {
     setBgAndQuote();
     setIsWrtie(true);
   }, []);
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-  }, [colorTheme]);
 
   useEffect(() => {
     if (startAnimation === true) {
