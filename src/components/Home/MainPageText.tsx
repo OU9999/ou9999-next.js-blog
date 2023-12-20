@@ -1,9 +1,7 @@
-import { colorThemeAtom } from "@/utils/atoms";
-import { returnColors } from "@/utils/utilFn";
+import { useColorTheme } from "@/hooks/useColorTheme";
 import { Text } from "@chakra-ui/react";
 import { AnimationControls, motion, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
 
 interface IMainPageTextProps {
   text: string;
@@ -40,9 +38,8 @@ export default function MainPageText({
   text,
   mainTextAni,
 }: IMainPageTextProps) {
+  const { colorTheme, lightColor } = useColorTheme();
   const [Click, setClick] = useState<number>(0);
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
   const [randomColor, setRandomColor] = useState("");
 
   const onClicked = () => {
@@ -55,8 +52,6 @@ export default function MainPageText({
 
   useEffect(() => {
     setClick(0);
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
   }, [colorTheme]);
 
   return (

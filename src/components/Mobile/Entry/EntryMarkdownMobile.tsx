@@ -4,11 +4,8 @@ import styled from "styled-components";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import "@fontsource/noto-sans-kr";
-import { colorThemeAtom } from "@/utils/atoms";
-import { useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
-import { returnColors } from "@/utils/utilFn";
 import MobileMarkdownLoadingView from "./EntryFooter/MobileMarkdownLoadingView";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 //custom style for md view
 const CustomStyle = styled.div<{ colorTheme: string }>`
@@ -46,17 +43,8 @@ interface IEntryMarkdownMobileProps {
 }
 
 export default function EntryMarkdownMobile({ md }: IEntryMarkdownMobileProps) {
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
-  const [darkColor, setDarkColor] = useState("");
-  const relativeColor = useColorModeValue(lightColor, darkColor);
+  const { relativeColor } = useColorTheme();
   const colorMode = useColorModeValue("light", "dark");
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-    setDarkColor(dc);
-  }, [colorTheme]);
 
   return (
     <>

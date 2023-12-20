@@ -6,18 +6,15 @@ import {
   Text,
   VStack,
   Image,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { images } from "@/constants/mainpageArray";
 import { useEffect, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
-import { useRecoilValue } from "recoil";
-import { colorThemeAtom } from "@/utils/atoms";
-import { returnColors } from "@/utils/utilFn";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { useRouter } from "next/router";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -40,17 +37,12 @@ const backgroundVariants: Variants = {
 };
 
 export default function MainImgMobile() {
+  const { lightColor, relativeColor } = useColorTheme();
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [isEntry, setIsEntry] = useState(false);
-  const [lightColor, setLightColor] = useState("");
-  const [darkColor, setDarkColor] = useState("");
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const relativeColor = useColorModeValue(lightColor, darkColor);
   const backgroundAni = useAnimation();
 
   const router = useRouter();
-
-  console.log("ROUTER >>>>>>", router.pathname);
 
   const setBg = () => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
@@ -66,12 +58,6 @@ export default function MainImgMobile() {
   useEffect(() => {
     setBg();
   }, []);
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-    setDarkColor(dc);
-  }, [colorTheme]);
 
   const [time, setTime] = useState(0);
 

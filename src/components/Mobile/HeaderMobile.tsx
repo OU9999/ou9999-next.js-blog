@@ -13,7 +13,6 @@ import {
   HStack,
   Text,
   VStack,
-  useColorMode,
   useColorModeValue,
   useDisclosure,
   useToast,
@@ -29,38 +28,21 @@ import {
   FaSun,
   FaTwitter,
 } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import { returnColors } from "@/utils/utilFn";
-import { useRecoilState } from "recoil";
-import { colorThemeAtom } from "@/utils/atoms";
 import Link from "next/link";
-import { motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import { SiFirebase, SiNextdotjs, SiReact, SiTypescript } from "react-icons/si";
 import { MdEmail, MdLibraryBooks } from "react-icons/md";
-import { useRouter } from "next/router";
 import HeaderButton from "./Header/HeaderButton";
 import { BsPersonFill } from "react-icons/bs";
 import ModeSwitch from "./Header/ModeSwitch";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 export default function HeaderMobile() {
-  const { scrollYProgress } = useScroll();
+  const { colorTheme, setColorTheme, lightColor, relativeColor } =
+    useColorTheme();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [colorTheme, setColorTheme] = useRecoilState(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
-  const [darkColor, setDarkColor] = useState("");
-  const [bgColor, setBgColor] = useState("");
-  const relativeColor = useColorModeValue(lightColor, darkColor);
   const Icon = useColorModeValue(FaSun, FaMoon);
-  const { toggleColorMode } = useColorMode();
   const toast = useToast();
-  const router = useRouter();
-
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-    setDarkColor(dc);
-    setBgColor(hbc);
-  }, [colorTheme]);
 
   const onEmailButtonClicked = () => {
     toast({

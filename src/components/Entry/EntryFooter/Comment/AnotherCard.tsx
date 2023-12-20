@@ -1,7 +1,6 @@
-import { colorThemeAtom } from "@/utils/atoms";
+import { useColorTheme } from "@/hooks/useColorTheme";
 import {
   dateFormatterMobile,
-  returnColors,
   returnUrlTitle,
   selectBasicThumbnail,
 } from "@/utils/utilFn";
@@ -16,9 +15,8 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiTimeFive } from "react-icons/bi";
-import { useRecoilValue } from "recoil";
 
 interface IAnotherCardProps {
   title: string;
@@ -35,11 +33,8 @@ export default function AnotherCard({
   link,
   category,
 }: IAnotherCardProps) {
+  const { relativeColor } = useColorTheme();
   const [hover, setHover] = useState(false);
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [lightColor, setLightColor] = useState("");
-  const [darkColor, setDarkColor] = useState("");
-  const relativeColor = useColorModeValue(lightColor, darkColor);
   const mdBgColor = useColorModeValue(
     "rgba(255,255,255,1)",
     "rgba(45,55,72,1)"
@@ -47,11 +42,6 @@ export default function AnotherCard({
   const date = dateFormatterMobile(createdAt);
   const urlTitle = returnUrlTitle(title);
 
-  useEffect(() => {
-    const [lc, dc, hbc] = returnColors(colorTheme);
-    setLightColor(lc);
-    setDarkColor(dc);
-  }, [colorTheme]);
   return (
     <>
       <Link href={`/entry/${urlTitle}/${link}`}>
