@@ -28,10 +28,14 @@ const item = {
 
 interface INoteGridProps {
   notes: INote[];
-  count: number;
+  currentPage: number;
 }
 
-export default function NoteGrid({ notes, count }: INoteGridProps) {
+const itemsPerPage = 9;
+export default function NoteGrid({ notes, currentPage }: INoteGridProps) {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
   return (
     <>
       <Grid
@@ -50,7 +54,7 @@ export default function NoteGrid({ notes, count }: INoteGridProps) {
         animate="show"
       >
         {notes &&
-          notes.slice(0, count).map((note, idx: number) => (
+          notes.slice(startIndex, endIndex).map((note, idx: number) => (
             <>
               <Box
                 key={note.id}

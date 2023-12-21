@@ -186,17 +186,17 @@ export default function MainImgMobile() {
             alignItems={"center"}
             h="full"
             pos={"relative"}
-            onClick={() => router.push("/notes/ALL")}
+            onClick={() => router.push("/notes/ALL/1")}
           >
             <Text
               fontWeight={
-                router.pathname === "/notes/[category]" ? "bold" : undefined
+                router.pathname === "/notes/[...slug]" ? "bold" : undefined
               }
             >
               Notes{" "}
             </Text>
 
-            {router.pathname === "/notes/[category]" ? (
+            {router.pathname === "/notes/[...slug]" ? (
               <Box
                 w="full"
                 h="1"

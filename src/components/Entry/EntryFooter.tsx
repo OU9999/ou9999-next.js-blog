@@ -103,7 +103,7 @@ export default function EntryFooter({
             >
               카테고리의 다른글
             </Heading>
-            <Link href={`/notes/${category}`}>
+            <Link href={`/notes/${category}/1`}>
               <Button colorScheme={colorTheme}>다른글 더 보기</Button>
             </Link>
           </Flex>

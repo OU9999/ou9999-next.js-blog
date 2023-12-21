@@ -23,7 +23,7 @@ export default function HeaderButton({
 }: IHeaderButtonProps) {
   const router = useRouter();
   const pathname = notes
-    ? router.pathname === "/notes/[category]" ||
+    ? router.pathname === "/notes/[...slug]" ||
       router.pathname === "/entry/[...slug]"
     : null;
   return (

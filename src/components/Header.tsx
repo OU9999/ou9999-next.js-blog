@@ -177,7 +177,7 @@ export default function Header() {
             />
             <LinkButton
               text="Notes"
-              link="/notes/ALL"
+              link="/notes/ALL/1"
               textColor={textColor}
               lightColor={lightColor}
             />

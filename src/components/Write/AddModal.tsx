@@ -180,7 +180,7 @@ export default function AddModal({
     setThumbnail(undefined);
     setSelectedCategory(undefined);
     onClose();
-    router.push(`/notes/${selectedCategory}`);
+    router.push(`/notes/${selectedCategory}/1`);
     toast({
       title: "노트작성 완료!",
       position: "top",
@@ -206,7 +206,7 @@ export default function AddModal({
           position: "top",
           isClosable: true,
         });
-        router.push(`/notes/${selectedCategory}`);
+        router.push(`/notes/${selectedCategory}/1`);
         return;
       }
       const response = await uploadString(
@@ -228,7 +228,7 @@ export default function AddModal({
       position: "top",
       isClosable: true,
     });
-    router.push(`/notes/${selectedCategory}`);
+    router.push(`/notes/${selectedCategory}/1`);
     onClose();
   };
 
