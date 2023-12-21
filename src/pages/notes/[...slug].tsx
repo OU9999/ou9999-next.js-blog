@@ -14,17 +14,17 @@ export interface INotesCategoryProps {
   categoryArr: FetchCategoryResult[];
   notesArr: INote[];
   snapsize: number;
+  currentPage: number;
 }
 
 export const getStaticPaths = async () => {
-  const categoryArr = await fetchCategory("snapshot");
+  const categoryArr = await fetchCategory("ALL");
 
-  const paths = [
-    ...categoryArr.map((c) => ({
-      params: { category: c.category },
-    })),
-    { params: { category: "ALL" } },
-  ];
+  const paths = categoryArr.flatMap((category) =>
+    Array.from({ length: category.size! }, (_, i) => ({
+      params: { slug: [category.category, String(i + 1)] },
+    }))
+  );
 
   return {
     paths,
@@ -33,7 +33,8 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const { category } = params;
+  const category = params.slug[0];
+  const currentPage = +params.slug[1];
 
   //notes
   const { notesArr, snapsize } = await fetchNotesArr(category);
@@ -47,6 +48,7 @@ export const getStaticProps = async ({ params }: any) => {
       notesArr,
       snapsize,
       categoryArr,
+      currentPage,
     },
   };
 };
@@ -56,6 +58,7 @@ export default function NotesCategory({
   category,
   categoryArr,
   notesArr,
+  currentPage,
 }: INotesCategoryProps) {
   const [desktopView] = useMediaQuery("(min-width: 767px)", {
     ssr: true,
@@ -79,6 +82,7 @@ export default function NotesCategory({
           notesArr={notesArr}
           categoryArr={categoryArr}
           snapsize={snapsize}
+          currentPage={currentPage}
         />
       ) : (
         NoteMainPageMobile && (
@@ -87,6 +91,7 @@ export default function NotesCategory({
             notesArr={notesArr}
             categoryArr={categoryArr}
             snapsize={snapsize}
+            currentPage={currentPage}
           />
         )
       )}

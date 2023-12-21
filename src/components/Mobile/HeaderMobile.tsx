@@ -254,7 +254,7 @@ export default function HeaderMobile() {
                   leftIcon={<MdLibraryBooks />}
                   onClose={onClose}
                   text="Notes"
-                  link="/notes/ALL"
+                  link="/notes/ALL/1"
                   notes
                 />
                 <HeaderButton

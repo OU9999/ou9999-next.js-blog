@@ -44,7 +44,7 @@ export default function DeleteModal({
       isClosable: true,
     });
     onClose();
-    router.push("/notes/ALL");
+    router.push("/notes/ALL/1");
   };
 
   return (

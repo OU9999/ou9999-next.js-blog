@@ -1,39 +1,28 @@
-import { colorThemeAtom } from "@/utils/atoms";
-import { Box, IconButton } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { Box } from "@chakra-ui/react";
 import PostMobile from "../Home/PostMobile";
-import { MdExpandMore } from "react-icons/md";
 import { INote } from "@/firebase/firebaseTypes";
+import NoteGridPagination from "@/components/Notes/NoteGridPage/NoteGridPagination";
 
 interface INoteGridMobileProps {
   notesArr: INote[];
   snapsize: number;
+  category: string;
+  currentPage: number;
 }
 
+const itemsPerPage = 9;
 export default function NoteGridMobile({
   notesArr,
   snapsize,
+  category,
+  currentPage,
 }: INoteGridMobileProps) {
-  const colorTheme = useRecoilValue(colorThemeAtom);
-  const [isDisable, setIsDisable] = useState(true);
-  const [count, setCount] = useState(9);
-
-  useEffect(() => {
-    if (snapsize > count) {
-      setIsDisable(false);
-    } else {
-      setIsDisable(true);
-    }
-  }, [count, snapsize]);
-
-  const onMoreButtonClicked = () => {
-    setCount((prev) => prev + 9);
-  };
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
 
   return (
     <>
-      {notesArr.slice(0, count).map((note) => (
+      {notesArr.slice(startIndex, endIndex).map((note) => (
         <Box key={note.id} w="full">
           <PostMobile
             key={"postMobile" + note.id}
@@ -45,19 +34,11 @@ export default function NoteGridMobile({
           />
         </Box>
       ))}
-
-      {isDisable ? null : (
-        <IconButton
-          aria-label="expand"
-          fontSize={"5xl"}
-          padding={"5"}
-          variant={"ghost"}
-          colorScheme={colorTheme}
-          onClick={onMoreButtonClicked}
-        >
-          <MdExpandMore />
-        </IconButton>
-      )}
+      <NoteGridPagination
+        category={category}
+        snapsize={snapsize}
+        currentPage={currentPage}
+      />
     </>
   );
 }

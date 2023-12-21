@@ -44,7 +44,7 @@ export default function NoteCategorySelector({
             <MenuList>
               {categoryArr.map((category) => (
                 <>
-                  <Link href={`/notes/${category.category}`}>
+                  <Link href={`/notes/${category.category}/1`}>
                     <MenuItem
                       key={category.id}
                       value={category.category}

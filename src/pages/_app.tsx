@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const showRoute = [
       "/",
-      "/notes/:category",
+      "/notes/:category/:currentPage",
       "/entry/:titleUrl/:id",
       "/guestbook",
     ];
