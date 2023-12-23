@@ -1,46 +1,16 @@
 import { Center } from "@chakra-ui/react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { dbService } from "@/firebase/firebase";
 import GBCommentMobile from "./GBCommentMobile";
+import { IGuestBookComment } from "@/firebase/firebaseTypes";
 
-interface IGuestBookComment {
-  nickname: string;
-  password: string;
-  avatar: string;
-  comment: string;
-  createdAt: number;
-  edited: boolean;
-  userIconPic: string;
-  guestBookImg: string;
-  id: string;
+interface IGBCommentsProps {
+  comments: IGuestBookComment[] | null;
+  refetchFn: () => void;
 }
 
-export default function GBCommentsMobile() {
-  const [comments, setComments] = useState<IGuestBookComment[] | undefined>(
-    undefined
-  );
-
-  const getGuestBookComments = async () => {
-    try {
-      const q = query(
-        collection(dbService, "guestBooks"),
-        orderBy("createdAt", "desc")
-      );
-      onSnapshot(q, (snapshot) => {
-        const commentsArr: any = snapshot.docs.map((comment) => ({
-          id: comment.id + "",
-          ...comment.data(),
-        }));
-        setComments(commentsArr);
-      });
-    } catch (error: any) {}
-  };
-
-  useEffect(() => {
-    getGuestBookComments();
-  }, []);
-
+export default function GBCommentsMobile({
+  comments,
+  refetchFn,
+}: IGBCommentsProps) {
   return (
     <>
       <Center
@@ -55,16 +25,17 @@ export default function GBCommentsMobile() {
       >
         {comments?.map((comment) => (
           <GBCommentMobile
-            key={comment.id}
-            commentId={comment.id}
-            nickname={comment.nickname}
-            password={comment.password}
-            avatar={comment.avatar}
-            comment={comment.comment}
-            createdAt={comment.createdAt}
-            edited={comment.edited}
-            userIconPic={comment.userIconPic}
-            guestBookImg={comment.guestBookImg}
+            key={"GBCOMMENT" + comment.id!}
+            commentId={comment.id!}
+            nickname={comment.nickname!}
+            password={comment.password!}
+            avatar={comment.avatar!}
+            comment={comment.comment!}
+            createdAt={comment.createdAt!}
+            edited={comment.edited!}
+            userIconPic={comment.userIconPic!}
+            guestBookImg={comment.guestBookImg!}
+            refetchFn={refetchFn}
           />
         ))}
       </Center>

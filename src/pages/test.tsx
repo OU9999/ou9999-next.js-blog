@@ -8,6 +8,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxSlash } from "react-icons/rx";
 import TestText from "@/components/Test/TestText";
 import { useColorTheme } from "@/hooks/useColorTheme";
+import { useRouter } from "next/router";
 
 const backgroundVariants: Variants = {
   normal: { opacity: 1 },
@@ -30,13 +31,17 @@ const backgroundVariants: Variants = {
 };
 
 export default function MainPage() {
-  const { lightColor } = useColorTheme();
+  //state
   const setIsWrtie = useSetRecoilState(writeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [startAnimation, setStartAnimation] = useState(true);
+
+  //util
+  const { lightColor } = useColorTheme();
   const mainTextAni = useAnimation();
   const mainBoxAni = useAnimation();
   const backgroundAni = useAnimation();
+  const router = useRouter();
 
   const setBgAndQuote = () => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
@@ -49,8 +54,10 @@ export default function MainPage() {
   };
 
   useEffect(() => {
+    router.push("/");
     setBgAndQuote();
-    setIsWrtie(true);
+    setIsWrtie(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

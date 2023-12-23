@@ -36,9 +36,12 @@ export default function CommentDeleteModal({
   password,
   isReply,
 }: ICommentDeleteModalProps) {
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
-  const toast = useToast();
   const [checkPassword, setCheckPassword] = useState("");
+
+  //util
+  const toast = useToast();
 
   const onDeleteClick = async () => {
     let commentsRef = null;

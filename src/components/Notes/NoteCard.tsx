@@ -42,8 +42,11 @@ export default function NoteCard({
   link,
   description,
 }: INoteCardProps) {
-  const { colorTheme, relativeColor } = useColorTheme();
+  //state
   const [hover, setHover] = useState(false);
+
+  //util
+  const { colorTheme, relativeColor } = useColorTheme();
   const colorMode = useColorModeValue("light", "dark");
   const mdBgColor = useColorModeValue(
     "rgba(255,255,255,1)",

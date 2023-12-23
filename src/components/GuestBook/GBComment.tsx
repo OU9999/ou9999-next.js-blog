@@ -15,8 +15,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { FaCommentSlash, FaImage } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaCommentSlash } from "react-icons/fa";
 import GBCommentDeleteModal from "./GBCommentDeleteModal";
 import GBCommentPopover from "./GBCommentPopover";
 import { userIcons } from "./GBInput";
@@ -37,6 +37,7 @@ interface ICommentProps {
   edited: boolean;
   userIconPic: string;
   guestBookImg: string;
+  refetchFn: () => void;
 }
 
 export default function GBComment({
@@ -49,7 +50,9 @@ export default function GBComment({
   edited,
   userIconPic,
   guestBookImg,
+  refetchFn,
 }: ICommentProps) {
+  //state
   const [icon, setIcon] = useState<JSX.Element>();
   const [option, setOption] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -58,11 +61,12 @@ export default function GBComment({
     guestBookImg
   );
 
+  //util
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const date = dateFormatterMobile(createdAt);
-  const guestBookImgInput = useRef<HTMLInputElement>(null);
+  // const guestBookImgInput = useRef<HTMLInputElement>(null);
 
   const onUpdateButtonClick = async () => {
     if (newComment.length > 500) {
@@ -85,6 +89,7 @@ export default function GBComment({
           edited: true,
           guestBookImg: newGuestBookImg,
         });
+        refetchFn();
         toast({
           title: "수정 완료!",
           position: "top",
@@ -106,29 +111,13 @@ export default function GBComment({
       guestBookImg: getGuestBookImgUrl,
       edited: true,
     });
+    refetchFn();
     toast({
       title: "수정 완료!",
       position: "top",
       isClosable: true,
     });
     setIsEdit(false);
-  };
-
-  const onGuestBookImgButtonClicked = (e: any) => {
-    guestBookImgInput?.current?.click();
-  };
-
-  const onGuestBookImgFileChange = ({
-    currentTarget: { files },
-  }: React.FormEvent<HTMLInputElement>) => {
-    if (files) {
-      const uploadFile = files![0];
-      const reader = new FileReader();
-      reader.onloadend = (finishEvent) => {
-        setNewGuestBookImg(finishEvent.target?.result as string);
-      };
-      reader.readAsDataURL(uploadFile);
-    }
   };
 
   const onClearButtonClicked = () => {
@@ -145,6 +134,23 @@ export default function GBComment({
   useEffect(() => {
     avatarTest(avatar);
   }, [avatar]);
+
+  // const onGuestBookImgButtonClicked = (e: any) => {
+  //   guestBookImgInput?.current?.click();
+  // };
+
+  // const onGuestBookImgFileChange = ({
+  //   currentTarget: { files },
+  // }: React.FormEvent<HTMLInputElement>) => {
+  //   if (files) {
+  //     const uploadFile = files![0];
+  //     const reader = new FileReader();
+  //     reader.onloadend = (finishEvent) => {
+  //       setNewGuestBookImg(finishEvent.target?.result as string);
+  //     };
+  //     reader.readAsDataURL(uploadFile);
+  //   }
+  // };
 
   return (
     <>
@@ -304,6 +310,7 @@ export default function GBComment({
         onClose={onClose}
         commentId={commentId}
         password={password}
+        refetchFn={refetchFn}
       />
     </>
   );

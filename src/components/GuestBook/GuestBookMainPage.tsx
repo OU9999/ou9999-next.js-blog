@@ -1,10 +1,23 @@
 import GBComments from "@/components/GuestBook/GBComments";
 import GBInput from "@/components/GuestBook/GBInput";
-
 import { Box, VStack } from "@chakra-ui/react";
 import PageHeader from "../common/PageHeader";
+import { IGuestBookComment } from "@/firebase/firebaseTypes";
+import { useEffect, useState } from "react";
+import { fetchGuestBookComments } from "@/firebase/firebaseUtil";
 
 export default function GuestBookMainPage() {
+  const [comments, setComments] = useState<IGuestBookComment[] | null>(null);
+
+  const getGuestBookComments = async () => {
+    const data = await fetchGuestBookComments();
+    setComments(data);
+  };
+
+  useEffect(() => {
+    getGuestBookComments();
+  }, []);
+
   return (
     <>
       <VStack h="auto" justifyContent={"flex-start"} position={"relative"}>
@@ -16,8 +29,8 @@ export default function GuestBookMainPage() {
 
         {/* comments */}
         <Box w={"full"} height={"auto"} zIndex={2} pt={"32"}>
-          <GBInput />
-          <GBComments />
+          <GBInput refetchFn={getGuestBookComments} />
+          <GBComments comments={comments} refetchFn={getGuestBookComments} />
         </Box>
       </VStack>
     </>

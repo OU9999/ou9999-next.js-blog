@@ -8,23 +8,21 @@ import {
   Input,
   useColorModeValue,
   useDisclosure,
-  useMediaQuery,
   useToast,
   VStack,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
-
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import AddModal from "@/components/Write/AddModal";
 import Mobile404 from "@/components/Mobile/404";
-import { NextSeo } from "next-seo";
 import styled from "styled-components";
 import BlogSEO from "@/components/common/BlogSEO";
+import { useDevicehook } from "@/hooks/useDevicehook";
 
 const CustomStyle = styled.div`
   blockquote {
@@ -46,17 +44,16 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 });
 
 export default function Write() {
-  const [mobileView] = useMediaQuery("(max-width: 768px)", {
-    ssr: true,
-    fallback: false, // return false on the server, and re-evaluate on the client side
-  });
-
+  //state
   const setIsWrite = useSetRecoilState(writeAtom);
   const isLogin = useRecoilValue(isLoginAtom);
   const [md, setMd] = useState<string | undefined>("# 내용을 입력하세요...");
   const [vh, setVh] = useState<number>();
   const [secondVh, setSecondVh] = useState<number>();
   const [title, setTitle] = useState<string>("");
+
+  //util
+  const { isDesktopView } = useDevicehook();
   const colorMode = useColorModeValue("light", "dark");
   const bgColor = useColorModeValue("#ecf0f1", "#0E1117");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -101,9 +98,8 @@ export default function Write() {
   return (
     <>
       <BlogSEO title="Write" description="Write!" image="/op.webp" />
-      {mobileView ? (
-        <Mobile404 />
-      ) : (
+
+      {isDesktopView ? (
         <HStack
           minW={"100vw"}
           minH={"100vh"}
@@ -191,6 +187,8 @@ export default function Write() {
             md={md!}
           />
         </HStack>
+      ) : (
+        <Mobile404 />
       )}
     </>
   );

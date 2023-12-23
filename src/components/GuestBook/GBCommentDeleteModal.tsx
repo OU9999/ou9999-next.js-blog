@@ -1,4 +1,5 @@
 import { dbService } from "@/firebase/firebase";
+import { useColorTheme } from "@/hooks/useColorTheme";
 import {
   Button,
   Input,
@@ -24,6 +25,7 @@ interface IGBCommentDeleteModalProps {
   onClose: () => void;
   commentId: string;
   password: string;
+  refetchFn: () => void;
 }
 
 export default function GBCommentDeleteModal({
@@ -31,12 +33,15 @@ export default function GBCommentDeleteModal({
   onClose,
   commentId,
   password,
+  refetchFn,
 }: IGBCommentDeleteModalProps) {
-  const toast = useToast();
+  //state
   const [checkPassword, setCheckPassword] = useState("");
 
+  //util
+  const toast = useToast();
+  const { colorTheme } = useColorTheme();
   const onDeleteClick = async () => {
-    const commentsRef = doc(dbService, "guestBooks", commentId!);
     if (password !== checkPassword) {
       toast({
         title: "비밀번호가 틀립니다",
@@ -44,15 +49,18 @@ export default function GBCommentDeleteModal({
         isClosable: true,
         status: "error",
       });
-    } else {
-      await deleteDoc(commentsRef);
-      toast({
-        title: "삭제 완료!",
-        position: "top",
-        isClosable: true,
-      });
-      onClose();
+      return;
     }
+
+    const commentsRef = doc(dbService, "guestBooks", commentId!);
+    await deleteDoc(commentsRef);
+    refetchFn();
+    toast({
+      title: "삭제 완료!",
+      position: "top",
+      isClosable: true,
+    });
+    onClose();
   };
 
   return (
@@ -80,10 +88,10 @@ export default function GBCommentDeleteModal({
             </VStack>
           </ModalBody>
           <ModalFooter gap={3}>
-            <Button colorScheme="twitter" onClick={onClose} variant="ghost">
+            <Button colorScheme={colorTheme} onClick={onClose} variant="ghost">
               취소
             </Button>
-            <Button colorScheme="twitter" mr={3} onClick={onDeleteClick}>
+            <Button colorScheme={colorTheme} mr={3} onClick={onDeleteClick}>
               삭제
             </Button>
           </ModalFooter>

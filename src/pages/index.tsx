@@ -4,18 +4,29 @@ import MainScroll from "@/components/Home/MainScroll";
 import { fetchNotesArr } from "@/firebase/firebaseUtil";
 import { INote } from "@/firebase/firebaseTypes";
 import BlogSEO from "@/components/common/BlogSEO";
+import { useDevicehook } from "@/hooks/useDevicehook";
+
+export const getStaticProps = async () => {
+  const { notesArr } = await fetchNotesArr("ALL");
+
+  return {
+    props: {
+      notesArr,
+    },
+  };
+};
 
 interface IHomeProps {
   notesArr: INote[];
 }
 
 export default function Home({ notesArr }: IHomeProps) {
-  const [desktopView] = useMediaQuery("(min-width: 767px)", {
-    ssr: true,
-    fallback: false,
-  });
+  //state
   const [MainPageMobile, setMainPageMobile] =
     useState<React.ComponentType<IHomeProps> | null>(null);
+
+  //util
+  const { isDesktopView } = useDevicehook();
 
   useEffect(() => {
     import("@/components/Mobile/Home/MainPageMobile").then((module) => {
@@ -32,7 +43,7 @@ export default function Home({ notesArr }: IHomeProps) {
         main
       />
 
-      {desktopView ? (
+      {isDesktopView ? (
         <MainScroll notesArr={notesArr!} />
       ) : (
         MainPageMobile && <MainPageMobile notesArr={notesArr} />
@@ -40,13 +51,3 @@ export default function Home({ notesArr }: IHomeProps) {
     </>
   );
 }
-
-export const getStaticProps = async () => {
-  const { notesArr } = await fetchNotesArr("ALL");
-
-  return {
-    props: {
-      notesArr,
-    },
-  };
-};

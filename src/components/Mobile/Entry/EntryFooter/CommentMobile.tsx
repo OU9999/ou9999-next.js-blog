@@ -232,14 +232,14 @@ export default function CommentMobile({
       <Center w="full" h={"auto"} flexDir={"column"} gap={4}>
         {replyComments?.map((reply) => (
           <CommentReplyMobile
-            key={reply.id}
-            id={reply.id}
-            nickname={reply.nickname}
-            password={reply.password}
-            avatar={reply.avatar}
-            comment={reply.comment}
-            createdAt={reply.createdAt}
-            edited={reply.edited}
+            key={"REPLYM" + reply.id!}
+            id={reply.id!}
+            nickname={reply.nickname!}
+            password={reply.password!}
+            avatar={reply.avatar!}
+            comment={reply.comment!}
+            createdAt={reply.createdAt!}
+            edited={reply.edited!}
           />
         ))}
       </Center>

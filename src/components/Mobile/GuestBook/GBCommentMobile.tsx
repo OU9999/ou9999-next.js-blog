@@ -11,17 +11,15 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import { FaImage, FaUser } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { dateFormatter } from "@/utils/utilFn";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { dbService, storageService } from "@/firebase/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { uuidv4 } from "@firebase/util";
 import { userIcons } from "./GBInputMobile";
-import { useRecoilValue } from "recoil";
-import { colorThemeAtom } from "@/utils/atoms";
 import Image from "next/image";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 interface ICommentProps {
   nickname: string;
@@ -33,6 +31,7 @@ interface ICommentProps {
   edited: boolean;
   userIconPic: string;
   guestBookImg: string;
+  refetchFn: () => void;
 }
 
 export default function GBCommentMobile({
@@ -45,8 +44,9 @@ export default function GBCommentMobile({
   edited,
   userIconPic,
   guestBookImg,
+  refetchFn,
 }: ICommentProps) {
-  const colorTheme = useRecoilValue(colorThemeAtom);
+  //state
   const [icon, setIcon] = useState<JSX.Element>();
   const [isEdit, setIsEdit] = useState(false);
   const [newComment, setNewComment] = useState(comment);
@@ -54,10 +54,12 @@ export default function GBCommentMobile({
     guestBookImg
   );
 
+  //util
+  const { colorTheme } = useColorTheme();
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const date = dateFormatter(createdAt);
-  const guestBookImgInput = useRef<HTMLInputElement>(null);
+  // const guestBookImgInput = useRef<HTMLInputElement>(null);
 
   const onUpdateButtonClick = async () => {
     if (newComment.length > 500) {
@@ -69,6 +71,7 @@ export default function GBCommentMobile({
       });
       return;
     }
+
     const commentsRef = doc(dbService, "guestBooks", commentId!);
     const guestBookImgRef = ref(storageService, `guestBooks/imgs/${uuidv4()}`);
     let getGuestBookImgUrl = "";
@@ -80,12 +83,14 @@ export default function GBCommentMobile({
           edited: true,
           guestBookImg: newGuestBookImg,
         });
+        refetchFn();
         toast({
           title: "수정 완료!",
           position: "top",
           isClosable: true,
         });
         setIsEdit(false);
+
         return;
       }
       const response = await uploadString(
@@ -101,6 +106,7 @@ export default function GBCommentMobile({
       guestBookImg: getGuestBookImgUrl,
       edited: true,
     });
+    refetchFn();
     toast({
       title: "수정 완료!",
       position: "top",
@@ -111,55 +117,39 @@ export default function GBCommentMobile({
 
   const onDeleteClick = async () => {
     const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
-    if (newPassword === password) {
-      const commentsRef = doc(dbService, "guestBooks", commentId);
-      await deleteDoc(commentsRef);
-      toast({
-        title: "삭제 완료!",
-        position: "top",
-        isClosable: true,
-      });
-    } else if (newPassword === "") {
-    } else {
+    if (newPassword !== password) {
       toast({
         title: "비밀번호가 틀립니다",
         position: "top",
         isClosable: true,
         status: "error",
       });
+      return;
     }
+
+    const commentsRef = doc(dbService, "guestBooks", commentId);
+    await deleteDoc(commentsRef);
+    refetchFn();
+    toast({
+      title: "삭제 완료!",
+      position: "top",
+      isClosable: true,
+    });
   };
 
   const onEditClick = async () => {
     const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
-    if (newPassword === password) {
-      setIsEdit(true);
-    } else if (newPassword === "") {
-    } else {
+    if (newPassword !== password) {
       toast({
         title: "비밀번호가 틀립니다",
         position: "top",
         isClosable: true,
         status: "error",
       });
+      return;
     }
-  };
 
-  const onGuestBookImgButtonClicked = (e: any) => {
-    guestBookImgInput?.current?.click();
-  };
-
-  const onGuestBookImgFileChange = ({
-    currentTarget: { files },
-  }: React.FormEvent<HTMLInputElement>) => {
-    if (files) {
-      const uploadFile = files![0];
-      const reader = new FileReader();
-      reader.onloadend = (finishEvent) => {
-        setNewGuestBookImg(finishEvent.target?.result as string);
-      };
-      reader.readAsDataURL(uploadFile);
-    }
+    setIsEdit(true);
   };
 
   const onClearButtonClicked = () => {
@@ -176,6 +166,23 @@ export default function GBCommentMobile({
   useEffect(() => {
     avatarTest(avatar);
   }, [avatar]);
+
+  // const onGuestBookImgButtonClicked = (e: any) => {
+  //   guestBookImgInput?.current?.click();
+  // };
+
+  // const onGuestBookImgFileChange = ({
+  //   currentTarget: { files },
+  // }: React.FormEvent<HTMLInputElement>) => {
+  //   if (files) {
+  //     const uploadFile = files![0];
+  //     const reader = new FileReader();
+  //     reader.onloadend = (finishEvent) => {
+  //       setNewGuestBookImg(finishEvent.target?.result as string);
+  //     };
+  //     reader.readAsDataURL(uploadFile);
+  //   }
+  // };
 
   return (
     <>

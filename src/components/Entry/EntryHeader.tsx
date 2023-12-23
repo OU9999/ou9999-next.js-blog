@@ -19,7 +19,6 @@ import { BiTimeFive } from "react-icons/bi";
 import { GoThreeBars } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
-import { IEntryProps } from "@/pages/entry/[...slug]";
 import { IDetail } from "@/firebase/firebaseTypes";
 
 interface IEntryHeaderProps {
@@ -28,7 +27,10 @@ interface IEntryHeaderProps {
 }
 
 export default function EntryHeader({ detail, docId }: IEntryHeaderProps) {
+  //state
   const isLogin = useRecoilValue(isLoginAtom);
+
+  //util
   const date = dateFormatter(detail.createdAt!);
   const urlTitle = returnUrlTitle(detail.title!);
   const { isOpen, onOpen, onClose } = useDisclosure();
