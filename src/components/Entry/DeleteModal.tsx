@@ -29,9 +29,12 @@ export default function DeleteModal({
   id,
   thumbnailUrl,
 }: ILoginModalProps) {
+  //state
+  const colorTheme = useRecoilValue(colorThemeAtom);
+
+  //util
   const router = useRouter();
   const toast = useToast();
-  const colorTheme = useRecoilValue(colorThemeAtom);
 
   const onDeleteClick = async () => {
     await deleteDoc(doc(dbService, "notes", id));

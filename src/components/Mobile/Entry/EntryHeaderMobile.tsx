@@ -25,7 +25,10 @@ export default function EntryHeaderMobile({
   detail,
   docId,
 }: IEntryHeaderMobileProps) {
+  //state
   const isLogin = useRecoilValue(isLoginAtom);
+
+  //util
   const { isOpen, onOpen, onClose } = useDisclosure();
   const date = dateFormatter(detail.createdAt!);
 

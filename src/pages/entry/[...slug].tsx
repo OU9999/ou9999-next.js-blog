@@ -1,10 +1,10 @@
 import { returnUrlTitle, selectBasicThumbnail } from "@/utils/utilFn";
-import { useMediaQuery } from "@chakra-ui/react";
 import EntryMainPage from "@/components/Entry/EntryMainPage";
 import { useEffect, useState } from "react";
 import { fetchDetail, fetchNotesArr } from "@/firebase/firebaseUtil";
 import { IDetail, INote } from "@/firebase/firebaseTypes";
 import BlogSEO from "@/components/common/BlogSEO";
+import { useDevicehook } from "@/hooks/useDevicehook";
 
 export const getStaticPaths = async () => {
   const { notesArr } = await fetchNotesArr("ALL");
@@ -57,12 +57,12 @@ export default function Entry({
   previousNote,
   nextNote,
 }: IEntryProps) {
-  const [desktopView] = useMediaQuery("(min-width: 767px)", {
-    ssr: true,
-    fallback: false,
-  });
+  //state
   const [EntryMainPageMobile, setEntryMainPageMobile] =
     useState<React.ComponentType<IEntryProps> | null>(null);
+
+  //util
+  const { isDesktopView } = useDevicehook();
 
   useEffect(() => {
     import("@/components/Mobile/Entry/EntryMainPageMobile").then((module) => {
@@ -78,7 +78,7 @@ export default function Entry({
         image={selectBasicThumbnail(detail.category!) as string}
       />
 
-      {desktopView ? (
+      {isDesktopView ? (
         <EntryMainPage
           detail={detail!}
           docId={docId}

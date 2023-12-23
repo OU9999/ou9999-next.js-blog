@@ -74,17 +74,20 @@ const resetButtonVariants: Variants = {
 };
 
 export default function MainPage() {
-  const { lightColor } = useColorTheme();
+  //state
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [quote, setQuote] = useState<string>("");
   const [startAnimation, setStartAnimation] = useState(true);
+  const [time, setTime] = useState(0);
+
+  //util
+  const { lightColor } = useColorTheme();
   const mainTextAni = useAnimation();
   const mainBoxAni = useAnimation();
   const quoteAni = useAnimation();
   const resetButtonAni = useAnimation();
   const backgroundAni = useAnimation();
   const toast = useToast();
-  const [time, setTime] = useState(0);
 
   const setBgAndQuote = () => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);

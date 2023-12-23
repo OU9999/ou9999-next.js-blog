@@ -4,17 +4,15 @@ import {
   Center,
   Heading,
   HStack,
-  IconButton,
   Text,
   Textarea,
-  Tooltip,
   useColorModeValue,
   useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCommentSlash, FaReply } from "react-icons/fa";
 import CommentReply from "./CommenReply";
 import CommentDeleteModal from "./CommentDeleteModal";
@@ -49,6 +47,7 @@ export default function Comment({
   commentId,
   edited,
 }: ICommentProps) {
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [icon, setIcon] = useState<JSX.Element>();
   const [option, setOption] = useState(false);
@@ -59,6 +58,7 @@ export default function Comment({
     null
   );
 
+  //util
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
@@ -192,14 +192,14 @@ export default function Comment({
       <Center w="full" h={"auto"} flexDir={"column"} gap={10}>
         {replyComments?.map((reply) => (
           <CommentReply
-            key={reply.id}
-            id={reply.id}
-            nickname={reply.nickname}
-            password={reply.password}
-            avatar={reply.avatar}
-            comment={reply.comment}
-            createdAt={reply.createdAt}
-            edited={reply.edited}
+            key={"REPLY" + reply.id!}
+            id={reply.id!}
+            nickname={reply.nickname!}
+            password={reply.password!}
+            avatar={reply.avatar!}
+            comment={reply.comment!}
+            createdAt={reply.createdAt!}
+            edited={reply.edited!}
           />
         ))}
       </Center>

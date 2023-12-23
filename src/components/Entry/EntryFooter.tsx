@@ -9,7 +9,6 @@ import {
   GridItem,
   Heading,
   useColorModeValue,
-  useMediaQuery,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -19,6 +18,7 @@ import Comments from "./EntryFooter/Comments";
 import AnotherCard from "./EntryFooter/Comment/AnotherCard";
 import OtherPost from "./EntryFooter/OtherPost/OtherPost";
 import { INote } from "@/firebase/firebaseTypes";
+import { useDevicehook } from "@/hooks/useDevicehook";
 
 export interface IEntryFooterProps {
   category: string;
@@ -35,14 +35,13 @@ export default function EntryFooter({
   previousNote,
   nextNote,
 }: IEntryFooterProps) {
-  const [fullOverlay] = useMediaQuery("(min-width: 1280px)", {
-    ssr: true,
-    fallback: false,
-  });
-
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [limit, setLimit] = useState(4);
+
+  //util
+  const { fullOverlay } = useDevicehook();
   const bgColor = useColorModeValue("white", "#1A202C");
 
   useEffect(() => {

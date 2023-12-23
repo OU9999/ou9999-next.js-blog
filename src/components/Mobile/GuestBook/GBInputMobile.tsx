@@ -6,7 +6,6 @@ import {
   Center,
   Flex,
   HStack,
-  IconButton,
   Image,
   Input,
   InputGroup,
@@ -32,9 +31,7 @@ import {
   FaUserSecret,
   FaUserTie,
 } from "react-icons/fa";
-import { HiPhoto } from "react-icons/hi2";
-import { useRecoilValue } from "recoil";
-import { colorThemeAtom } from "@/utils/atoms";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 export const userIcons = [
   {
@@ -71,8 +68,12 @@ export const userIcons = [
   },
 ];
 
-export default function GBInputMobile() {
-  const colorTheme = useRecoilValue(colorThemeAtom);
+interface IGBInputMobileProps {
+  refetchFn: () => void;
+}
+
+export default function GBInputMobile({ refetchFn }: IGBInputMobileProps) {
+  //state
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -82,18 +83,13 @@ export default function GBInputMobile() {
     undefined
   );
 
+  //util
+  const { colorTheme } = useColorTheme();
   const bgColor = useColorModeValue("white", "#1A202C");
   const inputBgColor = useColorModeValue("#fff", "#2D3748");
   const toast = useToast();
   const userIconPicInput = useRef<HTMLInputElement>(null);
-  const guestBookImgInput = useRef<HTMLInputElement>(null);
-
-  const onUserIconPicButtonClicked = (e: any) => {
-    userIconPicInput?.current?.click();
-  };
-  const onGuestBookImgButtonClicked = (e: any) => {
-    guestBookImgInput?.current?.click();
-  };
+  // const guestBookImgInput = useRef<HTMLInputElement>(null);
 
   const onUserIconPicFileChange = ({
     currentTarget: { files },
@@ -107,19 +103,6 @@ export default function GBInputMobile() {
       reader.readAsDataURL(uploadFile);
     }
     console.log(files);
-  };
-
-  const onGuestBookImgFileChange = ({
-    currentTarget: { files },
-  }: React.FormEvent<HTMLInputElement>) => {
-    if (files) {
-      const uploadFile = files![0];
-      const reader = new FileReader();
-      reader.onloadend = (finishEvent) => {
-        setGuestBookImg(finishEvent.target?.result as string);
-      };
-      reader.readAsDataURL(uploadFile);
-    }
   };
 
   const onClearGuestBookImgButtonClicked = (e: any) => {
@@ -136,9 +119,9 @@ export default function GBInputMobile() {
       });
       return;
     }
-    if (nickname.length > 10) {
+    if (nickname.length > 15) {
       toast({
-        title: `닉네임이 너무 깁니다..( ${nickname.length} / 10 )`,
+        title: `닉네임이 너무 깁니다..( ${nickname.length} / 15 )`,
         position: "top",
         status: "error",
         isClosable: true,
@@ -199,7 +182,27 @@ export default function GBInputMobile() {
       position: "top",
       isClosable: true,
     });
+    refetchFn();
   };
+
+  // const onGuestBookImgFileChange = ({
+  //   currentTarget: { files },
+  // }: React.FormEvent<HTMLInputElement>) => {
+  //   if (files) {
+  //     const uploadFile = files![0];
+  //     const reader = new FileReader();
+  //     reader.onloadend = (finishEvent) => {
+  //       setGuestBookImg(finishEvent.target?.result as string);
+  //     };
+  //     reader.readAsDataURL(uploadFile);
+  //   }
+  // };
+  // const onUserIconPicButtonClicked = (e: any) => {
+  //   userIconPicInput?.current?.click();
+  // };
+  // const onGuestBookImgButtonClicked = (e: any) => {
+  //   guestBookImgInput?.current?.click();
+  // };
 
   return (
     <>

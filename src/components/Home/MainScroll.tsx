@@ -43,9 +43,12 @@ const item = {
 };
 
 export default function MainScroll({ notesArr }: IMainScrollProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  //state
   const [limitCount, setLimitCount] = useState(4);
   const colorTheme = useRecoilValue(colorThemeAtom);
+
+  //util
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onMoreClicked = () => {
     setLimitCount((prev) => prev + 4);

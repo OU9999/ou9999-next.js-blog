@@ -26,8 +26,11 @@ export default function EntryFooterMobile({
   previousNote,
   nextNote,
 }: IEntryFooterProps) {
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
+
+  //util
   const bgColor = useColorModeValue("white", "#1A202C");
 
   useEffect(() => {

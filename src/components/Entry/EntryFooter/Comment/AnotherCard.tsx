@@ -33,8 +33,11 @@ export default function AnotherCard({
   link,
   category,
 }: IAnotherCardProps) {
-  const { relativeColor } = useColorTheme();
+  //state
   const [hover, setHover] = useState(false);
+
+  //util
+  const { relativeColor } = useColorTheme();
   const mdBgColor = useColorModeValue(
     "rgba(255,255,255,1)",
     "rgba(45,55,72,1)"

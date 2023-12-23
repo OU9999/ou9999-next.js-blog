@@ -9,7 +9,14 @@ import {
   where,
 } from "firebase/firestore";
 import { dbService } from "./firebase";
-import { ICategory, IComment, IDetail, INote } from "./firebaseTypes";
+import {
+  ICategory,
+  IComment,
+  IDetail,
+  IGuestBookComment,
+  INote,
+  IReplyComment,
+} from "./firebaseTypes";
 
 interface FetchNotesResult {
   notesArr: INote[];
@@ -128,17 +135,39 @@ export const fetchComments = async (docId: string): Promise<IComment[]> => {
   return commentArr;
 };
 
-export const fetchReplyComments = async (commentId: string) => {
+export const fetchReplyComments = async (
+  commentId: string
+): Promise<IReplyComment[]> => {
   const q = query(
     collection(dbService, "replyComments"),
     where("commentId", "==", commentId),
     orderBy("createdAt", "asc")
   );
   const snapshot = await getDocs(q);
-  const replyCommentArr: any[] = snapshot.docs.map((replyComment) => ({
-    id: replyComment.id + "",
-    ...replyComment.data(),
-  }));
+  const replyCommentArr: IReplyComment[] = snapshot.docs.map(
+    (replyComment) => ({
+      id: replyComment.id + "",
+      ...replyComment.data(),
+    })
+  );
 
   return replyCommentArr;
+};
+
+export const fetchGuestBookComments = async (): Promise<
+  IGuestBookComment[]
+> => {
+  const q = query(
+    collection(dbService, "guestBooks"),
+    orderBy("createdAt", "desc")
+  );
+  const snapshot = await getDocs(q);
+  const guestBookCommentArr: IGuestBookComment[] = snapshot.docs.map(
+    (comment) => ({
+      id: comment.id + "",
+      ...comment.data(),
+    })
+  );
+
+  return guestBookCommentArr;
 };

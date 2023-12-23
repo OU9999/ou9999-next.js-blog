@@ -34,12 +34,24 @@ export interface IComment {
 }
 
 export interface IReplyComment {
-  commentId: string;
-  nickname: string;
-  password: string;
-  avatar: string;
-  comment: string;
-  createdAt: number;
-  edited: boolean;
-  id: string;
+  commentId?: string;
+  nickname?: string;
+  password?: string;
+  avatar?: string;
+  comment?: string;
+  createdAt?: number;
+  edited?: boolean;
+  id?: string;
+}
+
+export interface IGuestBookComment {
+  nickname?: string;
+  password?: string;
+  avatar?: string;
+  comment?: string;
+  createdAt?: number;
+  edited?: boolean;
+  userIconPic?: string;
+  guestBookImg?: string;
+  id?: string;
 }

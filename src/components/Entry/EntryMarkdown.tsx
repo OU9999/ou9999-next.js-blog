@@ -37,8 +37,11 @@ interface IEntryMainPageProps {
 }
 
 export default function EntryMarkdown({ md }: IEntryMainPageProps) {
-  const { relativeColor } = useColorTheme();
+  //state
   const [re, setRe] = useState(false);
+
+  //util
+  const { relativeColor } = useColorTheme();
   const colorMode = useColorModeValue("light", "dark");
 
   useEffect(() => {

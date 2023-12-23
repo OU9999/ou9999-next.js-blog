@@ -31,6 +31,7 @@ import {
   FaUserSecret,
   FaUserTie,
 } from "react-icons/fa";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 export const userIcons = [
   {
@@ -67,7 +68,12 @@ export const userIcons = [
   },
 ];
 
-export default function GBInput() {
+interface IGBInputProps {
+  refetchFn: () => void;
+}
+
+export default function GBInput({ refetchFn }: IGBInputProps) {
+  //state
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -77,18 +83,13 @@ export default function GBInput() {
     undefined
   );
 
+  //util
+  const { colorTheme } = useColorTheme();
   const bgColor = useColorModeValue("white", "#1A202C");
   const inputBgColor = useColorModeValue("#fff", "#2D3748");
   const toast = useToast();
   const userIconPicInput = useRef<HTMLInputElement>(null);
-  const guestBookImgInput = useRef<HTMLInputElement>(null);
-
-  const onUserIconPicButtonClicked = (e: any) => {
-    userIconPicInput?.current?.click();
-  };
-  const onGuestBookImgButtonClicked = (e: any) => {
-    guestBookImgInput?.current?.click();
-  };
+  // const guestBookImgInput = useRef<HTMLInputElement>(null);
 
   const onUserIconPicFileChange = ({
     currentTarget: { files },
@@ -102,19 +103,6 @@ export default function GBInput() {
       reader.readAsDataURL(uploadFile);
     }
     console.log(files);
-  };
-
-  const onGuestBookImgFileChange = ({
-    currentTarget: { files },
-  }: React.FormEvent<HTMLInputElement>) => {
-    if (files) {
-      const uploadFile = files![0];
-      const reader = new FileReader();
-      reader.onloadend = (finishEvent) => {
-        setGuestBookImg(finishEvent.target?.result as string);
-      };
-      reader.readAsDataURL(uploadFile);
-    }
   };
 
   const onClearGuestBookImgButtonClicked = (e: any) => {
@@ -194,7 +182,27 @@ export default function GBInput() {
       position: "top",
       isClosable: true,
     });
+    refetchFn();
   };
+
+  // const onGuestBookImgFileChange = ({
+  //   currentTarget: { files },
+  // }: React.FormEvent<HTMLInputElement>) => {
+  //   if (files) {
+  //     const uploadFile = files![0];
+  //     const reader = new FileReader();
+  //     reader.onloadend = (finishEvent) => {
+  //       setGuestBookImg(finishEvent.target?.result as string);
+  //     };
+  //     reader.readAsDataURL(uploadFile);
+  //   }
+  // };
+  // const onUserIconPicButtonClicked = (e: any) => {
+  //   userIconPicInput?.current?.click();
+  // };
+  // const onGuestBookImgButtonClicked = (e: any) => {
+  //   guestBookImgInput?.current?.click();
+  // };
 
   return (
     <>
@@ -308,7 +316,7 @@ export default function GBInput() {
                   ) : null}
                 </Box>
                 <Flex w={"50%"} justifyContent={"flex-end"}>
-                  <Button colorScheme={"twitter"} onClick={onAddButtonClicked}>
+                  <Button colorScheme={colorTheme} onClick={onAddButtonClicked}>
                     방명록 작성
                   </Button>
                 </Flex>

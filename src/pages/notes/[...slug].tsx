@@ -6,7 +6,7 @@ import {
   fetchCategory,
   fetchNotesArr,
 } from "@/firebase/firebaseUtil";
-import { useMediaQuery } from "@chakra-ui/react";
+import { useDevicehook } from "@/hooks/useDevicehook";
 import { useEffect, useState } from "react";
 
 export interface INotesCategoryProps {
@@ -60,12 +60,12 @@ export default function NotesCategory({
   notesArr,
   currentPage,
 }: INotesCategoryProps) {
-  const [desktopView] = useMediaQuery("(min-width: 767px)", {
-    ssr: true,
-    fallback: false,
-  });
+  //state
   const [NoteMainPageMobile, setNoteMainPageMobile] =
     useState<React.ComponentType<INotesCategoryProps> | null>(null);
+
+  //util
+  const { isDesktopView } = useDevicehook();
 
   useEffect(() => {
     import("@/components/Mobile/Notes/NoteMainPageMobile").then((module) => {
@@ -76,7 +76,7 @@ export default function NotesCategory({
   return (
     <>
       <BlogSEO title="Notes" description="Notes!" image="/op.webp" />
-      {desktopView ? (
+      {isDesktopView ? (
         <NotesMainPage
           category={category}
           notesArr={notesArr}

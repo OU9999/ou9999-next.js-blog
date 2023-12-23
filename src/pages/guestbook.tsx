@@ -1,16 +1,15 @@
 import GuestBookMainPage from "@/components/GuestBook/GuestBookMainPage";
 import BlogSEO from "@/components/common/BlogSEO";
-import { useMediaQuery } from "@chakra-ui/react";
-import { NextSeo } from "next-seo";
+import { useDevicehook } from "@/hooks/useDevicehook";
 import { useEffect, useState } from "react";
 
 export default function GuestBook() {
-  const [desktopView] = useMediaQuery("(min-width: 767px)", {
-    ssr: true,
-    fallback: false,
-  });
+  //state
   const [GuestBookMainPageMobile, setGuestBookMainPageMobile] =
     useState<React.ComponentType | null>(null);
+
+  //util
+  const { isDesktopView } = useDevicehook();
 
   useEffect(() => {
     import("@/components/Mobile/GuestBook/GuestBookMainPageMobile").then(
@@ -23,7 +22,7 @@ export default function GuestBook() {
   return (
     <>
       <BlogSEO title="GuestBook" description="GuestBook!" image="/op.webp" />
-      {desktopView ? (
+      {isDesktopView ? (
         <GuestBookMainPage />
       ) : (
         GuestBookMainPageMobile && <GuestBookMainPageMobile />

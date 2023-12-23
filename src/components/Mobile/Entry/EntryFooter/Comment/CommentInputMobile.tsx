@@ -70,12 +70,14 @@ export const userIcons = [
 ];
 
 export default function CommentInputMobile({ docId }: ICommentInputProps) {
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [comment, setComment] = useState<string>("");
 
+  //util
   const inputBgColor = useColorModeValue("#fff", "#2D3748");
   const toast = useToast();
 

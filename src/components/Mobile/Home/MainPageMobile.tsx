@@ -40,9 +40,12 @@ const backgroundVariants: Variants = {
 };
 
 export default function MainPageMobile({ notesArr }: IMainPageMobileProps) {
+  //state
   const [time, setTime] = useState(0);
   const [quote, setQuote] = useState<string>("");
   const [limitCount, setLimitCount] = useState(4);
+
+  //util
   const backgroundAni = useAnimation();
 
   const onMoreClicked = () => {
