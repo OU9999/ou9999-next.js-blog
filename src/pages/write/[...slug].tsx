@@ -25,6 +25,7 @@ import Mobile404 from "@/components/Mobile/404";
 import styled from "styled-components";
 import BlogSEO from "@/components/common/BlogSEO";
 import { useDevicehook } from "@/hooks/useDevicehook";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 const CustomStyle = styled.div`
   blockquote {
@@ -67,6 +68,7 @@ export default function Write({ titleUrl, docId, detail }: any) {
   const [title, setTitle] = useState<string>(detail.title);
 
   //util
+  const { colorTheme } = useColorTheme();
   const { isDesktopView } = useDevicehook();
   const colorMode = useColorModeValue("light", "dark");
   const bgColor = useColorModeValue("#ecf0f1", "#0E1117");
@@ -170,14 +172,14 @@ export default function Write({ titleUrl, docId, detail }: any) {
                 <Button
                   onClick={onOutClicked}
                   variant={"ghost"}
-                  colorScheme={"twitter"}
+                  colorScheme={colorTheme}
                   fontSize={"2xl"}
                 >
                   임시저장
                 </Button>
                 <Button
                   onClick={onSaveClicked}
-                  colorScheme={"twitter"}
+                  colorScheme={colorTheme}
                   fontSize={"2xl"}
                 >
                   업데이트

@@ -20,6 +20,7 @@ import { useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useSetRecoilState } from "recoil";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 interface ILoginModalProps {
   isOpen: boolean;
@@ -27,10 +28,13 @@ interface ILoginModalProps {
 }
 
 export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
-  const toast = useToast();
+  //state
+  const setIsLogin = useSetRecoilState(isLoginAtom);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const setIsLogin = useSetRecoilState(isLoginAtom);
+  //util
+  const { colorTheme } = useColorTheme();
+  const toast = useToast();
 
   const onLoginButtonClick = async () => {
     try {
@@ -95,7 +99,7 @@ export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
           </ModalBody>
           <ModalFooter>
             <Button
-              colorScheme="twitter"
+              colorScheme={colorTheme}
               mr={3}
               onClick={() => onLoginButtonClick()}
             >

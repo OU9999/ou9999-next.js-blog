@@ -1,12 +1,11 @@
+import { useDevicehook } from "@/hooks/useDevicehook";
 import { writeAtom } from "@/utils/atoms";
 import { vhToPixels } from "@/utils/utilFn";
 import {
   Avatar,
   Box,
   HStack,
-  Text,
   useColorModeValue,
-  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { motion, useScroll, Variants } from "framer-motion";
@@ -21,7 +20,7 @@ const hugmeVariants: Variants = {
     const px = vhToPixels(100);
     return {
       opacity: 1,
-      y: ani ? 0 : -px!,
+      y: ani ? 0 : px!,
       transition: {
         type: "spring",
       },
@@ -34,14 +33,14 @@ interface IFooterProps {
 }
 
 export default function Footer({ loading }: IFooterProps) {
-  const [mobileView] = useMediaQuery("(max-width: 768px)", {
-    ssr: true,
-    fallback: false, // return false on the server, and re-evaluate on the client side
-  });
-  const { scrollY } = useScroll();
+  //state
   const isWrite = useRecoilValue(writeAtom);
   const [invisible, setInvisible] = useState(false);
   const [hugmeAni, setHugmeAni] = useState(false);
+
+  //util
+  const { isDesktopView } = useDevicehook();
+  const { scrollY } = useScroll();
   const bgColor = useColorModeValue("#fff", "#1A202C");
 
   const onHugMeClicked = () => {
@@ -114,12 +113,13 @@ export default function Footer({ loading }: IFooterProps) {
             </Box>
           </HStack>
         </VStack>
-        {mobileView ? null : (
+
+        {isDesktopView && (
           <Avatar
             aria-label="hugme"
             src={`/assets/imgs/icon/hug_me.webp`}
             display={invisible ? "none" : "block"}
-            size={mobileView ? "md" : "xl"}
+            size={"xl"}
             position={"fixed"}
             zIndex={99}
             bottom={3}
@@ -130,7 +130,7 @@ export default function Footer({ loading }: IFooterProps) {
             variants={hugmeVariants}
             animate={"hello"}
             initial={{
-              y: -vhToPixels(100)!,
+              y: vhToPixels(100)!,
               opacity: 0,
             }}
             custom={hugmeAni}
