@@ -26,6 +26,7 @@ import { dbService, storageService } from "@/firebase/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { uuidv4 } from "@firebase/util";
 import Image from "next/image";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 interface ICommentProps {
   nickname: string;
@@ -62,6 +63,7 @@ export default function GBComment({
   );
 
   //util
+  const { colorTheme } = useColorTheme();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
@@ -270,12 +272,12 @@ export default function GBComment({
               >
                 <Button
                   onClick={() => setIsEdit(false)}
-                  colorScheme="twitter"
+                  colorScheme={colorTheme}
                   variant={"ghost"}
                 >
                   취소
                 </Button>
-                <Button colorScheme="twitter" onClick={onUpdateButtonClick}>
+                <Button colorScheme={colorTheme} onClick={onUpdateButtonClick}>
                   수정
                 </Button>
               </Flex>

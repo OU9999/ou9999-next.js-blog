@@ -1,4 +1,7 @@
 import { dbService, storageService } from "@/firebase/firebase";
+import { ICategory } from "@/firebase/firebaseTypes";
+import { fetchCategory } from "@/firebase/firebaseUtil";
+import { useColorTheme } from "@/hooks/useColorTheme";
 import { returnDescription } from "@/utils/utilFn";
 import {
   Accordion,
@@ -56,12 +59,6 @@ interface IAddModalProps {
   isEdit?: boolean;
 }
 
-export interface ICategorys {
-  id: string;
-  category: string;
-  createdAt: number;
-}
-
 export default function AddModal({
   isOpen,
   onClose,
@@ -73,30 +70,24 @@ export default function AddModal({
   docId,
   isEdit,
 }: IAddModalProps) {
-  const router = useRouter();
+  //state
   const [thumbnail, setThumbnail] = useState<string | undefined>(thumbnailUrl);
-  const twitterColor = useColorModeValue("twitter.500", "twitter.200");
-  const thumbnailInput = useRef<HTMLInputElement>(null);
-  const [categorys, setCategorys] = useState<ICategorys[]>([]);
+  const [categorys, setCategorys] = useState<ICategory[]>([]);
   const [newCategory, setNewCategory] = useState<string | undefined>();
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
     defaultCategory
   );
+
+  //util
+  const { colorTheme, relativeColor } = useColorTheme();
+  const router = useRouter();
+  const thumbnailInput = useRef<HTMLInputElement>(null);
   const toast = useToast();
   const description = returnDescription(md);
 
   const getCategorys = async () => {
-    const q = query(
-      collection(dbService, "categorys"),
-      orderBy("createdAt", "asc")
-    );
-    onSnapshot(q, (snapshot) => {
-      const categoryArr: any = snapshot.docs.map((category) => ({
-        id: category.id + "",
-        ...category.data(),
-      }));
-      setCategorys(categoryArr);
-    });
+    const data = await fetchCategory("snapshot");
+    setCategorys(data);
   };
 
   useEffect(() => {
@@ -246,7 +237,7 @@ export default function AddModal({
                   <HStack width={"full"} justifyContent={"flex-end"}>
                     <Box>
                       <Link
-                        color={twitterColor}
+                        color={relativeColor}
                         onClick={onThumbnailButtonClicked}
                       >
                         재업로드
@@ -260,7 +251,7 @@ export default function AddModal({
                       />
                     </Box>
                     <Link
-                      color={twitterColor}
+                      color={relativeColor}
                       onClick={onClearThumbnailButtonClicked}
                     >
                       제거
@@ -287,7 +278,7 @@ export default function AddModal({
                     </Box>
                     <Box>
                       <Button
-                        colorScheme={"twitter"}
+                        colorScheme={colorTheme}
                         onClick={onThumbnailButtonClicked}
                       >
                         썸네일 업로드
@@ -369,7 +360,7 @@ export default function AddModal({
           </ModalBody>
           <ModalFooter>
             <Button
-              colorScheme="twitter"
+              colorScheme={colorTheme}
               mr={3}
               onClick={onClose}
               variant="ghost"
@@ -378,13 +369,13 @@ export default function AddModal({
             </Button>
             {isEdit ? (
               <Button
-                colorScheme="twitter"
+                colorScheme={colorTheme}
                 onClick={() => onUpdateButtonClick(docId!)}
               >
                 업데이트
               </Button>
             ) : (
-              <Button colorScheme="twitter" onClick={onAddButtonClick}>
+              <Button colorScheme={colorTheme} onClick={onAddButtonClick}>
                 노트작성
               </Button>
             )}

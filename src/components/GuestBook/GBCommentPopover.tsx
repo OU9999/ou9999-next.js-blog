@@ -1,3 +1,4 @@
+import { useColorTheme } from "@/hooks/useColorTheme";
 import {
   Box,
   Button,
@@ -32,9 +33,12 @@ export default function GBCommentPopover({
   setIsEdit,
   isEdit,
 }: IGBCommentPopoverProps) {
-  const { onClose, isOpen, onToggle } = useDisclosure();
+  //state
   const [checkPassword, setCheckPassword] = useState("");
   const [wait, setWait] = useState(false);
+  //util
+  const { colorTheme } = useColorTheme();
+  const { onClose, isOpen, onToggle } = useDisclosure();
   const toast = useToast();
 
   const onCheckButtonClicked = () => {
@@ -104,10 +108,14 @@ export default function GBCommentPopover({
           </PopoverBody>
           <PopoverFooter display="flex" justifyContent="flex-end">
             <ButtonGroup size="sm">
-              <Button colorScheme="twitter" variant={"ghost"} onClick={onClose}>
+              <Button
+                colorScheme={colorTheme}
+                variant={"ghost"}
+                onClick={onClose}
+              >
                 취소
               </Button>
-              <Button colorScheme="twitter" onClick={onCheckButtonClicked}>
+              <Button colorScheme={colorTheme} onClick={onCheckButtonClicked}>
                 확인
               </Button>
             </ButtonGroup>

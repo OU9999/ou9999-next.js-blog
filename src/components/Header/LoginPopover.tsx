@@ -21,11 +21,16 @@ import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { SiFirebase } from "react-icons/si";
 import { useSetRecoilState } from "recoil";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 export default function LoginPopover() {
+  //state
+  const setIsLogin = useSetRecoilState(isLoginAtom);
+
+  //util
+  const { colorTheme } = useColorTheme();
   const { onClose, isOpen, onToggle } = useDisclosure();
   const toast = useToast();
-  const setIsLogin = useSetRecoilState(isLoginAtom);
 
   const onLogOutClick = () => {
     authService.signOut();
@@ -97,7 +102,7 @@ export default function LoginPopover() {
                   target="_blank"
                 >
                   <Button
-                    colorScheme={"twitter"}
+                    colorScheme={colorTheme}
                     leftIcon={<SiFirebase />}
                     variant={"outline"}
                   >
@@ -105,7 +110,10 @@ export default function LoginPopover() {
                   </Button>
                 </Link>
 
-                <Button colorScheme={"twitter"} onClick={() => onLogOutClick()}>
+                <Button
+                  colorScheme={colorTheme}
+                  onClick={() => onLogOutClick()}
+                >
                   Logout
                 </Button>
               </HStack>
