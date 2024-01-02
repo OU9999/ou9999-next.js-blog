@@ -8,17 +8,15 @@ import {
   Grid,
   GridItem,
   Heading,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import CommentInput from "./EntryFooter/CommentInput";
-import Comments from "./EntryFooter/Comments";
 import AnotherCard from "./EntryFooter/Comment/AnotherCard";
 import OtherPost from "./EntryFooter/OtherPost/OtherPost";
 import { INote } from "@/firebase/firebaseTypes";
 import { useDevicehook } from "@/hooks/useDevicehook";
+import CommentsBox from "./EntryFooter/CommentsBox";
 
 export interface IEntryFooterProps {
   category: string;
@@ -42,7 +40,6 @@ export default function EntryFooter({
 
   //util
   const { fullOverlay } = useDevicehook();
-  const bgColor = useColorModeValue("white", "#1A202C");
 
   useEffect(() => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
@@ -146,16 +143,7 @@ export default function EntryFooter({
         </Center>
 
         {/* comments */}
-        <Box
-          w={"full"}
-          height={"auto"}
-          position="relative"
-          zIndex={5}
-          bgColor={bgColor}
-        >
-          <CommentInput docId={docId} />
-          <Comments docId={docId} />
-        </Box>
+        <CommentsBox docId={docId} />
       </Box>
     </>
   );

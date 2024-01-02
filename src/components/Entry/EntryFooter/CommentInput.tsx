@@ -34,6 +34,7 @@ import { useRecoilValue } from "recoil";
 
 interface ICommentInputProps {
   docId: string;
+  refetchFn: () => void;
 }
 
 export const userIcons = [
@@ -71,7 +72,7 @@ export const userIcons = [
   },
 ];
 
-export default function CommentInput({ docId }: ICommentInputProps) {
+export default function CommentInput({ docId, refetchFn }: ICommentInputProps) {
   //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
@@ -132,6 +133,7 @@ export default function CommentInput({ docId }: ICommentInputProps) {
     setNickname("");
     setPassword("");
     setComment("");
+    refetchFn();
   };
 
   return (

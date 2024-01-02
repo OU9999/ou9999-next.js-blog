@@ -27,6 +27,7 @@ interface ICommentDeleteModalProps {
   commentId: string;
   password: string;
   isReply?: boolean;
+  refetchFn: () => void;
 }
 
 export default function CommentDeleteModal({
@@ -35,6 +36,7 @@ export default function CommentDeleteModal({
   commentId,
   password,
   isReply,
+  refetchFn,
 }: ICommentDeleteModalProps) {
   //state
   const colorTheme = useRecoilValue(colorThemeAtom);
@@ -44,12 +46,6 @@ export default function CommentDeleteModal({
   const toast = useToast();
 
   const onDeleteClick = async () => {
-    let commentsRef = null;
-    if (isReply) {
-      commentsRef = doc(dbService, "replyComments", commentId!);
-    } else {
-      commentsRef = doc(dbService, "comments", commentId!);
-    }
     if (password !== checkPassword) {
       toast({
         title: "비밀번호가 틀립니다",
@@ -57,15 +53,24 @@ export default function CommentDeleteModal({
         isClosable: true,
         status: "error",
       });
-    } else {
-      await deleteDoc(commentsRef);
-      toast({
-        title: "삭제 완료!",
-        position: "top",
-        isClosable: true,
-      });
-      onClose();
+      return;
     }
+
+    let commentsRef = null;
+    if (isReply) {
+      commentsRef = doc(dbService, "replyComments", commentId!);
+    } else {
+      commentsRef = doc(dbService, "comments", commentId!);
+    }
+
+    await deleteDoc(commentsRef);
+    toast({
+      title: "삭제 완료!",
+      position: "top",
+      isClosable: true,
+    });
+    onClose();
+    refetchFn();
   };
 
   return (
