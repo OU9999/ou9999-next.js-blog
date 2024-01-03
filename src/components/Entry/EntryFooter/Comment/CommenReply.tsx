@@ -165,6 +165,7 @@ export default function CommentReply({
         commentId={id}
         password={password}
         isReply={true}
+        refetchFn={() => {}}
       />
     </>
   );
