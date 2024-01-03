@@ -91,14 +91,15 @@ export default function Comment({
     refetchFn();
   };
 
-  const getReplyComments = async (commentId: string) => {
+  const getReplyComments = async () => {
     const fetchData = await fetchReplyComments(commentId);
     setReplyComments(fetchData);
   };
 
   useEffect(() => {
-    getReplyComments(commentId);
-  }, [commentId]);
+    getReplyComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const avatarTest = (avatar: string) => {
     // eslint-disable-next-line array-callback-return

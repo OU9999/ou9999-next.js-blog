@@ -41,6 +41,7 @@ interface ICommentProps {
   createdAt: number;
   commentId: string;
   edited: boolean;
+  refetchFn: () => void;
 }
 
 export default function CommentMobile({
@@ -51,6 +52,7 @@ export default function CommentMobile({
   avatar,
   commentId,
   edited,
+  refetchFn,
 }: ICommentProps) {
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [icon, setIcon] = useState<JSX.Element>();
@@ -67,38 +69,39 @@ export default function CommentMobile({
 
   const onDeleteClick = async () => {
     const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
-    if (newPassword === password) {
-      const commentsRef = doc(dbService, "comments", commentId);
-      await deleteDoc(commentsRef);
-      toast({
-        title: "삭제 완료!",
-        position: "top",
-        isClosable: true,
-      });
-    } else if (newPassword === "") {
-    } else {
+    if (newPassword !== password) {
       toast({
         title: "비밀번호가 틀립니다",
         position: "top",
         isClosable: true,
         status: "error",
       });
+      return;
     }
+
+    const commentsRef = doc(dbService, "comments", commentId);
+    await deleteDoc(commentsRef);
+    toast({
+      title: "삭제 완료!",
+      position: "top",
+      isClosable: true,
+    });
+    refetchFn();
   };
 
   const onEditClick = async () => {
     const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
-    if (newPassword === password) {
-      setIsEdit(true);
-    } else if (newPassword === "") {
-    } else {
+    if (newPassword !== password) {
       toast({
         title: "비밀번호가 틀립니다",
         position: "top",
         isClosable: true,
         status: "error",
       });
+      return;
     }
+
+    setIsEdit(true);
   };
 
   const onUpdateButtonClick = async () => {
@@ -122,6 +125,7 @@ export default function CommentMobile({
       isClosable: true,
     });
     setIsEdit(false);
+    refetchFn();
   };
 
   const getReplyComments = async (commentId: string) => {
