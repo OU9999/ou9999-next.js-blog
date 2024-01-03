@@ -8,16 +8,14 @@ import {
   Heading,
   Image,
   VStack,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import CommentInputMobile from "./EntryFooter/Comment/CommentInputMobile";
-import CommentsMobile from "./EntryFooter/CommentsMobile";
 import OtherPostMobile from "./EntryFooter/OtherPostMobile/OtherPostMobile";
 import OtherPost from "./EntryFooter/OtherPost";
 import { IEntryFooterProps } from "@/components/Entry/EntryFooter";
+import CommentBoxMobile from "./EntryFooter/CommentBoxMobile";
 
 export default function EntryFooterMobile({
   category,
@@ -29,9 +27,6 @@ export default function EntryFooterMobile({
   //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
-
-  //util
-  const bgColor = useColorModeValue("white", "#1A202C");
 
   useEffect(() => {
     setBackgroundImage(images[Math.floor(Math.random() * images.length)]);
@@ -98,16 +93,7 @@ export default function EntryFooterMobile({
         </Box>
 
         {/* comments */}
-        <Box
-          w={"full"}
-          height={"auto"}
-          position="relative"
-          zIndex={5}
-          bgColor={bgColor}
-        >
-          <CommentInputMobile docId={docId} />
-          <CommentsMobile docId={docId} />
-        </Box>
+        <CommentBoxMobile docId={docId} />
       </Box>
     </>
   );

@@ -36,6 +36,7 @@ interface ICommentProps {
   createdAt: number;
   commentId: string;
   edited: boolean;
+  refetchFn: () => void;
 }
 
 export default function Comment({
@@ -46,6 +47,7 @@ export default function Comment({
   avatar,
   commentId,
   edited,
+  refetchFn,
 }: ICommentProps) {
   //state
   const colorTheme = useRecoilValue(colorThemeAtom);
@@ -86,16 +88,18 @@ export default function Comment({
       isClosable: true,
     });
     setIsEdit(false);
+    refetchFn();
   };
 
-  const getReplyComments = async (commentId: string) => {
+  const getReplyComments = async () => {
     const fetchData = await fetchReplyComments(commentId);
     setReplyComments(fetchData);
   };
 
   useEffect(() => {
-    getReplyComments(commentId);
-  }, [commentId]);
+    getReplyComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const avatarTest = (avatar: string) => {
     // eslint-disable-next-line array-callback-return
@@ -208,6 +212,7 @@ export default function Comment({
         onClose={onClose}
         commentId={commentId}
         password={password}
+        refetchFn={refetchFn}
       />
     </>
   );

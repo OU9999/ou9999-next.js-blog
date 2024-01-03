@@ -1,25 +1,13 @@
 import { Center } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import Comment from "./Comment/Comment";
-import { fetchComments } from "@/firebase/firebaseUtil";
 import { IComment } from "@/firebase/firebaseTypes";
 
 interface ICommentsProps {
-  docId: string;
+  comments: IComment[];
+  refetchFn: () => void;
 }
 
-export default function Comments({ docId }: ICommentsProps) {
-  const [comments, setComments] = useState<IComment[] | undefined>(undefined);
-
-  const getComments = async (docId: string) => {
-    const fetchData = await fetchComments(docId);
-    setComments(fetchData);
-  };
-
-  useEffect(() => {
-    getComments(docId);
-  }, [docId]);
-
+export default function Comments({ comments, refetchFn }: ICommentsProps) {
   return (
     <>
       <Center w="full" h={"auto"} flexDir={"column"} gap={10}>
@@ -33,6 +21,7 @@ export default function Comments({ docId }: ICommentsProps) {
             comment={comment.comment!}
             createdAt={comment.createdAt!}
             edited={comment.edited!}
+            refetchFn={refetchFn}
           />
         ))}
       </Center>
