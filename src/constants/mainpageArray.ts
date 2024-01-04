@@ -34,6 +34,7 @@ export const images = [
   "miles4.webp",
   "ranni.webp",
   "spidercouple.webp",
+  "lucy_space.webp",
 ];
 
 export const quotes = [
@@ -113,4 +114,10 @@ export const quotes = [
   `계단을 밟아야 계단 위에 올라설수 있다.`,
   `오랫동안 꿈을 그리는 사람은 마침내 그 꿈을 닮아 간다.`,
   `우리 조금은 찬란하게 , 심적으로 가난해져보자고.`,
+  `가장 넓은 길은 언제나 내 마음속에 있다.`,
+  `언젠간 이겨낼 그 단 한번을 위해.`,
+  `ONE MORE`,
+  `가득한 햇살로 그 여린 날들을 축복하다.`,
+  `언제나 다른 사람에게 다정한건 
+  강한 사람만 할 수 있는 일이야.`,
 ];

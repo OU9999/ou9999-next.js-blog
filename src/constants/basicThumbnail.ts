@@ -5,3 +5,4 @@ export const algoThumbnail = "/assets/imgs/notes/programmers.webp";
 export const tsThumbnail = "/assets/imgs/notes/TS.webp";
 export const nextThumbnail = "/assets/imgs/notes/next.webp";
 export const blogThumbnail = "/assets/imgs/notes/op_resize.webp";
+export const essayThumbnail = "/assets/imgs/notes/essay.webp";
