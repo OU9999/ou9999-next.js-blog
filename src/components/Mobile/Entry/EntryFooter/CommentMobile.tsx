@@ -54,6 +54,7 @@ export default function CommentMobile({
   edited,
   refetchFn,
 }: ICommentProps) {
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [icon, setIcon] = useState<JSX.Element>();
   const [isEdit, setIsEdit] = useState(false);
@@ -63,6 +64,7 @@ export default function CommentMobile({
     null
   );
 
+  //util
   const toast = useToast();
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const date = dateFormatterMobile(createdAt);
@@ -128,14 +130,15 @@ export default function CommentMobile({
     refetchFn();
   };
 
-  const getReplyComments = async (commentId: string) => {
+  const getReplyComments = async () => {
     const fetchData = await fetchReplyComments(commentId);
     setReplyComments(fetchData);
   };
 
   useEffect(() => {
-    getReplyComments(commentId);
-  }, [commentId]);
+    getReplyComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const avatarTest = (avatar: string) => {
     // eslint-disable-next-line array-callback-return
@@ -231,6 +234,7 @@ export default function CommentMobile({
         <CommentReplyInputMobile
           setIsReply={setIsReply}
           commentId={commentId}
+          refetchReplyFn={getReplyComments}
         />
       ) : null}
       <Center w="full" h={"auto"} flexDir={"column"} gap={4}>
@@ -244,6 +248,7 @@ export default function CommentMobile({
             comment={reply.comment!}
             createdAt={reply.createdAt!}
             edited={reply.edited!}
+            refetchReplyFn={getReplyComments}
           />
         ))}
       </Center>

@@ -29,6 +29,7 @@ interface IReplyCommentProps {
   createdAt: number;
   id: string;
   edited: boolean;
+  refetchReplyFn: () => void;
 }
 
 export default function CommentReplyMobile({
@@ -39,14 +40,16 @@ export default function CommentReplyMobile({
   createdAt,
   id,
   edited,
+  refetchReplyFn,
 }: IReplyCommentProps) {
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [icon, setIcon] = useState<JSX.Element>();
   const [option, setOption] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [newComment, setNewComment] = useState(comment);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  //util
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const date = dateFormatter(createdAt);
   const toast = useToast();
@@ -63,42 +66,44 @@ export default function CommentReplyMobile({
       isClosable: true,
     });
     setIsEdit(false);
+    refetchReplyFn();
   };
 
   const onDeleteClick = async () => {
     const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
-    if (newPassword === password) {
-      const commentsRef = doc(dbService, "replyComments", id);
-      await deleteDoc(commentsRef);
-      toast({
-        title: "삭제 완료!",
-        position: "top",
-        isClosable: true,
-      });
-    } else if (newPassword === "") {
-    } else {
+    if (newPassword !== password) {
       toast({
         title: "비밀번호가 틀립니다",
         position: "top",
         isClosable: true,
         status: "error",
       });
+      return;
     }
+
+    const commentsRef = doc(dbService, "replyComments", id);
+    await deleteDoc(commentsRef);
+    toast({
+      title: "삭제 완료!",
+      position: "top",
+      isClosable: true,
+    });
+    refetchReplyFn();
   };
 
   const onEditClick = async () => {
     const newPassword = prompt("확인용 비밀번호를 입력해주세요.", "");
-    if (newPassword === password) {
-      setIsEdit(true);
-    } else if (newPassword === "") {
-    } else {
+    if (newPassword !== password) {
       toast({
         title: "비밀번호가 틀립니다",
         position: "top",
         isClosable: true,
         status: "error",
       });
+      return;
     }
+
+    setIsEdit(true);
   };
 
   const avatarTest = (avatar: string) => {
