@@ -1,7 +1,9 @@
 import { Box, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { returnLinkTitle } from "@/utils/utilFn";
+import { motion, useScroll } from "framer-motion";
+import { tocAniVariants } from "./TOC";
 
 interface ITocProps {
   md: string;
@@ -14,6 +16,11 @@ interface Item {
 }
 
 export default function TOCPlaceHolder({ md }: ITocProps) {
+  //state
+  const [tocAni, setTocAni] = useState(false);
+
+  //util
+  const { scrollY } = useScroll();
   const tocRef = useRef<HTMLDivElement>(null);
 
   const titles = md.split(`\n`).filter((t: string) => t.includes("# "));
@@ -33,9 +40,29 @@ export default function TOCPlaceHolder({ md }: ITocProps) {
       };
     });
 
+  useEffect(() => {
+    scrollY.on("change", () => {
+      if (scrollY.get() >= 250) {
+        setTocAni(true);
+      } else {
+        setTocAni(false);
+      }
+    });
+  }, [scrollY]);
+
   return (
     <>
-      <Box w="220px" ref={tocRef}>
+      <Box
+        as={motion.div}
+        variants={tocAniVariants}
+        animate={"hello"}
+        initial={{
+          opacity: 0,
+        }}
+        custom={tocAni}
+        w="220px"
+        ref={tocRef}
+      >
         <Box borderLeft={"3px solid gray"} px={1}>
           <Box h="auto">
             {result.map((item) => {

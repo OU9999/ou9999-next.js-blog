@@ -86,7 +86,7 @@ export default function EntryMarkdown({ md }: IEntryMainPageProps) {
             top={150}
             zIndex={1}
           >
-            {re ? <Toc md={md} /> : <TOCPlaceHolder md={md} />}
+            {re && <Toc md={md} />}
           </Box>
         </Box>
       </Flex>

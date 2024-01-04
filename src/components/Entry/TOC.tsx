@@ -1,9 +1,10 @@
 import { Box, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIntersectionObserve } from "./IO";
 import { returnLinkTitle } from "@/utils/utilFn";
 import { useColorTheme } from "@/hooks/useColorTheme";
+import { Variants, motion, useScroll } from "framer-motion";
 
 interface ITocProps {
   md: string;
@@ -15,10 +16,23 @@ interface Item {
   count?: number;
 }
 
+export const tocAniVariants: Variants = {
+  hello: (inView: boolean) => {
+    return {
+      opacity: inView ? 1 : 0,
+    };
+  },
+};
+
 export default function Toc({ md }: ITocProps) {
-  const { relativeColor } = useColorTheme();
+  //state
   const [activeId, setActiveId] = useState("");
+  const [tocAni, setTocAni] = useState(false);
+
+  //util
   const tocRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  const { relativeColor } = useColorTheme();
 
   useIntersectionObserve(setActiveId, md);
 
@@ -39,9 +53,29 @@ export default function Toc({ md }: ITocProps) {
       };
     });
 
+  useEffect(() => {
+    scrollY.on("change", () => {
+      if (scrollY.get() >= 250) {
+        setTocAni(true);
+      } else {
+        setTocAni(false);
+      }
+    });
+  }, [scrollY]);
+
   return (
     <>
-      <Box w="220px" ref={tocRef}>
+      <Box
+        as={motion.div}
+        variants={tocAniVariants}
+        animate={"hello"}
+        initial={{
+          opacity: 0,
+        }}
+        custom={tocAni}
+        w="220px"
+        ref={tocRef}
+      >
         <Box borderLeft={"3px solid gray"} px={1}>
           <Box h="auto">
             {result.map((item) => {
