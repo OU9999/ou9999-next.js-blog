@@ -2,6 +2,7 @@ import {
   algoThumbnail,
   blogThumbnail,
   cssThumbnail,
+  essayThumbnail,
   jsThumbnail,
   nextThumbnail,
   reactThumbnail,
@@ -77,6 +78,8 @@ export const selectBasicThumbnail = (category: string) => {
       return nextThumbnail;
     case "My First Blog":
       return blogThumbnail;
+    case "Essay":
+      return essayThumbnail;
     default:
       return reactThumbnail;
   }
