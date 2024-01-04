@@ -191,7 +191,11 @@ export default function Comment({
       </VStack>
 
       {isReply && (
-        <CommentReplyInput setIsReply={setIsReply} commentId={commentId} />
+        <CommentReplyInput
+          setIsReply={setIsReply}
+          commentId={commentId}
+          refetchReplyFn={getReplyComments}
+        />
       )}
       <Center w="full" h={"auto"} flexDir={"column"} gap={10}>
         {replyComments?.map((reply) => (
@@ -204,6 +208,7 @@ export default function Comment({
             comment={reply.comment!}
             createdAt={reply.createdAt!}
             edited={reply.edited!}
+            refetchReplyFn={getReplyComments}
           />
         ))}
       </Center>

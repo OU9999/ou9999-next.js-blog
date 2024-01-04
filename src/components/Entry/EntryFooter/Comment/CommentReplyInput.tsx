@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { addDoc, collection } from "firebase/firestore";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 import { FiCornerDownRight } from "react-icons/fi";
 import { dbService } from "../../../../firebase/firebase";
@@ -22,20 +22,24 @@ import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
 
 interface IReplyCommentInputProps {
-  setIsReply: any;
+  setIsReply: Dispatch<SetStateAction<boolean>>;
   commentId: string;
+  refetchReplyFn: () => void;
 }
 
 export default function CommentReplyInput({
   setIsReply,
   commentId,
+  refetchReplyFn,
 }: IReplyCommentInputProps) {
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [comment, setComment] = useState<string>("");
 
+  //util
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const toast = useToast();
 
@@ -85,6 +89,7 @@ export default function CommentReplyInput({
       isClosable: true,
     });
     setIsReply(false);
+    refetchReplyFn();
   };
 
   return (

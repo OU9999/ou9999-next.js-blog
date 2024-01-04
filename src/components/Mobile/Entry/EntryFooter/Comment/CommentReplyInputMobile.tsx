@@ -12,7 +12,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { addDoc, collection } from "firebase/firestore";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 import { FiCornerDownRight } from "react-icons/fi";
 import { userIcons } from "./CommentInputMobile";
@@ -21,26 +21,26 @@ import { colorThemeAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
 
 interface IReplyCommentInputProps {
-  setIsReply: any;
+  setIsReply: Dispatch<SetStateAction<boolean>>;
   commentId: string;
+  refetchReplyFn: () => void;
 }
 
 export default function CommentReplyInputMobile({
   setIsReply,
   commentId,
+  refetchReplyFn,
 }: IReplyCommentInputProps) {
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [comment, setComment] = useState<string>("");
 
+  //util
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const toast = useToast();
-
-  const onAvatarClicked = () => {
-    setUserIcon(userIcons[Math.floor(Math.random() * userIcons.length)]);
-  };
 
   const onAddButtonClicked = async () => {
     if (nickname === "" || password === "" || comment === "") {
@@ -84,7 +84,12 @@ export default function CommentReplyInputMobile({
       isClosable: true,
     });
     setIsReply(false);
+    refetchReplyFn();
   };
+
+  // const onAvatarClicked = () => {
+  //   setUserIcon(userIcons[Math.floor(Math.random() * userIcons.length)]);
+  // };
 
   return (
     <>

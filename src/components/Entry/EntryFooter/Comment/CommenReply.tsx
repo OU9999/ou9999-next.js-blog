@@ -34,6 +34,7 @@ interface IReplyCommentProps {
   createdAt: number;
   id: string;
   edited: boolean;
+  refetchReplyFn: () => void;
 }
 
 export default function CommentReply({
@@ -44,13 +45,16 @@ export default function CommentReply({
   createdAt,
   id,
   edited,
+  refetchReplyFn,
 }: IReplyCommentProps) {
+  //state
   const colorTheme = useRecoilValue(colorThemeAtom);
   const [icon, setIcon] = useState<JSX.Element>();
   const [option, setOption] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [newComment, setNewComment] = useState(comment);
 
+  //util
   const { isOpen, onOpen, onClose } = useDisclosure();
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const date = dateFormatter(createdAt);
@@ -68,6 +72,7 @@ export default function CommentReply({
       isClosable: true,
     });
     setIsEdit(false);
+    refetchReplyFn();
   };
 
   const avatarTest = (avatar: string) => {
@@ -165,7 +170,7 @@ export default function CommentReply({
         commentId={id}
         password={password}
         isReply={true}
-        refetchFn={() => {}}
+        refetchFn={refetchReplyFn}
       />
     </>
   );
