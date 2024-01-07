@@ -31,6 +31,8 @@ import {
   FaUserTie,
 } from "react-icons/fa";
 import { useRecoilValue } from "recoil";
+import { useReCaptcha } from "next-recaptcha-v3";
+import CommentReCAPTCHA from "./Comment/CommentReCAPTCHA";
 
 interface ICommentInputProps {
   docId: string;
@@ -200,6 +202,7 @@ export default function CommentInput({ docId, refetchFn }: ICommentInputProps) {
                 onChange={(e) => setComment(e.currentTarget.value)}
               />
               <Flex width={"full"} justifyContent={"flex-end"}>
+                <CommentReCAPTCHA />
                 <Button colorScheme={colorTheme} onClick={onAddButtonClicked}>
                   댓글 작성
                 </Button>
