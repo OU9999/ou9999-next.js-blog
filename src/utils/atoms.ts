@@ -19,3 +19,8 @@ export const isEntryAtom = atom<boolean>({
   key: "isEntry",
   default: false,
 });
+
+export const isRecaptchaAtom = atom<boolean>({
+  key: "isRecaptcha",
+  default: false,
+});
