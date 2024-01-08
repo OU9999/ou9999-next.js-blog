@@ -8,6 +8,7 @@ import {
   InputLeftElement,
   Textarea,
   useColorModeValue,
+  useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -18,8 +19,10 @@ import { FaLock, FaUser } from "react-icons/fa";
 import { FiCornerDownRight } from "react-icons/fi";
 import { dbService } from "../../../../firebase/firebase";
 import { userIcons } from "../CommentInput";
-import { colorThemeAtom } from "@/utils/atoms";
+import { isRecaptchaAtom } from "@/utils/atoms";
 import { useRecoilValue } from "recoil";
+import CheckRecaptchaModal from "@/components/common/CheckRecaptchaModal";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 interface IReplyCommentInputProps {
   setIsReply: Dispatch<SetStateAction<boolean>>;
@@ -33,21 +36,27 @@ export default function CommentReplyInput({
   refetchReplyFn,
 }: IReplyCommentInputProps) {
   //state
-  const colorTheme = useRecoilValue(colorThemeAtom);
+  const isRecap = useRecoilValue(isRecaptchaAtom);
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [comment, setComment] = useState<string>("");
 
   //util
+  const { colorTheme } = useColorTheme();
   const bgColor = useColorModeValue("#fff", "#2D3748");
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onAvatarClicked = () => {
     setUserIcon(userIcons[Math.floor(Math.random() * userIcons.length)]);
   };
 
   const onAddButtonClicked = async () => {
+    if (!isRecap) {
+      onOpen();
+      return;
+    }
     if (nickname === "" || password === "" || comment === "") {
       toast({
         title: "빈칸이 있습니다.",
@@ -163,6 +172,7 @@ export default function CommentReplyInput({
           </VStack>
         </VStack>
       </Center>
+      <CheckRecaptchaModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 }

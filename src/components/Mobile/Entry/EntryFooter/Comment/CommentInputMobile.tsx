@@ -1,4 +1,4 @@
-import { colorThemeAtom } from "@/utils/atoms";
+import { colorThemeAtom, isRecaptchaAtom } from "@/utils/atoms";
 import { dbService } from "@/firebase/firebase";
 import {
   Box,
@@ -11,6 +11,7 @@ import {
   InputLeftElement,
   Textarea,
   useColorModeValue,
+  useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -29,6 +30,8 @@ import {
   FaUserTie,
 } from "react-icons/fa";
 import { useRecoilValue } from "recoil";
+import { useColorTheme } from "@/hooks/useColorTheme";
+import CheckRecaptchaModal from "@/components/common/CheckRecaptchaModal";
 
 interface ICommentInputProps {
   docId: string;
@@ -75,17 +78,24 @@ export default function CommentInputMobile({
   refetchFn,
 }: ICommentInputProps) {
   //state
-  const colorTheme = useRecoilValue(colorThemeAtom);
+  const isRecap = useRecoilValue(isRecaptchaAtom);
   const [userIcon, setUserIcon] = useState<any>(userIcons[0]);
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [comment, setComment] = useState<string>("");
 
   //util
+  const { colorTheme } = useColorTheme();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const inputBgColor = useColorModeValue("#fff", "#2D3748");
   const toast = useToast();
 
   const onAddButtonClicked = async () => {
+    if (!isRecap) {
+      onOpen();
+      return;
+    }
+
     if (nickname === "" || password === "" || comment === "") {
       toast({
         title: "빈칸이 있습니다.",
@@ -198,6 +208,7 @@ export default function CommentInputMobile({
           </VStack>
         </Center>
       </Box>
+      <CheckRecaptchaModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 }

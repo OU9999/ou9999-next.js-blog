@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { Router } from "next/router";
 import Loading from "@/components/Loading";
 import MainImgMobile from "@/components/Mobile/MainImgMobile";
+import { ReCaptchaProvider } from "next-recaptcha-v3";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [mobileView] = useMediaQuery("(max-width: 767px)", {

@@ -15,6 +15,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
+import { useColorTheme } from "@/hooks/useColorTheme";
 
 interface ILoginModalProps {
   isOpen: boolean;
@@ -29,10 +30,8 @@ export default function DeleteModal({
   id,
   thumbnailUrl,
 }: ILoginModalProps) {
-  //state
-  const colorTheme = useRecoilValue(colorThemeAtom);
-
   //util
+  const { colorTheme } = useColorTheme();
   const router = useRouter();
   const toast = useToast();
 
