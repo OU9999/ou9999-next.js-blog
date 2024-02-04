@@ -79,10 +79,12 @@ export default function MainScroll({ notesArr }: IMainScrollProps) {
             <Box fontSize={"3xl"}>
               <HiSpeakerphone />
             </Box>
-            <Text fontSize={"xl"}>
-              Firebase 무료 요금제여서... 대역폭 한도가 금방차네요! 한동한
-              이미지 업로드 기능은 제한할 예정입니다!
-            </Text>
+            <HStack fontSize={"xl"}>
+              <Text>블로그 이전했습니다. </Text>
+              <Link href={"https://ou9999-dev.com"}>
+                <Text as={"u"}>ou9999-dev.com</Text>
+              </Link>
+            </HStack>
           </HStack>
           <Heading py={10}>START!</Heading>
           <HStack w={"full"}>

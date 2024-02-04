@@ -179,6 +179,27 @@ export default function HeaderMobile() {
                 </Flex>
               </HStack>
 
+              <Link href={"https://ou9999-dev.com"}>
+                <Box
+                  p={1}
+                  bgGradient="linear(to-r, green.200, pink.500)"
+                  rounded="md"
+                  zIndex={99}
+                >
+                  <Box
+                    w="full"
+                    rounded="md"
+                    bg="black"
+                    textColor="white"
+                    fontWeight="bold"
+                    p={1}
+                    fontSize={"sm"}
+                  >
+                    <Text>⭐️ 새로운 블로그로 이전 (Link)</Text>
+                  </Box>
+                </Box>
+              </Link>
+
               <Divider />
 
               <VStack py={3} justifyContent={"center"} alignItems={"center"}>

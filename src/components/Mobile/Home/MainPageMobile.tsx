@@ -14,6 +14,8 @@ import PostMobile from "./PostMobile";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { INote } from "@/firebase/firebaseTypes";
+import Link from "next/link";
+import { HiSpeakerphone } from "react-icons/hi";
 
 interface IMainPageMobileProps {
   notesArr: INote[];
@@ -91,11 +93,16 @@ export default function MainPageMobile({ notesArr }: IMainPageMobileProps) {
           variants={backgroundVariants}
           animate={backgroundAni}
           initial={"normal"}
+          fontWeight={"bold"}
           py={3}
         >
-          <FaQuoteLeft />
-          <Text fontWeight={"bold"}>{quote}</Text>
-          <FaQuoteRight />
+          <Box fontSize={"2xl"}>
+            <HiSpeakerphone />
+          </Box>
+          <Text>블로그 이전했습니다. </Text>
+          <Link href={"https://ou9999-dev.com"}>
+            <Text as={"u"}>ou9999-dev.com</Text>
+          </Link>
         </HStack>
 
         <Divider />

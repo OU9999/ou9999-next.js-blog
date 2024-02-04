@@ -7,6 +7,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
   useColorMode,
   useColorModeValue,
   useDisclosure,
@@ -45,7 +46,8 @@ export default function Header() {
   const [underBar, setUnderBar] = useState(false);
   const [boxShadow, setBoxShadow] = useState(false);
   const [textColor, setTextColor] = useState(false);
-  const { colorTheme, setColorTheme, lightColor, darkColor } = useColorTheme();
+  const { colorTheme, setColorTheme, lightColor, darkColor, relativeColor } =
+    useColorTheme();
 
   const hoverEnd = () => {
     if (scrollY.get() < 80) {
@@ -197,6 +199,30 @@ export default function Header() {
         </HStack>
 
         <HStack gap={2}>
+          <Link href={"https://ou9999-dev.com"}>
+            <Box
+              p={1}
+              bgGradient="linear(to-r, green.200, pink.500)"
+              rounded="md"
+              zIndex={99}
+            >
+              <Box
+                w="full"
+                rounded="md"
+                bg="black"
+                textColor="white"
+                fontWeight="bold"
+                p={{ md: 1, lg: 3, xl: 3 }}
+                fontSize={{
+                  md: "xs",
+                  lg: "sm",
+                  xl: "md",
+                }}
+              >
+                <Text>⭐️ 새로운 블로그로 이전했습니다</Text>
+              </Box>
+            </Box>
+          </Link>
           <Box>
             <Menu>
               <MenuButton
@@ -263,20 +289,6 @@ export default function Header() {
             />
           )}
         </HStack>
-
-        <Box
-          bgColor={darkColor}
-          opacity={0.3}
-          zIndex={1}
-          w="110vw"
-          h={20}
-          as={motion.div}
-          style={{ scaleX: scrollYProgress }}
-          transformOrigin="left"
-          position="absolute"
-          left={-3}
-          top={0}
-        ></Box>
       </HStack>
 
       {isLogin ? null : <LoginModal isOpen={isOpen} onClose={onClose} />}
