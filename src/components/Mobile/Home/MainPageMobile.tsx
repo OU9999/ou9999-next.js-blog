@@ -88,18 +88,19 @@ export default function MainPageMobile({ notesArr }: IMainPageMobileProps) {
 
         <HStack
           px={5}
-          gap={1}
+          spacing={0}
           as={motion.div}
           variants={backgroundVariants}
           animate={backgroundAni}
           initial={"normal"}
           fontWeight={"bold"}
+          fontSize={"xs"}
           py={3}
         >
-          <Box fontSize={"2xl"}>
+          <Box fontSize={"md"}>
             <HiSpeakerphone />
           </Box>
-          <Text>블로그 이전했습니다. </Text>
+          <Text pl={2}>블로그 이전했습니다.&nbsp;</Text>
           <Link href={"https://ou9999-dev.com"}>
             <Text as={"u"}>ou9999-dev.com</Text>
           </Link>
